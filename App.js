@@ -769,6 +769,8 @@ const sensorioScreenPortraitStyles = StyleSheet.create({
     width: 100,
     backgroundColor: 'black',
     opacity: .7,
+    borderRadius: 8,
+    overflow: 'hidden',
   },
   appContainer: {
     flex: 1,
@@ -814,12 +816,12 @@ const sensorioScreenPortraitStyles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     margin: 5,
-    height: 40,
+    height: 45,
 //    backgroundColor: '#776655'
   },
   controlsButton: {
     margin:10,
-    width: 50,
+    width: 60,
     backgroundColor: 'powderblue',
   },
   controlsButtonText: {
@@ -833,6 +835,7 @@ const sensorioScreenPortraitStyles = StyleSheet.create({
     color: 'powderblue',
     backgroundColor: 'steelblue',
     borderRadius: 8,
+    overflow: 'hidden',
   },
   refreshButtonText: {
     textAlign: 'center',
