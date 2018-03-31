@@ -1,9 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React, { Component } from 'react';
 import {
   ActivityIndicator,
@@ -16,14 +10,11 @@ import {
   TouchableHighlight,
   View
 } from 'react-native';
-
-import { StackNavigator, } from 'react-navigation';
 import { G, Line, Rect } from 'react-native-svg';
 import { LineChart, YAxis, XAxis } from 'react-native-svg-charts';
-import { TextField } from 'react-native-material-textfield';
-import { Switch } from 'react-native-switch';
 import * as d3Scale from 'd3-scale'
 import dateFns from 'date-fns'
+import VisibleYAxis from '../containers/VisibleYAxis'
 
 const refresh = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +
@@ -32,118 +23,7 @@ const refresh = Platform.select({
     'Shake or press menu button for dev menu',
 });
 
-class SettingsScreen extends Component<{}> {
-  constructor(props) {
-    super(props);
-    this.state = {
-      myMQTTServer: 'myMQTTServer:5000',
-      myGatewayID: 'myGatewayID',
-      tempStyle: 'F',
-    };
-  }
-
-  static navigationOptions = {
-    title: 'Settings',
-    headerStyle: {
-      backgroundColor: 'powderblue',
-    },
-    heaterTintColor: 'steelblue',
-    headerTitleStyle: {
-      fontWeight: 'bold',
-      width: '75%',
-      alignSelf: 'center',
-      textAlign: 'center',
-    },
-  }
-
-  componentDidMount() {
-    AsyncStorage.getItem('myMQTTServer').then((value) => {
-      if (value !== null){
-        this.setState({myMQTTServer: value});
-      }
-    }).done();
-    AsyncStorage.getItem('myGatewayID').then((value) => {
-      if (value !== null){
-        this.setState({myGatewayID: value});
-      }
-      console.log('myGatewayID', value);
-    }).done();
-    AsyncStorage.getItem('tempStyle').then((value) => {
-      if (value !== null){
-        this.setState({tempStyle: value});
-      }
-      let dataType = (value == 'F') ? value = 'TempF' : value = 'TempC';
-      console.log('selectedDataType', dataType);
-      this.setState({
-        selectedDataType: dataType
-      });
-    }).done();
-  }
-
-  render() {
-    let { myMQTTServer } = this.state;
-    let { myGatewayID } = this.state;
-    let { tempStyle } = this.state;
-    let tempSwitchState = (tempStyle == 'F')? true : false;
-
-    return (
-      <View style={settingsScreenPortraitStyles.settingsContainer}>
-        <View style={settingsScreenPortraitStyles.MQTTrow}>
-          <TextField
-            label='MQTT Server'
-            value={myMQTTServer}
-            onChangeText={ (myMQTTServer) => {
-                AsyncStorage.setItem('myMQTTServer', myMQTTServer);
-                this.setState({
-                  myMQTTServer,
-                });
-              }
-            }
-          />
-        </View>
-        <View style={settingsScreenPortraitStyles.GWIDrow}>
-          <TextField
-            label='Gateway ID'
-            value={myGatewayID}
-            onChangeText={ (myGatewayID) => {
-                AsyncStorage.setItem('myGatewayID', myGatewayID);
-                this.setState({
-                  myGatewayID,
-                });
-              }
-            }
-          />
-        </View>
-        <View style={settingsScreenPortraitStyles.tempSwitchRow}>
-          <Text style={settingsScreenPortraitStyles.tempSwitchText}>
-            Temperature Format
-          </Text>
-          <Switch
-            value={tempSwitchState}
-            disabled={false}
-            activeText={'F'}
-            inActiveText={'C'}
-            backgroundActive={'green'}
-            backgroundInactive={'green'}
-            style={{marginTop:0}}
-            onValueChange={ (value) => {
-                let tempStyle = (value) ? 'F' : 'C';
-                console.log('Setting tempStyle to', tempStyle);
-                AsyncStorage.setItem('tempStyle', tempStyle);
-                this.setState({
-                  tempStyle,
-                });
-                this.props.navigation.state.params.parent.updateSettings(myMQTTServer, myGatewayID, tempStyle);
-              }
-            }
-          />
-        </View>
-      </View>
-    )
-  }
-}
-
-class SensorioScreen extends Component<{}> {
+export class SensorIoTScreen extends Component<{}> {
 
   constructor(props) {
     super(props);
@@ -178,6 +58,8 @@ class SensorioScreen extends Component<{}> {
       myMQTTServer: '',
       myGatewayID: '',
       tempStyle: 'F',
+      currentYmin: 0,
+      currentYMax: 105,
       nodeList: [ {'nodeID': 1, 'isActive': false},
                   {'nodeID': 2, 'isActive': false},
                   {'nodeID': 3, 'isActive': false},
@@ -210,16 +92,6 @@ class SensorioScreen extends Component<{}> {
         this.retrieveDataArray(this.state.myMQTTServer, this.state.myGatewayID, this.state.selectedDataType, this.state.selectedDisplayInterval);
 
       }).done();
-    }).done();
-    AsyncStorage.getItem('tempStyle').then((value) => {
-      if (value !== null){
-        this.setState({tempStyle: this.state.tempStyle});
-        let value = (this.state.tempStyle == 'F') ? value = 'TempF' : value = 'TempC'
-        console.log('selectedDataType', value);
-        this.setState({
-          selectedDataType: value
-        });
-      }
     }).done();
 
     this.props.navigation.setParams({ parent: this });
@@ -262,9 +134,6 @@ class SensorioScreen extends Component<{}> {
     this.props.navigation.navigate('Settings', {updateSettings: () => this.updateSettings()});
   }
   _onPressRefresh = () => {
-    this.setState({
-      isLoading: true,
-    })
     jsonArray = this.retrieveDataArray(this.state.myMQTTServer, this.state.myGatewayID, this.state.selectedDataType, this.state.selectedDisplayInterval);
   }
   _onPressOneDay = () => {
@@ -295,26 +164,22 @@ class SensorioScreen extends Component<{}> {
 
   _onPressTemp = () => {
     let value = (this.state.tempStyle == 'F') ? value = 'TempF' : value = 'TempC'
-    this.setState({
-      selectedDataType: value
-    });
+    this.retrieveDataArray(this.state.myMQTTServer, this.state.myGatewayID, value, this.state.selectedDisplayInterval);
+    store.dispatch(setYAxisScale, value);
   }
   _onPressHum = () => {
-    this.setState({
-      selectedDataType: 'Hum'
-    });
+    this.retrieveDataArray(this.state.myMQTTServer, this.state.myGatewayID, 'Hum', this.state.selectedDisplayInterval);
+    store.dispatch(setYAxisScale, 'Hum');
   }
 
   _onPressPres = () => {
-    this.setState({
-      selectedDataType: 'Pres'
-    });
+    this.retrieveDataArray(this.state.myMQTTServer, this.state.myGatewayID, 'Pres', this.state.selectedDisplayInterval);
+    store.dispatch(setYAxisScale, 'Pres');
   }
 
   _onPressBatt = () => {
-    this.setState({
-      selectedDataType: 'Batt'
-    });
+    this.retrieveDataArray(this.state.myMQTTServer, this.state.myGatewayID, 'Batt', this.state.selectedDisplayInterval);
+    store.dispatch(setYAxisScale, 'Batt');
   }
 
   _onPressNode = (nodeID) => {
@@ -381,6 +246,11 @@ class SensorioScreen extends Component<{}> {
   }
 
   retrieveDataArray(MQTTGateway, gatewayID, selectedDataType, selectedDisplayInterval) {
+
+    this.setState({
+      isLoading: true,
+    });
+
     let period;
     switch (selectedDisplayInterval) {
       case '1D':
@@ -474,27 +344,6 @@ class SensorioScreen extends Component<{}> {
       />
     ))
 
-    let yLabel = null;
-    switch (this.state.selectedDataType) {
-      case 'TempF':
-        yLabel = value => `${value}ºF` ;
-        break;
-      case 'TempC':
-        yLabel = value => `${value}ºC` ;
-        break;
-      case 'Hum':
-        yLabel = value => `${value}%` ;
-        break;
-      case 'Pres':
-        yLabel = value => `${value}inHg` ;
-        break;
-      case 'Batt':
-      yLabel = value => `${value}V` ;
-      break;
-      default:
-        yLabel = value => `${value}` ;
-    }
-
     const CustomGrid = ({ x, y, data, ticks }) => {
 
       const xValues = data.map((item, index) => item.date)
@@ -555,17 +404,14 @@ class SensorioScreen extends Component<{}> {
     return (
       <View style={sensorioScreenPortraitStyles.appContainer}>
         <View style={sensorioScreenPortraitStyles.histogramContainer}>
-          <YAxis
+          <VisibleYAxis
             style={sensorioScreenPortraitStyles.histogramYLegend}
             data={ this.state.histogramData }
-            max={105}
-            min={0}
             yAccessor={({ item }) => item.value}
             contentInset={ contentInsetY }
             svg={{
               fontSize: 10,
             }}
-            formatLabel={ yLabel }
           />
           <LineChart
             style={sensorioScreenPortraitStyles.histogram}
@@ -731,27 +577,6 @@ class SensorioScreen extends Component<{}> {
     );
   }
 }
-
-const RootStack = StackNavigator (
-  {
-    Sensorio: {
-      screen: SensorioScreen,
-    },
-    Settings: {
-      screen: SettingsScreen,
-    },
-  },
-  {
-    initialRouteName: 'Sensorio',
-  }
-);
-
-export default class App extends Component<{}> {
-  render () {
-    return <RootStack />
-  }
-}
-
 const sensorioScreenPortraitStyles = StyleSheet.create({
   activityIndicatorContainer: {
     position: 'absolute',
@@ -863,49 +688,4 @@ const sensorioScreenPortraitStyles = StyleSheet.create({
   finePrintText: {
     textAlign: 'center',
   }
-});
-
-const settingsScreenPortraitStyles = StyleSheet.create({
-  settingsContainer: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    alignItems: 'stretch',
-    backgroundColor: 'powderblue',
-  },
-  settingsTextInput: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    height: 40,
-    width: 100,
-    color: 'steelblue',
-    backgroundColor: 'blue',
-    margin: 10,
-  },
-  MQTTrow: {
-    height: 75,
-    backgroundColor: 'powderblue',
-    margin:5,
-    marginLeft:20,
-//    backgroundColor: '#889900',
-  },
-  GWIDrow: {
-    height: 75,
-    backgroundColor: 'powderblue',
-    margin:5,
-    marginLeft:20,
-//    backgroundColor: '#00AABB',
-  },
-  tempSwitchRow: {
-    height: 75,
-    justifyContent: 'center',
-    backgroundColor: 'powderblue',
-    margin:5,
-    marginLeft:20,
-//    backgroundColor: '#BBAA00',
-  },
-  tempSwitchText: {
-    fontSize: 12,
-    marginBottom: 5,
-  },
 });
