@@ -12,9 +12,13 @@ import {
 } from 'react-native';
 import { G, Line, Rect } from 'react-native-svg';
 import { LineChart, YAxis, XAxis } from 'react-native-svg-charts';
-import * as d3Scale from 'd3-scale'
-import dateFns from 'date-fns'
-import VisibleYAxis from '../containers/VisibleYAxis'
+import * as d3Scale from 'd3-scale';
+import dateFns from 'date-fns';
+import VisibleYAxis from '../containers/VisibleYAxis';
+import SelectSensorType from '../containers/SelectSensorType';
+import SelectRange from '../containers/SelectRange';
+import NodeList from '../containers/NodeList';
+import { yAxisTypes } from '../actions';
 
 const refresh = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +
@@ -28,8 +32,6 @@ export class SensorIoTScreen extends Component<{}> {
   constructor(props) {
     super(props);
     this.state = {
-      selectedDataType: 'TempF',
-      selectedDisplayInterval: '1D',
       histogramData: [ {value:1,date:dateFns.setHours(new Date(2018, 1, 2), 6)},
                        {value:2,date:dateFns.setHours(new Date(2018, 1, 3), 6)},
                        {value:3,date:dateFns.setHours(new Date(2018, 1, 4), 6)},
@@ -53,49 +55,14 @@ export class SensorIoTScreen extends Component<{}> {
                                 {'date':'Feb 22','time':'04PM'},
                                 {'date':'Feb 23','time':'11AM'},
                               ],
-      histogramTestLegendValues: ['A','B','C','D','E','F','G','H'],
-      isLoading: true,
-      myMQTTServer: '',
-      myGatewayID: '',
-      tempStyle: 'F',
-      currentYmin: 0,
-      currentYMax: 105,
-      nodeList: [ {'nodeID': 1, 'isActive': false},
-                  {'nodeID': 2, 'isActive': false},
-                  {'nodeID': 3, 'isActive': false},
-                ],
+      isLoading: false,
     };
   }
 
-  updateSettings(MQTTServer, GatewayID, tempStyle) {
-    this.setState({myMQTTServer: MQTTServer});
-    this.setState({myGatewayID: GatewayID});
-    this.setState({tempStyle: tempStyle});
-    let value = (tempStyle == 'F') ? value = 'TempF' : value = 'TempC'
-    this.setState({
-      selectedDataType: value
-    });
-}
-
   componentDidMount() {
-    AsyncStorage.getItem('myMQTTServer').then((value) => {
-      if (value !== null){
-        this.setState({myMQTTServer: value});
-      }
-      AsyncStorage.getItem('myGatewayID').then((value) => {
-        if (value !== null){
-          this.setState({myGatewayID: value});
-        }
-        //Need to nest these so that we have a MQTT Server and GatewayID before we try to fetch.
-        this.retrieveNodeList(this.state.myMQTTServer, this.state.myGatewayID, this.state.selectedDisplayInterval);
+    //this.retrieveNodeList(this.state.myMQTTServer, this.state.myGatewayID, this.state.selectedDisplayInterval);
 
-        this.retrieveDataArray(this.state.myMQTTServer, this.state.myGatewayID, this.state.selectedDataType, this.state.selectedDisplayInterval);
-
-      }).done();
-    }).done();
-
-    this.props.navigation.setParams({ parent: this });
-
+    //this.retrieveDataArray(this.state.myMQTTServer, this.state.myGatewayID, this.state.selectedDataType, this.state.selectedDisplayInterval);
   }
 
   static navigationOptions = ({navigation}) => {
@@ -161,49 +128,7 @@ export class SensorIoTScreen extends Component<{}> {
       selectedDisplayInterval: '3M'
     });
   }
-
-  _onPressTemp = () => {
-    let value = (this.state.tempStyle == 'F') ? value = 'TempF' : value = 'TempC'
-    this.retrieveDataArray(this.state.myMQTTServer, this.state.myGatewayID, value, this.state.selectedDisplayInterval);
-    store.dispatch(setYAxisScale, value);
-  }
-  _onPressHum = () => {
-    this.retrieveDataArray(this.state.myMQTTServer, this.state.myGatewayID, 'Hum', this.state.selectedDisplayInterval);
-    store.dispatch(setYAxisScale, 'Hum');
-  }
-
-  _onPressPres = () => {
-    this.retrieveDataArray(this.state.myMQTTServer, this.state.myGatewayID, 'Pres', this.state.selectedDisplayInterval);
-    store.dispatch(setYAxisScale, 'Pres');
-  }
-
-  _onPressBatt = () => {
-    this.retrieveDataArray(this.state.myMQTTServer, this.state.myGatewayID, 'Batt', this.state.selectedDisplayInterval);
-    store.dispatch(setYAxisScale, 'Batt');
-  }
-
-  _onPressNode = (nodeID) => {
-    let newNodeList = this.state.nodeList;
-    let index = this.findNode(newNodeList, nodeID);
-    if (newNodeList[index].isActive == true) {
-      newNodeList[index].isActive = false;
-    } else {
-      newNodeList[index].isActive = true;
-    }
-    this.setState({
-      nodeList: newNodeList,
-    })
-  }
-
-  findNode(nodeList, nodeID) {
-    for (let i=0; i <nodeList.length; i++) {
-      if (nodeList[i].nodeID === nodeID) {
-        return i;
-      }
-    }
-    return null;
-  }
-
+/*
   retrieveNodeList(MQTTGateway, gatewayID, selectedDisplayInterval) {
     let period;
     switch (selectedDisplayInterval) {
@@ -244,7 +169,7 @@ export class SensorIoTScreen extends Component<{}> {
       console.error(error);
     });
   }
-
+*/
   retrieveDataArray(MQTTGateway, gatewayID, selectedDataType, selectedDisplayInterval) {
 
     this.setState({
@@ -385,22 +310,6 @@ export class SensorIoTScreen extends Component<{}> {
       )
   }
 
-    let nodeRows = [];
-    for (let i=0; i <this.state.nodeList.length; i++) {
-      nodeRows.push(
-        <TouchableHighlight
-          key={i}
-          onPress={() => {this._onPressNode(this.state.nodeList[i].nodeID)}}
-          underlayColor="white">
-          <View style={sensorioScreenPortraitStyles.controlsButton}>
-            <Text style={(this.state.nodeList[i].isActive) ? sensorioScreenPortraitStyles.controlsOnButtonText : sensorioScreenPortraitStyles.controlsButtonText}>
-              {this.state.nodeList[i].nodeID}
-            </Text>
-          </View>
-        </TouchableHighlight>
-      )
-    }
-
     return (
       <View style={sensorioScreenPortraitStyles.appContainer}>
         <View style={sensorioScreenPortraitStyles.histogramContainer}>
@@ -467,84 +376,36 @@ export class SensorIoTScreen extends Component<{}> {
         </View>
         <View style={sensorioScreenPortraitStyles.controlsContainer}>
           <View style={sensorioScreenPortraitStyles.controlsRowContainer}>
-            <TouchableHighlight
-              onPress={this._onPressOneDay}
-              underlayColor="white">
-              <View style={sensorioScreenPortraitStyles.controlsButton}>
-                <Text style={(this.state.selectedDisplayInterval == '1D') ? sensorioScreenPortraitStyles.controlsOnButtonText : sensorioScreenPortraitStyles.controlsButtonText}>
-                  1 D
-                </Text>
-              </View>
-            </TouchableHighlight>
-            <TouchableHighlight
-              onPress={this._onPressOneWeek}
-              underlayColor="white">
-              <View style={sensorioScreenPortraitStyles.controlsButton}>
-                <Text style={(this.state.selectedDisplayInterval == '1W') ? sensorioScreenPortraitStyles.controlsOnButtonText : sensorioScreenPortraitStyles.controlsButtonText}>
-                  1 W
-                </Text>
-              </View>
-            </TouchableHighlight>
-            <TouchableHighlight
-              onPress={this._onPressOneMonth}
-              underlayColor="white">
-              <View style={sensorioScreenPortraitStyles.controlsButton}>
-                <Text style={(this.state.selectedDisplayInterval == '1M') ? sensorioScreenPortraitStyles.controlsOnButtonText : sensorioScreenPortraitStyles.controlsButtonText}>
-                  1 M
-                </Text>
-              </View>
-            </TouchableHighlight>
-            <TouchableHighlight
-              onPress={this._onPressThreeMonths}
-              underlayColor="white">
-              <View style={sensorioScreenPortraitStyles.controlsButton}>
-                <Text style={(this.state.selectedDisplayInterval == '3M') ? sensorioScreenPortraitStyles.controlsOnButtonText : sensorioScreenPortraitStyles.controlsButtonText}>
-                  3 M
-                </Text>
-              </View>
-            </TouchableHighlight>
+            <SelectRange xDateRange={'1'}>
+              1 D
+            </SelectRange>
+            <SelectRange xDateRange={'7'}>
+              1 W
+            </SelectRange>
+            <SelectRange xDateRange={'30'}>
+              1 M
+            </SelectRange>
+            <SelectRange xDateRange={'93'}>
+              3 M
+            </SelectRange>
           </View>
           <View style={sensorioScreenPortraitStyles.controlsRowContainer}>
-            <TouchableHighlight
-              style={sensorioScreenPortraitStyles.buttonStyle}
-              onPress={this._onPressTemp}
-              underlayColor="white">
-              <View style={sensorioScreenPortraitStyles.controlsButton}>
-                <Text style={((this.state.selectedDataType == 'TempF') || (this.state.selectedDataType == 'TempC'))? sensorioScreenPortraitStyles.controlsOnButtonText : sensorioScreenPortraitStyles.controlsButtonText}>
-                  Temp
-                </Text>
-              </View>
-            </TouchableHighlight>
-            <TouchableHighlight
-              onPress={this._onPressHum}
-              underlayColor="white">
-              <View style={sensorioScreenPortraitStyles.controlsButton}>
-                <Text style={(this.state.selectedDataType == 'Hum') ? sensorioScreenPortraitStyles.controlsOnButtonText : sensorioScreenPortraitStyles.controlsButtonText}>
-                  Hum
-                </Text>
-              </View>
-            </TouchableHighlight>
-            <TouchableHighlight
-              onPress={this._onPressPres}
-              underlayColor="white">
-              <View style={sensorioScreenPortraitStyles.controlsButton}>
-                <Text style={(this.state.selectedDataType == 'Pres') ? sensorioScreenPortraitStyles.controlsOnButtonText : sensorioScreenPortraitStyles.controlsButtonText}>
-                  Pres
-                </Text>
-              </View>
-            </TouchableHighlight>
-            <TouchableHighlight
-              onPress={this._onPressBatt}
-              underlayColor="white">
-              <View style={sensorioScreenPortraitStyles.controlsButton}>
-                <Text style={(this.state.selectedDataType == 'Batt') ? sensorioScreenPortraitStyles.controlsOnButtonText : sensorioScreenPortraitStyles.controlsButtonText}>
-                  Batt
-                </Text>
-              </View>
-            </TouchableHighlight>
+            <SelectSensorType yAxisType={yAxisTypes.TempF}>
+              Temp
+            </SelectSensorType>
+            <SelectSensorType yAxisType={yAxisTypes.Hum}>
+              Hum
+            </SelectSensorType>
+            <SelectSensorType yAxisType={yAxisTypes.Pres}>
+              Pres
+            </SelectSensorType>
+            <SelectSensorType yAxisType={yAxisTypes.Batt}>
+              Batt
+            </SelectSensorType>
           </View>
           <View style={sensorioScreenPortraitStyles.controlsRowContainer}>
-          {nodeRows}
+            <NodeList>
+            </NodeList>
           </View>
         </View>
         <View style={sensorioScreenPortraitStyles.refreshContainer}>
@@ -643,24 +504,6 @@ const sensorioScreenPortraitStyles = StyleSheet.create({
     margin: 5,
     height: 45,
 //    backgroundColor: '#776655'
-  },
-  controlsButton: {
-    margin:10,
-    width: 60,
-    backgroundColor: 'powderblue',
-  },
-  controlsButtonText: {
-    textAlign: 'center',
-    fontSize: 18,
-    color: 'steelblue',
-  },
-  controlsOnButtonText: {
-    textAlign: 'center',
-    fontSize: 18,
-    color: 'powderblue',
-    backgroundColor: 'steelblue',
-    borderRadius: 8,
-    overflow: 'hidden',
   },
   refreshButtonText: {
     textAlign: 'center',

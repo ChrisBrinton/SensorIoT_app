@@ -1,18 +1,42 @@
-export const setYAxisScale = scale => ({
-  type: 'SET_Y_AXIS_SCALE',
-  scale: scale,
+export const yAxisTypes = {
+  TempF: 'TempF',
+  TempC: 'TempC',
+  Hum: 'Hum',
+  Pres: 'Pres',
+  Batt: 'Batt',
+}
+
+export const setYAxisType = type => ({
+  type: 'SET_Y_AXIS_TYPE',
+  yAxisType: type,
 })
 
 export const setYAxisRange = (min, max) => ({
   type: 'SET_Y_AXIS_RANGE',
-  min: min,
-  max: max,
+  yAxisMin: min,
+  yAxisMax: max,
 })
 
-export const yAxisScales = {
-  TEMP_F: 'TEMP_F',
-  TEMP_C: 'TEMP_C',
-  HUM: 'HUM',
-  PRES: 'PRES',
-  BATT: 'BATT',
-}
+export const setXDateRange = (days) => ({
+  type: 'SET_X_DATE_RANGE',
+  xDateRange: days,
+})
+
+export const toggleNode = (nodeIndex) => ({
+  type: 'TOGGLE_NODE',
+  nodeIndex: nodeIndex,
+})
+
+export const toggleTempType = () => ({
+  type: 'TOGGLE_TEMP_TYPE',
+})
+
+export const setMQTTServer = value => ({
+  type: 'SET_MQTT_SERVER',
+  myMQTTServer: value,
+})
+
+export const setGatewayID = value => ({
+  type: 'SET_GATEWAY_ID',
+  myGatewayID: value,
+})

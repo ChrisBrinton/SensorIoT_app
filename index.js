@@ -1,47 +1,32 @@
-import React from 'react'
-import { render } from 'react-dom'
-import { Provider } from 'react-redux'
-import { createStore, applyMiddleware } from 'redux'
-import rootReducer from './reducers'
-import createAppWithNavigationState from './components/AppNavigator'
-import AppWithNavigationState from './components/AppNavigator'
+import React from 'react';
 import { AppRegistry } from 'react-native';
-import {
-  createReactNavigationReduxMiddleware,
-  createReduxBoundAddListener,
-} from 'react-navigation-redux-helpers'
-//import { PersistGate } from 'redux-persist/integration/react'
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import { PersistGate } from 'redux-persist/integration/react';
+import App from './containers/App';
+import rootReducer from './reducers';
 
-/*
-const SensorIoT = () => (
+const persistConfig = {
+  key: 'root',
+  storage,
+}
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+let store = createStore(persistedReducer);
+let persistor = persistStore(store);
+
+persistor.purge();
+
+const ReduxTestApp = () => (
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
-      <App />
+      <App/>
     </PersistGate>
   </Provider>
 )
-*/
 
-const middleware = createReactNavigationReduxMiddleware(
-  "root",
-  state => state.nav,
-);
 
-const addListener = createReduxBoundAddListener("root");
-
-const store = createStore(
-  rootReducer,
-  applyMiddleware(middleware),
-);
-
-class SensorIoT extends React.Component {
-  render() {
-    return (
-      <Provider store={store}>
-          {createAppWithNavigationState(store)}
-      </Provider>
-    )
-  }
-}
-
-AppRegistry.registerComponent('SensorIoT', () => AppWithNavigationState);
+AppRegistry.registerComponent('ReduxTestApp', () => ReduxTestApp);

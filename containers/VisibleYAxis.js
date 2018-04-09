@@ -1,30 +1,22 @@
 import { connect } from 'react-redux'
-import { setYAxisScale, setYAxisRange } from '../actions'
-import SensorIoTYAxis from '../components/SensorIoTYAxis'
+import { setYAxisType, setYAxisRange } from '../actions'
+import HistogramYAxis from '../components/HistogramYAxis'
 
-const yMinMaxDefaults = [ { dataType: 'TempF', yMin: 1, yMax: 105},
-                          { dataType: 'TempC', yMin: -10, yMax: 40},
-                          { dataType: 'Hum', yMin: 0, yMax: 100},
-                          { dataType: 'Pres', yMin: 10, yMax: 40},
-                          { dataType: 'Batt', yMin: 0, yMax: 5},
-                        ];
-
-function getRangeFromType(type) {
-  let range = { min: 0, max: 100 };
-  for (i in yMinMaxDefaults) {
-    if (type == yMinMaxDefaults[i].dataType) {
-      let range = {min: yMinMaxDefaults[i].yMin,
-                   max: yMinMaxDefaults[i].yMax}
-      console.log('found yMin ', range.min , ' and yMax ', range.max );
+function getRangeFromType(reduxState) {
+  let range = { yAxisMin: -1, yAxisMax: -1 };
+  for (i in reduxState.yAxis.yAxisMinMaxDefaults) {
+    if (reduxState.yAxis.yAxisType == reduxState.yAxis.yAxisMinMaxDefaults[i].dataType) {
+      range = {yAxisMin: reduxState.yAxis.yAxisMinMaxDefaults[i].yMin,
+               yAxisMax: reduxState.yAxis.yAxisMinMaxDefaults[i].yMax};
+      break;
     }
   }
-  console.log('getRangeFromType', min, max);
+  //console.log('getRangeFromType returning', range.yAxisMin, range.yAxisMax);
   return range;
 }
 
 function getLabelFromType(type) {
   let yLabel = null;
-  console.log('getLabelFromType',type);
   switch (type) {
     case 'TempF':
       yLabel = value => `${value}ºF` ;
@@ -44,23 +36,28 @@ function getLabelFromType(type) {
     default:
       yLabel = value => `${value}` ;
   }
+  //console.log('getLabelFromType type:', type);
   return yLabel;
 }
 
-const mapStateToProps = state => {
-  console.log('mapStateToProps');
-  return ({
-    min: getRangeFromType(state.yType).min,
-    max: getRangeFromType(state.yType).max,
-    yLabel: getLabelFromType(state.yType)
-  })
+const mapStateToProps = (state, ownProps) => {
+  //console.log('VisibleYAxis mapStateToProps state:', state);
+  let newRange = getRangeFromType(state);
+  return (
+    {
+      ...ownProps,
+      yAxisMin: newRange.yAxisMin,
+      yAxisMax: newRange.yAxisMax,
+      yAxisLabel: getLabelFromType(state.yAxis.yAxisType),
+      yAxisType: state.yAxis.yAxisType,
+    }
+  )
 }
 
 const mapDispatchToProps = dispatch => ({
-
 })
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-) (SensorIoTYAxis)
+) (HistogramYAxis)
