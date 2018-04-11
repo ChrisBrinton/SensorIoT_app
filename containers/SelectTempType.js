@@ -11,9 +11,9 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-  onValueChange: () => {
+ onValueChange: () => {
       return(dispatch(toggleTempType()))
-    }
+     }
   }
 }
 
