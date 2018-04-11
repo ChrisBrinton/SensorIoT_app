@@ -11,6 +11,7 @@ const mapStateToProps = (state, ownProps) => {
     yAxisMax: ownProps.yAxisMax,
     yAxisLabel: ownProps.yAxisLabel,
     active: active,
+    dataQueryKey: ownProps.dataQueryKey,
   })
 }
 
@@ -18,7 +19,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   console.log('SelectSensorType mapDispatchToProps');
   return {
   onPress: () => {
-      return(dispatch(setYAxisType(ownProps.yAxisType)))
+      return(dispatch(setYAxisType(ownProps.yAxisType, ownProps.dataQueryKey)))
     }
   }
 }

@@ -1,8 +1,8 @@
-const yMinMaxDefaults = [ { dataType: 'TempF', yMin: 0, yMax: 105},
-                          { dataType: 'TempC', yMin: -10, yMax: 40},
-                          { dataType: 'Hum', yMin: 0, yMax: 100},
-                          { dataType: 'Pres', yMin: 10, yMax: 40},
-                          { dataType: 'Batt', yMin: 0, yMax: 5},
+const yMinMaxDefaults = [ { dataType: 'TempF', dataQueryKey: 'F', yMin: 0, yMax: 105},
+                          { dataType: 'TempC', dataQueryKey: 'F', yMin: -10, yMax: 40},
+                          { dataType: 'Hum', dataQueryKey: 'H', yMin: 0, yMax: 100},
+                          { dataType: 'Pres', dataQueryKey: 'P', yMin: 10, yMax: 40},
+                          { dataType: 'Batt', dataQueryKey: 'BAT', yMin: 0, yMax: 5},
                         ];
 
 const initialState = {
@@ -11,6 +11,7 @@ const initialState = {
   yAxisMin: '0',
   yAxisMax: '105',
   yAxisLabel: value => `${value}ºF`,
+  dataQueryKey: 'F',
   yAxisMinMaxDefaults: yMinMaxDefaults,
 }
 
@@ -41,6 +42,7 @@ const yAxis = (state = initialState, action) => {
            yAxisMin: action.yAxisMin,
            yAxisMax: action.yAxisMax,
            yAxisMinMaxDefaults: newMinMaxs,
+           dataQueryKey: action.dataQueryKey,
          })
      case 'TOGGLE_TEMP_TYPE':
        let tempType;

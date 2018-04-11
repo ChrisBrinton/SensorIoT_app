@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { setYAxisType, setYAxisRange } from '../actions'
-import HistogramYAxis from '../components/HistogramYAxis'
+import Histogram from '../components/Histogram'
 
 function getRangeFromType(reduxState) {
   let range = { yAxisMin: -1, yAxisMax: -1 };
@@ -41,7 +41,7 @@ function getLabelFromType(type) {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  //console.log('VisibleYAxis mapStateToProps state:', state);
+  //console.log('Histogram mapStateToProps state:', state);
   let newRange = getRangeFromType(state);
   return (
     {
@@ -50,6 +50,7 @@ const mapStateToProps = (state, ownProps) => {
       yAxisMax: newRange.yAxisMax,
       yAxisLabel: getLabelFromType(state.yAxis.yAxisType),
       yAxisType: state.yAxis.yAxisType,
+      data: state.histogramDataSet.data,
     }
   )
 }
@@ -60,4 +61,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-) (HistogramYAxis)
+) (Histogram)
