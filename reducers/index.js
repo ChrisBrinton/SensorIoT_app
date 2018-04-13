@@ -4,7 +4,6 @@ import xAxis from './xAxis';
 import settings from './settings';
 import histogramDataSet from './histogramDataSet';
 
-
 const AppReducer = combineReducers({
   yAxis,
   xAxis,

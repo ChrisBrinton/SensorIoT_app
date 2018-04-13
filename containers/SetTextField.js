@@ -3,7 +3,7 @@ import { setMQTTServer, setGatewayID } from '../actions'
 import SettingsTextField from '../components/SettingsTextField'
 
 const mapStateToProps = (state, ownProps) => {
-  console.log('SetTextField mapStateToProps state', state);
+  console.log('SetTextField mapStateToProps');
   let value
   switch(ownProps.label) {
     case 'MQTT Server':

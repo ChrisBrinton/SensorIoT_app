@@ -3,6 +3,37 @@ import { StyleSheet, Text, View } from 'react-native'
 import { LineChart, XAxis, YAxis } from 'react-native-svg-charts'
 import * as d3Scale from 'd3-scale';
 import dateFns from 'date-fns';
+import { Line, Rect } from 'react-native-svg';
+
+const HorizontalLine = (threshold, color) => {
+  //console.log('HorizontalLine Threshold', threshold);
+  return (({ y }) => (
+    <Line
+      key={ threshold }
+      x1={ '0%' }
+      x2={ '100%' }
+      y1={ y(threshold) }
+      y2={ y(threshold) }
+      stroke={ color }
+      strokeDasharray={ [ 4, 8 ] }
+      strokeWidth={ 2 }
+    />
+  ))
+}
+
+const GridBorder = (({width, height}) => (
+  <Rect
+    key={ 'grid-border' }
+    x='0'
+    y='0'
+    width={ width-1 }
+    height={ height-1 }
+    fillOpacity='0'
+    strokeWidth='1'
+    stroke='grey'
+  />
+))
+
 
 const Histogram = ({ ...args }) => {
   //console.log('HistogramYAxis min', props.yAxisMin, 'max', props.yAxisMax, 'yAxisLabel', props.yAxisLabel, 'data', props.data,);
@@ -30,7 +61,7 @@ const Histogram = ({ ...args }) => {
           svg={{ stroke: 'rgb(134, 65, 244)' }}
           contentInset={args.contentInsetY}
           renderGrid={args.renderGrid}
-          extras={args.extras}
+          extras={[HorizontalLine(args.lowThreshold,'blue'), HorizontalLine(args.highThreshold,'red'), GridBorder]}
         />
       </View>
       <View style={histogramStyles.histogramXLegend}>
@@ -88,15 +119,3 @@ const histogramStyles = StyleSheet.create({
     marginRight: 5,
   },
 })
-
-/*
-          <DisplayHistogram
-            style={sensorioScreenPortraitStyles.histogramYLegend}
-            data={ this.state.histogramData }
-            yAccessor={({ item }) => item.value}
-            contentInset={ contentInsetY }
-            svg={{
-              fontSize: 10,
-            }}
-        />
-*/

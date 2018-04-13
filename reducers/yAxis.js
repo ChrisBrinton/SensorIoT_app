@@ -1,6 +1,6 @@
-const yMinMaxDefaults = [ { dataType: 'TempF', dataQueryKey: 'F', yMin: 0, yMax: 105},
-                          { dataType: 'TempC', dataQueryKey: 'F', yMin: -10, yMax: 40},
-                          { dataType: 'Hum', dataQueryKey: 'H', yMin: 0, yMax: 100},
+const yMinMaxDefaults = [ { dataType: 'TempF', dataQueryKey: 'F', yMin: 0, yMax: 105, lowThreshold: 32, highThreshold: 100},
+                          { dataType: 'TempC', dataQueryKey: 'F', yMin: -10, yMax: 40, lowThreshold: 0, highThreshold: 35},
+                          { dataType: 'Hum', dataQueryKey: 'H', yMin: 0, yMax: 100, lowThreshold: 10, highThreshold:90},
                           { dataType: 'Pres', dataQueryKey: 'P', yMin: 10, yMax: 40},
                           { dataType: 'Batt', dataQueryKey: 'BAT', yMin: 0, yMax: 5},
                         ];
@@ -12,6 +12,8 @@ const initialState = {
   yAxisMax: '105',
   yAxisLabel: value => `${value}ºF`,
   dataQueryKey: 'F',
+  lowThreshold: 32,
+  highThreshold: 100,
   yAxisMinMaxDefaults: yMinMaxDefaults,
 }
 
@@ -27,13 +29,26 @@ function updateMinMax(state, newMin, newMax) {
   return newMinMaxs;
 }
 
+function getDefaultsIndex(type) {
+  for (i in yMinMaxDefaults) {
+    if ( type == yMinMaxDefaults[i].dataType) {
+      return i;
+    }
+  }
+}
+
 const yAxis = (state = initialState, action) => {
   console.log('yAxis reducer - action', action);
   switch (action.type) {
     case 'SET_Y_AXIS_TYPE':
+      console.log('dataQueryKey',yMinMaxDefaults[getDefaultsIndex(action.yAxisType)].dataQueryKey);
+      let index = getDefaultsIndex(action.yAxisType);
       return ({
                 ...state,
                 yAxisType: action.yAxisType,
+                dataQueryKey: yMinMaxDefaults[index].dataQueryKey,
+                lowThreshold: yMinMaxDefaults[index].lowThreshold,
+                highThreshold: yMinMaxDefaults[index].highThreshold,
               })
     case 'SET_Y_AXIS_RANGE':
       let newMinMaxs = updateMinMax(state, action.yAxisMin, action.yAxisMax);
@@ -58,11 +73,15 @@ const yAxis = (state = initialState, action) => {
            yAxisType = 'TempF';
          }
        }
+       index = getDefaultsIndex(yAxisType);
        return ({
                  ...state,
                  tempType: tempType,
                  yAxisType: yAxisType,
-               })
+                 dataQueryKey: yMinMaxDefaults[index].dataQueryKey,
+                 lowThreshold: yMinMaxDefaults[index].lowThreshold,
+                 highThreshold: yMinMaxDefaults[index].highThreshold,
+                })
     default:
       return state;
   }

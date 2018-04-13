@@ -3,7 +3,7 @@ import RefreshButton from '../components/RefreshButton';
 import { fetchSensorData } from '../actions';
 
 const mapStateToProps = (state, ownProps) => {
-    console.log('DisplayRefreshButton mapStateToProps state', state);
+    //console.log('DisplayRefreshButton mapStateToProps state', state);
     return ({
       isLoading: state.histogramDataSet.isLoading,
     })
@@ -12,7 +12,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, getState) => {
   return {
     onPress: () => {
-        console.log('DisplayRefreshButton onPress ')
+        //console.log('DisplayRefreshButton onPress ')
         return(dispatch(fetchSensorData()))
       }
     }

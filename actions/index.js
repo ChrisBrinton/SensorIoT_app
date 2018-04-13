@@ -6,10 +6,9 @@ export const yAxisTypes = {
   Batt: 'Batt',
 }
 
-export const setYAxisType = (type, key) => ({
+export const setYAxisType = (type) => ({
   type: 'SET_Y_AXIS_TYPE',
   yAxisType: type,
-  dataQueryKey: key,
 })
 
 export const setYAxisRange = (min, max) => ({
@@ -56,7 +55,7 @@ export function fetchSensorData(nodeID) {
               + '/gw/'+ currentState.settings.myGatewayID 
               + '/42?type=' + currentState.yAxis.dataQueryKey 
               + '&period=' + currentState.xAxis.xDateRange + '&timezone=EST5EDT';
-    //console.log('fetchSensorData using url:', url);
+    console.log('fetchSensorData using url:', url);
     return fetch(url)
     .then(response => response.json())
     .then(json => dispatch(receiveSensorData(nodeID, json)))
