@@ -80,31 +80,6 @@ export class SensorIoTScreen extends Component {
 
     const contentInsetY = { top: 10, bottom: 10, left: 0, right: 0 };
     const contentInsetX = { top: 0, bottom: 0, left: 15, right: 5 };
-    const HorizontalLine = (({ y }) => (
-      <Line
-        key={ 'freeze-axis' }
-        x1={ '0%' }
-        x2={ '100%' }
-        y1={ y(32) }
-        y2={ y(32) }
-        stroke={ 'red' }
-        strokeDasharray={ [ 4, 8 ] }
-        strokeWidth={ 2 }
-      />
-    ))
-
-    const GridBorder = (({width, height}) => (
-      <Rect
-        key={ 'grid-border' }
-        x='0'
-        y='0'
-        width={ width-1 }
-        height={ height-1 }
-        fillOpacity='0'
-        strokeWidth='1'
-        stroke='grey'
-      />
-    ))
 
     const CustomGrid = ({ x, y, data, ticks }) => {
 
@@ -158,7 +133,6 @@ export class SensorIoTScreen extends Component {
             fontSize: 10,
           }}
           renderGrid={ CustomGrid }
-          extras={ [ HorizontalLine, GridBorder ] }
           svgX={{
             fill: 'black',
             fontSize: 8,

@@ -5,7 +5,7 @@ const initialState = {
               {'nodeID': 2, 'isActive': false},
               {'nodeID': 3, 'isActive': false},
             ],
-  isLoading: false,
+  isLoading: 0,
   data: [ {value:1,date:dateFns.setHours(new Date(2018, 1, 2), 6)},
           {value:2,date:dateFns.setHours(new Date(2018, 1, 3), 6)},
           {value:3,date:dateFns.setHours(new Date(2018, 1, 4), 6)},
@@ -51,12 +51,12 @@ function findNode(nodeList, nodeID) {
 }
 
 const histogramDataSet = (state = initialState, action) => {
-  console.log('histogramDataSet reducer - action', action, 'state:', state);
+  //console.log('histogramDataSet reducer - action', action, 'state:', state);
   switch (action.type) {
     case 'TOGGLE_NODE':
       return Object.assign({}, state, _toggleNode(state, action.nodeIndex));
     case 'REQUEST_SERVER_DATA':
-      return Object.assign({}, state, {isLoading: true});
+      return Object.assign({}, state, {isLoading: state.isLoading+1});
     case 'RECEIVE_NODELIST':
       let nodeData = [];
       for (let i = 0; i < action.json.length; i++) {
@@ -68,9 +68,9 @@ const histogramDataSet = (state = initialState, action) => {
         let obj = {'nodeID': action.json[i], 'isActive': oldIsActive};
         nodeData.push(obj);
       }
-      console.log('processing receiveNodeList json', action.json,'nodeData',nodeData);
+      //console.log('processing receiveNodeList json', action.json,'nodeData',nodeData);
       return Object.assign({}, state, {
-        isLoading: false,
+        isLoading: state.isLoading-1,
         nodeList: nodeData,
       })
     case 'RECEIVE_SENSOR_DATA':
@@ -87,7 +87,7 @@ const histogramDataSet = (state = initialState, action) => {
         sensorData[i-1] = {value: action.json[i].value, date: valueDate}
       }
       return Object.assign({}, state, {
-        isLoading: false,
+        isLoading: state.isLoading-1,
         data: sensorData,
       })
 
