@@ -45,20 +45,30 @@ export const requestServerData = () => ({
   type: 'REQUEST_SERVER_DATA',
 })
 
-export function fetchSensorData(nodeID) {
+export function fetchSensorData() {
   //console.log('fetchSensorData nodeID', nodeID);
   return (dispatch, getState) => {
-    dispatch(requestServerData());
     currentState = getState();
+    let nodes = '';
+    for ( node in currentState.histogramDataSet.nodeList ) {
+      nodeID = currentState.histogramDataSet.nodeList[node].nodeID;
+      active = currentState.histogramDataSet.nodeList[node].isActive;
+      if (active) {
+        nodes += 'node=' + nodeID + '&'
+      }
+    }
+    if ( nodes == '' ) return //if there are no nodes, dont fetch!
+    dispatch(requestServerData());
     let url = 'http://' 
               + currentState.settings.myMQTTServer
               + '/gw/'+ currentState.settings.myGatewayID 
-              + '/42?type=' + currentState.yAxis.dataQueryKey 
+              + '?' + nodes 
+              + 'type=' + currentState.yAxis.dataQueryKey 
               + '&period=' + currentState.xAxis.xDateRange + '&timezone=EST5EDT';
     console.log('fetchSensorData using url:', url);
     return fetch(url)
     .then(response => response.json())
-    .then(json => dispatch(receiveSensorData(nodeID, json)))
+    .then(json => dispatch(receiveSensorData(currentState.histogramDataSet.nodeList[node].nodeID, json)))
     .catch(error => console.error(error))
   }
 }

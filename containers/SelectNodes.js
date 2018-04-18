@@ -8,6 +8,7 @@ const mapStateToProps = (state, ownProps) => {
     nodeIndex: ownProps.nodeIndex,
     nodeID: state.histogramDataSet.nodeList[ownProps.nodeIndex].nodeID,
     active: state.histogramDataSet.nodeList[ownProps.nodeIndex].isActive,
+    nodeColor: state.histogramDataSet.nodeList[ownProps.nodeIndex].color,
   })
 }
 

@@ -36,10 +36,7 @@ export class SensorIoTScreen extends Component {
   }
 
   componentDidMount() {
-    //this.retrieveNodeList(this.state.myMQTTServer, this.state.myGatewayID, this.state.selectedDisplayInterval);
-
-    //this.retrieveDataArray(this.state.myMQTTServer, this.state.myGatewayID, this.state.selectedDataType, this.state.selectedDisplayInterval);
-  }
+   }
 
   static navigationOptions = ({navigation}) => {
     const params = navigation.state.params || {};
