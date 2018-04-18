@@ -38,7 +38,7 @@ function getDefaultsIndex(type) {
 }
 
 const yAxis = (state = initialState, action) => {
-  console.log('yAxis reducer - action', action);
+  console.log('yAxis reducer - action type', action.type);
   switch (action.type) {
     case 'SET_Y_AXIS_TYPE':
       console.log('dataQueryKey',yMinMaxDefaults[getDefaultsIndex(action.yAxisType)].dataQueryKey);

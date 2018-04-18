@@ -23,7 +23,7 @@ const RootStack = StackNavigator(
 class App extends Component {
   componentDidMount() {
     this.props.fetchNodeList();
-    this.props.fetchSensorData();
+    //this.props.fetchSensorData();
   }
 
   render() {
@@ -35,7 +35,7 @@ const mapStateToProps = (state) => ({
   init: state.init
 })
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, getState) => {
   return {
     fetchNodeList: () => {
       return(dispatch(fetchNodeList()))

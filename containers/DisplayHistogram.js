@@ -63,6 +63,7 @@ const mapStateToProps = (state, ownProps) => {
       lowThreshold: state.yAxis.lowThreshold,
       highThreshold: state.yAxis.highThreshold,
       data: data,
+      nodeList: state.histogramDataSet.nodeList,
     }
   )
 }

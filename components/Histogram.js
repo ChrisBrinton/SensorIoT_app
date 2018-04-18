@@ -7,18 +7,22 @@ import { Line, Rect } from 'react-native-svg';
 
 const HorizontalLine = (threshold, color) => {
   //console.log('HorizontalLine Threshold', threshold);
-  return (({ y }) => (
-    <Line
-      key={ threshold }
-      x1={ '0%' }
-      x2={ '100%' }
-      y1={ y(threshold) }
-      y2={ y(threshold) }
-      stroke={ color }
-      strokeDasharray={ [ 4, 8 ] }
-      strokeWidth={ 2 }
-    />
-  ))
+  if (typeof threshold != 'undefined') {
+    return (({ y }) => (
+      <Line
+        key={ threshold }
+        x1={ '0%' }
+        x2={ '100%' }
+        y1={ y(threshold) }
+        y2={ y(threshold) }
+        stroke={ color }
+        strokeDasharray={ [ 4, 8 ] }
+        strokeWidth={ 2 }
+      />
+    ))
+  } else {
+    return (() => {return})
+  }
 }
 
 const GridBorder = (({width, height}) => (
@@ -37,12 +41,30 @@ const GridBorder = (({width, height}) => (
 
 const Histogram = ({ ...args }) => {
   //console.log('HistogramYAxis min', props.yAxisMin, 'max', props.yAxisMax, 'yAxisLabel', props.yAxisLabel, 'data', props.data,);
+  let dataSets = [];
+  console.log('Histogram args.data', args.data);
+  for (let i=0; i < args.data.length; i++) {
+    dataSets.push(
+      <LineChart
+        key={i}
+        style={histogramStyles.overlayGraph}
+        data={args.data[i].sensorData}
+        gridMax={args.yAxisMax}
+        gridMin={args.yAxisMin}
+        yAccessor={args.yAccessor}
+        xAccessor={args.xAccessor}
+        xScale={d3Scale.scaleTime}
+        svg={{ stroke: args.nodeList[i].color }}
+        contentInset={args.contentInsetY}
+        />
+    )
+  }
   return (
     <View>
       <View style={histogramStyles.histogramContainer}>
         <YAxis
           style={histogramStyles.histogramYLegend}
-          data={args.data}
+          data={args.data[0].sensorData}
           min={args.yAxisMin}
           max={args.yAxisMax}
           yAccessor={args.yAccessor}
@@ -52,21 +74,22 @@ const Histogram = ({ ...args }) => {
         </YAxis>
         <LineChart
           style={histogramStyles.histogram}
-          data={args.data}
+          data={args.data[0].sensorData}
           gridMax={args.yAxisMax}
           gridMin={args.yAxisMin}
           yAccessor={args.yAccessor}
           xAccessor={args.xAccessor}
           xScale={d3Scale.scaleTime}
-          svg={{ stroke: 'rgb(134, 65, 244)' }}
+          svg={{ stroke: args.nodeList[0].color }}
           contentInset={args.contentInsetY}
           renderGrid={args.renderGrid}
           extras={[HorizontalLine(args.lowThreshold,'blue'), HorizontalLine(args.highThreshold,'red'), GridBorder]}
         />
+        {dataSets}
       </View>
       <View style={histogramStyles.histogramXLegend}>
         <XAxis
-          data={args.data}
+          data={args.data[0].sensorData}
           xAccessor={args.xAccessor}
           scale={d3Scale.scaleTime}
           numberOfTicks={7}
@@ -78,7 +101,7 @@ const Histogram = ({ ...args }) => {
       </View>
       <View style={histogramStyles.histogramXLegend}>
         <XAxis
-          data={args.data}
+          data={args.data[0].sensorData}
           xAccessor={({ item }) => item.date}
           scale={d3Scale.scaleTime}
           numberOfTicks={7}
@@ -117,5 +140,12 @@ const histogramStyles = StyleSheet.create({
     flex: 1,
     marginLeft: 0,
     marginRight: 5,
+  },
+  overlayGraph: {
+    ...StyleSheet.absoluteFillObject,
+    marginLeft: 28,
+    marginRight: 5,
+    marginBottom: 0,
+    marginTop: 0,
   },
 })

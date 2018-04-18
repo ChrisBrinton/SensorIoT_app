@@ -2,7 +2,40 @@ import React from 'React';
 import { TouchableHighlight, StyleSheet, Text, View } from 'react-native';
 import PropTypes from 'prop-types';
 
-const ControlsButton = ({active, children, onPress }) => {
+function getButtonStyle(active, nodeColor) {
+  let currentColor = 'steelblue';
+  let currentBackgroundColor = 'steelblue';
+  if (active) {
+    if (typeof nodeColor != 'undefined') {
+      currentBackgroundColor = nodeColor;
+    } else {
+      currentBackgroundColor = 'steelblue';
+    }
+    newStyle = {
+      textAlign: 'center',
+      fontSize: 18,
+      color: 'powderblue',
+      backgroundColor: currentBackgroundColor,
+      borderRadius: 8,
+      overflow: 'hidden',
+      }
+  } else {
+    if (typeof nodeColor != 'undefined') {
+      currentColor = nodeColor;
+    } else {
+      currentColor = 'steelblue';
+    }
+    newStyle = {
+      textAlign: 'center',
+      fontSize: 18,
+      color: currentColor,
+    }
+  }
+  console.log('ControlsButton getButtonStyle returning', newStyle, 'based on active', active, 'nodeColor', nodeColor,'currentColor', currentColor, 'currentBackgroundColor', currentBackgroundColor);
+  return newStyle;
+}
+
+const ControlsButton = ({ active, nodeColor, children, onPress }) => {
   console.log('ControlsButton created with children:', children);
   return (
     <TouchableHighlight
@@ -11,7 +44,7 @@ const ControlsButton = ({active, children, onPress }) => {
       underlayColor="white"
       >
       <View style={controlsButtonStyles.controlsButton}>
-        <Text style={(active) ? controlsButtonStyles.controlsOnButtonText : controlsButtonStyles.controlsButtonText}>
+        <Text style={getButtonStyle(active, nodeColor)}>
           {children}
         </Text>
       </View>
@@ -34,13 +67,11 @@ const controlsButtonStyles = StyleSheet.create({
   controlsButtonText: {
     textAlign: 'center',
     fontSize: 18,
-    color: 'steelblue',
   },
   controlsOnButtonText: {
     textAlign: 'center',
     fontSize: 18,
     color: 'powderblue',
-    backgroundColor: 'steelblue',
     borderRadius: 8,
     overflow: 'hidden',
   },
