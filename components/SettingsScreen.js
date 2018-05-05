@@ -14,7 +14,7 @@ import SetTextField from '../containers/SetTextField'
 
 const _onChangeText= () => {};
 
-export class SettingsScreen extends Component<{}> {
+export class SettingsScreen extends Component {
   render() {
 
     return (

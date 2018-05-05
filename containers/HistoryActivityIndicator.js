@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import RefreshActivityIndictor from '../components/RefreshActivityIndicator'
 
 const mapStateToProps = (state) => {
-  console.log('DisplayActivityIndicator mapStateToProps isLoading', state.histogramDataSet.isLoading);
+  console.log('HistoryActivityIndicator mapStateToProps isLoading', state.histogramDataSet.isLoading);
   return ({
     isLoading: state.histogramDataSet.isLoading,
   })

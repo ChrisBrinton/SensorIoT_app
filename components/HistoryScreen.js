@@ -19,7 +19,7 @@ import SelectSensorType from '../containers/SelectSensorType';
 import SelectRange from '../containers/SelectRange';
 import NodeList from '../containers/NodeList';
 import DisplayRefreshButton from '../containers/DisplayRefreshButton';
-import DisplayActivityIndicator from '../containers/DisplayActivityIndicator';
+import HistoryActivityIndicator from '../containers/HistoryActivityIndicator';
 import { yAxisTypes, fetchNodeList } from '../actions';
 
 const refresh = Platform.select({
@@ -29,7 +29,7 @@ const refresh = Platform.select({
     'Shake or press menu button for dev menu',
 });
 
-export class SensorIoTScreen extends Component {
+export class HistoryScreen extends Component {
 
   constructor(props) {
     super(props);
@@ -42,7 +42,7 @@ export class SensorIoTScreen extends Component {
     const params = navigation.state.params || {};
 
     return {
-      title: 'SensorIoT',
+      title: 'History',
       headerStyle: {
         backgroundColor: 'powderblue',
       },
@@ -56,14 +56,19 @@ export class SensorIoTScreen extends Component {
       headerLeft:(
         <View>
           <Button
-            onPress={() => navigation.navigate('Settings', {parent: params.parent})}
-            title="Settings"
+            onPress={() => navigation.navigate('Dashboard', {parent: params.parent})}
+            title="Dashboard"
             color="steelblue"
           />
         </View>
       ),
       headerRight:(
         <View>
+          <Button
+            onPress={() => navigation.navigate('Settings', {parent: params.parent})}
+            title="Settings"
+            color="steelblue"
+          />
         </View>
       ),
     }
@@ -181,7 +186,9 @@ export class SensorIoTScreen extends Component {
           {refresh}
           </Text>
         </View>
-        <DisplayActivityIndicator/>
+        <HistoryActivityIndicator>
+          Loading...
+        </HistoryActivityIndicator>
       </View>
     );
   }

@@ -1,22 +1,26 @@
 import React, { Component } from 'react';
 import { StackNavigator } from 'react-navigation';
 import { SettingsScreen } from './SettingsScreen';
-import { SensorIoTScreen } from './SensorIoTScreen';
+import { HistoryScreen } from './HistoryScreen';
+import { DashboardScreen } from './DashboardScreen';
 import { connect } from 'react-redux'
-import { fetchNodeList, fetchSensorData } from '../actions';
+import { fetchNodeList, fetchSensorData, fetchNodeLatestData } from '../actions';
 
 //static navigationOptions = ({navigation}) => {
 const RootStack = StackNavigator(
     {
-      SensorIoT: {
-        screen: SensorIoTScreen,
+      Dashboard: {
+        screen: DashboardScreen,
+      },
+      History: {
+        screen: HistoryScreen,
       },
       Settings: {
         screen: SettingsScreen,
       },
     },
     {
-      initialRouteName: 'SensorIoT',
+      initialRouteName: 'Dashboard',
     },
 );
 
@@ -24,6 +28,7 @@ class App extends Component {
   componentDidMount() {
     this.props.fetchNodeList();
     //this.props.fetchSensorData();
+    this.props.fetchNodeLatestData();
   }
 
   render() {
@@ -42,6 +47,9 @@ const mapDispatchToProps = (dispatch, getState) => {
     },
     fetchSensorData: () => {
       return(dispatch(fetchSensorData()))
+    },
+    fetchNodeLatestData: () => {
+      return(dispatch(fetchNodeLatestData()))
     }
   }
 }

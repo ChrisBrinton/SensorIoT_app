@@ -13,7 +13,7 @@ import rootReducer from './reducers';
 const persistConfig = {
   key: 'root',
   storage,
-  blacklist: ['histogramDataSet', 'yAxis'],
+  blacklist: ['dashboardDataSet', 'histogramDataSet', 'yAxis'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
