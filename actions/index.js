@@ -1,3 +1,7 @@
+import {
+  Alert,
+} from 'react-native';
+
 export const yAxisTypes = {
   TempF: 'TempF',
   TempC: 'TempC',
@@ -45,10 +49,68 @@ export const requestServerData = () => ({
   type: 'REQUEST_SERVER_DATA',
 })
 
+export const requestNodeLatestData = () => ({
+  type: 'REQUEST_NODE_LATEST',
+})
+
+export const resetServerRequests = () => ({
+  type: 'RESET_SERVER_REQUESTS',
+})
+
+function serverConfigured(state) {
+  if (state.settings.MQTTConfigured && state.settings.gatewayConfigured) {
+    return true;
+  } else {
+    Alert.alert('Please configure MQTT server and gateway in settings');
+    return false;
+  }
+}
+
+function handleError(dispatch, error) {
+  console.log('Error caught',error,error.name,error.message);
+  if (typeof error != 'undefined'){
+    switch (error.message) {
+      case 'Network request failed':
+        Alert.alert('Network request failed. Check settings');
+      default:
+        Alert.alert('Error communicating with Server');
+    }
+    dispatch(resetServerRequests());
+    return;
+  } else {
+    Alert.alert('Network error. Check settings');
+    dispatch(resetServerRequests());
+    return;
+  }
+}
+
+export function fetchNodeLatestData() {
+  //console.log('fetchSensorData nodeID', nodeID);
+  return (dispatch, getState) => {
+    currentState = getState();
+    if (!serverConfigured(currentState)) return;
+    dispatch(requestNodeLatestData());
+    let url = 'http://' 
+              + currentState.settings.myMQTTServer
+              + '/latest/'+ currentState.settings.myGatewayID;
+    console.log('fetchNodeLatestData using url:', url);
+    return fetch(url)
+    .then(response => response.json())
+    .then(json => dispatch(receiveNodeLatestData(json)))
+    .catch(error => handleError(dispatch, error))
+  }
+}
+
+export const receiveNodeLatestData = (json) => ({
+  type: 'RECEIVE_NODE_LATEST',
+  json: json,
+})
+
 export function fetchSensorData() {
   //console.log('fetchSensorData nodeID', nodeID);
   return (dispatch, getState) => {
     currentState = getState();
+    if (!serverConfigured(currentState)) return;
     let nodes = '';
     for ( node in currentState.histogramDataSet.nodeList ) {
       nodeID = currentState.histogramDataSet.nodeList[node].nodeID;
@@ -69,23 +131,7 @@ export function fetchSensorData() {
     return fetch(url)
     .then(response => response.json())
     .then(json => dispatch(receiveSensorData(currentState.histogramDataSet.nodeList[node].nodeID, json)))
-    .catch(error => console.error(error))
-  }
-}
-
-export function fetchNodeList() {
-  return (dispatch, getState) => {
-    dispatch(requestServerData());
-    currentState = getState();
-    let url = 'http://' 
-              + currentState.settings.myMQTTServer
-              + '/nodelist/'+ currentState.settings.myGatewayID 
-              + '?period=' + currentState.xAxis.xDateRange;
-    console.log('fetchNodeList using url:', url);
-    return fetch(url)
-      .then(response => response.json())
-      .then(json => dispatch(receiveNodeList(json)))
-      .catch(error => console.error(error));
+    .catch(error => handleError(dispatch, error))
   }
 }
 
@@ -94,6 +140,23 @@ export const receiveSensorData = (nodeID, json) => ({
   nodeID: nodeID,
   json: json,
 })
+
+export function fetchNodeList() {
+  return (dispatch, getState) => {
+    dispatch(requestServerData());
+    currentState = getState();
+    if (!serverConfigured(currentState)) return;
+    let url = 'http://' 
+              + currentState.settings.myMQTTServer
+              + '/nodelist/'+ currentState.settings.myGatewayID 
+              + '?period=' + currentState.xAxis.xDateRange;
+    console.log('fetchNodeList using url:', url);
+    return fetch(url)
+      .then(response => response.json())
+      .then(json => dispatch(receiveNodeList(json)))
+      .catch(error => handleError(dispatch, error));
+  }
+}
 
 export const receiveNodeList = (json) => ({
   type: 'RECEIVE_NODELIST',

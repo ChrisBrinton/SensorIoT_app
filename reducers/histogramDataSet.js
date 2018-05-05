@@ -9,21 +9,7 @@ const initialState = {
   isLoading: 0,
   data: [ {nodeID: 1,
            sensorData:  [ {value:1,date:dateFns.setHours(new Date(2018, 1, 2), 6)},
-                          {value:2,date:dateFns.setHours(new Date(2018, 1, 3), 6)},
-                          {value:3,date:dateFns.setHours(new Date(2018, 1, 4), 6)},
-                          {value:4,date:dateFns.setHours(new Date(2018, 1, 5), 6)},
-                          {value:5,date:dateFns.setHours(new Date(2018, 1, 6), 6)},
-                          {value:6,date:dateFns.setHours(new Date(2018, 1, 7), 6)},
-                          {value:7,date:dateFns.setHours(new Date(2018, 1, 8), 6)},
-                          {value:8,date:dateFns.setHours(new Date(2018, 1, 9), 6)},
-                          {value:8,date:dateFns.setHours(new Date(2018, 1, 13), 6)},
-                          {value:9,date:dateFns.setHours(new Date(2018, 1, 14), 6)},
-                          {value:10,date:dateFns.setHours(new Date(2018, 1, 15), 6)},
-                          {value:11,date:dateFns.setHours(new Date(2018, 1, 16), 6)},
-                          {value:12,date:dateFns.setHours(new Date(2018, 1, 17), 6)},
-                          {value:13,date:dateFns.setHours(new Date(2018, 1, 18), 6)},
-                          {value:14,date:dateFns.setHours(new Date(2018, 1, 19), 6)},
-                          {value:15,date:dateFns.setHours(new Date(2018, 1, 20), 6)},
+
                           {value:16,date:dateFns.setHours(new Date(2018, 1, 21), 6)} ],
            }
         ]
@@ -84,10 +70,17 @@ const histogramDataSet = (state = initialState, action) => {
         nodeData.push(obj);
       }
       //console.log('processing receiveNodeList json', action.json,'nodeData',nodeData);
-      return Object.assign({}, state, {
-        isLoading: state.isLoading-1,
-        nodeList: nodeData,
-      })
+      if (state.isLoading > 0) {
+        return Object.assign({}, state, {
+          isLoading: state.isLoading-1,
+          nodeList: nodeData,
+        })
+      } else {
+        return Object.assign({}, state, {
+          isLoading: 0,
+          nodeList: nodeData,
+        })        
+      }
     case 'RECEIVE_SENSOR_DATA':
       //console.log('histogramDataSet reducer - action', action, 'state:', state);
       let newData = [];
@@ -96,14 +89,23 @@ const histogramDataSet = (state = initialState, action) => {
                        sensorData: unpackSensorData(action.json[i].sensorData),
                        })
       }
-      console.log('receiveSensorData newData', newData);
-      return Object.assign({}, state, {
-        isLoading: state.isLoading-1,
-        data: newData,
-      })
+      //console.log('receiveSensorData newData', newData);
+      if (state.isLoading > 0) {
+        return Object.assign({}, state, {
+          isLoading: state.isLoading-1,
+          data: newData,
+        })
+      } else {
+        return Object.assign({}, state, {
+          isLoading: 0,
+          data: newData,
+        })        
+      }
 
-    case 'INVALIDATE_SENSOR_DATA':
-            
+    case 'RESET_SERVER_REQUESTS':
+      return Object.assign({}, state, {
+        isLoading: 0,
+      })          
     default:
       return state;
   }

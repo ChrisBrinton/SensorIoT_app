@@ -1,18 +1,22 @@
 import React from 'React';
-import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 
-const RefreshActivityIndicator = ({isLoading}) => {
+const RefreshActivityIndicator = ({children, isLoading}) => {
     let showSpinner = (isLoading > 0) ? true : false;
     console.log('RefreshActivityIndicator isLoading',isLoading,'showSpinner',showSpinner);
     if(showSpinner) {
         return (
             <View style={styles.activityIndicatorContainer}>
-                <ActivityIndicator
-                    animating = {showSpinner}
-                    color = 'powderblue'
-                    size = 'large'
-                    style = {styles.activityIndicator}
-                />
+                <View style={styles.activityIndicator}>
+                    <ActivityIndicator
+                        animating = {showSpinner}
+                        color = 'powderblue'
+                        size = 'large'>
+                    </ActivityIndicator>
+                    <Text style={{color: 'powderblue', justifyContent: 'space-between'}}>
+                        {children}
+                    </Text>
+                </View>
             </View>
             )
         } else {

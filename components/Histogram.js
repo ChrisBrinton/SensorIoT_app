@@ -38,12 +38,21 @@ const GridBorder = (({width, height}) => (
   />
 ))
 
+function getNodeColor(nodeID, nodeList) {
+  for (i in nodeList) {
+    if (nodeList[i].nodeID == nodeID) {
+      return nodeList[i].color
+    }
+  }
+  return 'red' //default color
+}
 
 const Histogram = ({ ...args }) => {
   //console.log('HistogramYAxis min', props.yAxisMin, 'max', props.yAxisMax, 'yAxisLabel', props.yAxisLabel, 'data', props.data,);
   let dataSets = [];
-  console.log('Histogram args.data', args.data);
+  //console.log('Histogram args.data', args.data);
   for (let i=0; i < args.data.length; i++) {
+    let color = getNodeColor(args.data[i].nodeID, args.nodeList);
     dataSets.push(
       <LineChart
         key={i}
@@ -54,11 +63,12 @@ const Histogram = ({ ...args }) => {
         yAccessor={args.yAccessor}
         xAccessor={args.xAccessor}
         xScale={d3Scale.scaleTime}
-        svg={{ stroke: args.nodeList[i].color }}
+        svg={{ stroke: color }}
         contentInset={args.contentInsetY}
         />
     )
   }
+  color = getNodeColor(args.data[0].nodeID, args.nodeList);
   return (
     <View>
       <View style={histogramStyles.histogramContainer}>
