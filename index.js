@@ -1,4 +1,37 @@
+import React from 'react';
 import { AppRegistry } from 'react-native';
-import App from './App';
+import { createStore, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import { PersistGate } from 'redux-persist/integration/react';
+import thunkMiddleware from 'redux-thunk';
+import { createLogger } from 'redux-logger';
+import App from './components/App';
+import rootReducer from './reducers';
 
-AppRegistry.registerComponent('SensorIoT', () => App);
+const persistConfig = {
+  key: 'root',
+  storage,
+  blacklist: ['dashboardDataSet', 'histogramDataSet', 'yAxis'],
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+const loggerMiddleware = createLogger();
+
+let store = createStore(persistedReducer, applyMiddleware( thunkMiddleware ));
+let persistor = persistStore(store);
+
+//persistor.purge();
+
+const SensorIoT = () => (
+  <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
+      <App/>
+    </PersistGate>
+  </Provider>
+)
+
+
+AppRegistry.registerComponent('SensorIoT', () => SensorIoT);
