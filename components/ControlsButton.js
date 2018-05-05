@@ -31,12 +31,12 @@ function getButtonStyle(active, nodeColor) {
       color: currentColor,
     }
   }
-  console.log('ControlsButton getButtonStyle returning', newStyle, 'based on active', active, 'nodeColor', nodeColor,'currentColor', currentColor, 'currentBackgroundColor', currentBackgroundColor);
+  //console.log('ControlsButton getButtonStyle returning', newStyle, 'based on active', active, 'nodeColor', nodeColor,'currentColor', currentColor, 'currentBackgroundColor', currentBackgroundColor);
   return newStyle;
 }
 
 const ControlsButton = ({ active, nodeColor, children, onPress }) => {
-  console.log('ControlsButton created with children:', children);
+  //console.log('ControlsButton created with children:', children);
   return (
     <TouchableHighlight
       onPress={onPress}
@@ -48,7 +48,7 @@ const ControlsButton = ({ active, nodeColor, children, onPress }) => {
           {children}
         </Text>
       </View>
-      </TouchableHighlight>
+    </TouchableHighlight>
   )
 }
 

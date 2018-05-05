@@ -1,7 +1,7 @@
-const yMinMaxDefaults = [ { dataType: 'TempF', dataQueryKey: 'F', yMin: 0, yMax: 105, lowThreshold: 32, highThreshold: 100},
-                          { dataType: 'TempC', dataQueryKey: 'F', yMin: -10, yMax: 40, lowThreshold: 0, highThreshold: 35},
+const yMinMaxDefaults = [ { dataType: 'TempF', dataQueryKey: 'F', yMin: 0, yMax: 115, lowThreshold: 32, highThreshold: 100},
+                          { dataType: 'TempC', dataQueryKey: 'F', yMin: -20, yMax: 45, lowThreshold: 0, highThreshold: 35},
                           { dataType: 'Hum', dataQueryKey: 'H', yMin: 0, yMax: 100, lowThreshold: 10, highThreshold:90},
-                          { dataType: 'Pres', dataQueryKey: 'P', yMin: 10, yMax: 40},
+                          { dataType: 'Pres', dataQueryKey: 'P', yMin: 28, yMax: 31},
                           { dataType: 'Batt', dataQueryKey: 'BAT', yMin: 0, yMax: 5},
                         ];
 
