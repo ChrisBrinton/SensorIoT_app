@@ -5,6 +5,7 @@ import { HistoryScreen } from './HistoryScreen';
 import { DashboardScreen } from './DashboardScreen';
 import { connect } from 'react-redux'
 import { fetchNodeList, fetchSensorData, fetchNodeLatestData } from '../actions';
+import SplashScreen from 'react-native-splash-screen';
 
 //static navigationOptions = ({navigation}) => {
 const RootStack = StackNavigator(
@@ -29,6 +30,7 @@ class App extends Component {
     this.props.fetchNodeList();
     //this.props.fetchSensorData();
     this.props.fetchNodeLatestData();
+    SplashScreen.hide();
   }
 
   render() {
