@@ -4,8 +4,8 @@ import { fetchNodeLatestData } from '../actions'
 
 const isScrollAtAnEnd = ({layoutMeasurement, contentOffset, contentSize}) => {
   const paddingToBottom=5;
-  //console.log('checking position', layoutMeasurement.height, contentOffset.y, contentSize.height, paddingToBottom);
-  if (contentOffset.y == 0) {
+  console.log('checking position', layoutMeasurement.height, contentOffset.y, contentSize.height, paddingToBottom);
+  if (contentOffset.y <= 0) {
       return true;
   } else if ( layoutMeasurement.height + contentOffset.y >= contentSize.height - paddingToBottom ) {
       return true;
