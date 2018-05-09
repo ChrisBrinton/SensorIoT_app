@@ -1,11 +1,14 @@
 import React from 'React';
-import { StyleSheet, Text, View } from 'react-native';
+import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import PropTypes from 'prop-types';
 import DisplayGauge from '../containers/DisplayGauge';
 import { format } from 'date-fns';
 
 const GaugeRow = ({ node, children }) => {
-    //console.log('GaugeRow created with node:', node);
+    let deviceWidth = Dimensions.get('window').width;
+    let gaugeSize = parseInt((deviceWidth - 20*2)/4 - 2*2);
+
+    console.log('GaugeRow created with node:', node, deviceWidth, gaugeSize);
     return (
         <View style={{ marginBottom: 10, backgroundColor: '#BFE6EB' }}>
             <Text style={GaugeRowPortraitStyles.dashboardRowLabel}>
@@ -14,18 +17,22 @@ const GaugeRow = ({ node, children }) => {
             <View style={GaugeRowPortraitStyles.dashboardRow}>
                 <DisplayGauge
                     type='Temp'
+                    size={gaugeSize}
                     value={node.latestData.F}>
                 </DisplayGauge>
                 <DisplayGauge
                     type='Hum'
+                    size={gaugeSize}
                     value={node.latestData.H}>
                 </DisplayGauge>
                 <DisplayGauge
                     type='Pres'
+                    size={gaugeSize}
                     value={node.latestData.P}>
                 </DisplayGauge>
                 <DisplayGauge
                     type='Batt'
+                    size={gaugeSize}
                     value={node.latestData.BAT}>
                 </DisplayGauge>
             </View>
