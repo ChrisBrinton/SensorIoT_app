@@ -22,7 +22,7 @@ export class DashboardScreen extends Component {
           headerStyle: {
             backgroundColor: 'powderblue',
           },
-          heaterTintColor: 'steelblue',
+          headerTintColor: 'steelblue',
           headerTitleStyle: {
             fontWeight: 'bold',
             width: '90%',

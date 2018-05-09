@@ -26,6 +26,7 @@ const mapStateToProps = (state, ownProps) => {
     value: ownProps.value,
     min: minMax.min,
     max: minMax.max,
+    size: ownProps.size,
   })
 }
 
