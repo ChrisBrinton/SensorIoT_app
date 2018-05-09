@@ -35,7 +35,7 @@ const Gauge = ( { type, value, min, max } ) => {
                         )
                     }
                 }/>
-            <View style={{ flexDirection:'row', width: 85, height: 10, margin: 0, justifyContent: 'space-between', alignItems: 'center' }}>
+            <View style={{ flexDirection:'row', width: 85, height: 12, margin: 0, justifyContent: 'space-between', alignItems: 'center' }}>
                 <Text style={{fontSize:12, marginLeft: 5, textAlign: 'left'}}>
                     {min}
                 </Text>
