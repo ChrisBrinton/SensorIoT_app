@@ -90,9 +90,9 @@ export function fetchNodeLatestData() {
     currentState = getState();
     if (!serverConfigured(currentState)) return;
     dispatch(requestNodeLatestData());
-    let url = 'http://' 
+    let url = 'https://' 
               + currentState.settings.myMQTTServer
-              + '/latest/'+ currentState.settings.myGatewayID;
+              + '/SensorIoT/latest/'+ currentState.settings.myGatewayID;
     console.log('fetchNodeLatestData using url:', url);
     return fetch(url)
     .then(response => response.json())
@@ -121,9 +121,9 @@ export function fetchSensorData() {
     }
     if ( nodes == '' ) return //if there are no nodes, dont fetch!
     dispatch(requestServerData());
-    let url = 'http://' 
+    let url = 'https://' 
               + currentState.settings.myMQTTServer
-              + '/gw/'+ currentState.settings.myGatewayID 
+              + '/SensorIoT/gw/'+ currentState.settings.myGatewayID 
               + '?' + nodes 
               + 'type=' + currentState.yAxis.dataQueryKey 
               + '&period=' + currentState.xAxis.xDateRange + '&timezone=EST5EDT';
@@ -146,9 +146,9 @@ export function fetchNodeList() {
     dispatch(requestServerData());
     currentState = getState();
     if (!serverConfigured(currentState)) return;
-    let url = 'http://' 
+    let url = 'https://' 
               + currentState.settings.myMQTTServer
-              + '/nodelist/'+ currentState.settings.myGatewayID 
+              + '/SensorIoT/nodelist/'+ currentState.settings.myGatewayID 
               + '?period=' + currentState.xAxis.xDateRange;
     console.log('fetchNodeList using url:', url);
     return fetch(url)
