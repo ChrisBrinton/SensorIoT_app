@@ -2,7 +2,7 @@ import React from 'React';
 import { StyleSheet, Text, View } from 'react-native';
 import AnimatedCircularProgress from './AnimatedCircularProgress';
 
-const Gauge = ( { type, value, min, max } ) => {
+const Gauge = ( { type, value, min, max, size } ) => {
     if ( value > max ) {
         max = value;
     }
@@ -14,8 +14,8 @@ const Gauge = ( { type, value, min, max } ) => {
     return (
         <View style={GaugePortraitStyles.dashboardGaugeContainer}>
             <AnimatedCircularProgress
-                style={GaugePortraitStyles.dashboardGauge}
-                size={85}
+                style={{ margin: 0, marginBottom: 0, width: size, height: 65, alignItems: 'center' }}
+                size={size}
                 width={12}
                 fill={adjustedValue}
                 value={value}
@@ -35,7 +35,11 @@ const Gauge = ( { type, value, min, max } ) => {
                         )
                     }
                 }/>
+<<<<<<< 4089862416898ec76f58a3db1f9859b084f1e9b9
             <View style={{ flexDirection:'row', width: 85, height: 12, margin: 0, justifyContent: 'space-between', alignItems: 'center' }}>
+=======
+            <View style={{ flexDirection:'row', width: size, height: 10, margin: 0, justifyContent: 'space-between', alignItems: 'center' }}>
+>>>>>>> Make gauge width related to screen width
                 <Text style={{fontSize:12, marginLeft: 5, textAlign: 'left'}}>
                     {min}
                 </Text>
@@ -58,14 +62,6 @@ const GaugePortraitStyles = StyleSheet.create({
         flexDirection:'column', 
         alignItems: 'center', 
         height: 105, 
-    },
-    dashboardGauge: {
-        margin: 0,
-        marginBottom: 0,
-        width: 85,
-        height: 65,
-        alignItems: 'center',
-//        backgroundColor: '#445566',
     },
     dashboardGaugeText: {
         textAlign: 'center',
