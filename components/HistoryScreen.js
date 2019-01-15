@@ -202,7 +202,7 @@ const sensoriotScreenPortraitStyles = StyleSheet.create({
 //    height: 900,
     alignItems: 'stretch',
     backgroundColor: 'powderblue',
-//    backgroundColor: '#CCDDEE',
+    backgroundColor: '#CCDDEE',
 },
   controlsContainer: {
     flexDirection: 'column',
@@ -212,14 +212,14 @@ const sensoriotScreenPortraitStyles = StyleSheet.create({
 //    marginBottom: 5,
 //    marginTop:5,
 //    height: 150,
-//    backgroundColor: '#AAAAAA',
+    backgroundColor: '#AAAAAA',
   },
   controlsRowContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     margin: 1, //5
 //    height: 45,
-//    backgroundColor: '#776655',
+    backgroundColor: '#776655',
   },
   refreshButtonText: {
     textAlign: 'center',
@@ -234,6 +234,6 @@ const sensoriotScreenPortraitStyles = StyleSheet.create({
     margin: 1, //10
     marginTop: 1, //5
 //    height: 75,
-//    backgroundColor: '#665544',
+    backgroundColor: '#665544',
   },
 });

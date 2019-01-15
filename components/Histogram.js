@@ -133,7 +133,7 @@ const histogramStyles = StyleSheet.create({
     justifyContent: 'center',
     margin: 10,
     marginBottom: 0,
-    marginTop: 40,
+    marginTop: 4,//40
     height: 300,
 //    backgroundColor: 'skyblue',
   },
