@@ -85,6 +85,7 @@ const histogramDataSet = (state = initialState, action) => {
       //console.log('histogramDataSet reducer - action', action, 'state:', state);
       let newData = [];
       for ( let i=0; i< action.json.length; i++ ) {
+        console.log('receiving sensor data for node ', action.json[i].nodeID);
         newData.push({ nodeID: action.json[i].nodeID,
                        sensorData: unpackSensorData(action.json[i].sensorData),
                        })

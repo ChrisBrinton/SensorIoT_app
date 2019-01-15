@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StackNavigator } from 'react-navigation';
 import { SettingsScreen } from './SettingsScreen';
 import { HistoryScreen } from './HistoryScreen';
-import { DashboardScreen } from './DashboardScreen';
+import DashboardScreen from './DashboardScreen';
 import { connect } from 'react-redux'
 import { fetchNodeList, fetchSensorData, fetchNodeLatestData } from '../actions';
 import SplashScreen from 'react-native-splash-screen';

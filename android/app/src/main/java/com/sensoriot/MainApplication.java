@@ -25,8 +25,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new SplashScreenReactPackage(),
-            new SvgPackage()
+          new SplashScreenReactPackage(),
+          new SvgPackage()
       );
     }
 

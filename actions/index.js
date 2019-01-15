@@ -57,12 +57,19 @@ export const resetServerRequests = () => ({
   type: 'RESET_SERVER_REQUESTS',
 })
 
-function serverConfigured(state) {
+export const queryServerConfigured = () => ({
+  type: 'QUERY_SERVER_CONFIGURED',
+})
+
+function serverConfigured(dispatch, state) {
   if (state.settings.MQTTConfigured && state.settings.gatewayConfigured) {
     return true;
   } else {
+    if (state.settings.configMessageAlert == false) {
+    dispatch(queryServerConfigured());
     Alert.alert('Please configure MQTT server and gateway in settings');
     return false;
+    }
   }
 }
 
@@ -85,10 +92,10 @@ function handleError(dispatch, error) {
 }
 
 export function fetchNodeLatestData() {
-  //console.log('fetchSensorData nodeID', nodeID);
+  console.log('fetchNodeLatestdata');
   return (dispatch, getState) => {
     currentState = getState();
-    if (!serverConfigured(currentState)) return;
+    if (!serverConfigured(dispatch, currentState)) return;
     dispatch(requestNodeLatestData());
     let url = 'https://' 
               + currentState.settings.myMQTTServer
@@ -110,7 +117,7 @@ export function fetchSensorData() {
   //console.log('fetchSensorData nodeID', nodeID);
   return (dispatch, getState) => {
     currentState = getState();
-    if (!serverConfigured(currentState)) return;
+    if (!serverConfigured(dispatch, currentState)) return;
     let nodes = '';
     for ( node in currentState.histogramDataSet.nodeList ) {
       nodeID = currentState.histogramDataSet.nodeList[node].nodeID;
@@ -143,9 +150,9 @@ export const receiveSensorData = (nodeID, json) => ({
 
 export function fetchNodeList() {
   return (dispatch, getState) => {
-    dispatch(requestServerData());
     currentState = getState();
-    if (!serverConfigured(currentState)) return;
+    if (!serverConfigured(dispatch, currentState)) return;
+    dispatch(requestServerData());
     let url = 'https://' 
               + currentState.settings.myMQTTServer
               + '/SensorIoT/nodelist/'+ currentState.settings.myGatewayID 
