@@ -9,7 +9,10 @@ const RefreshButton = ({ onPress }) => {
       onPress={onPress}
       underlayColor="white">
       <View style={RefreshButtonStyles.refreshContainer}>
-        <Text style={RefreshButtonStyles.refreshText}>
+        <Text 
+          style={RefreshButtonStyles.refreshText}
+          adjustFontSizeToFit={true}
+          >
           Refresh
         </Text>
       </View>
@@ -30,12 +33,16 @@ const RefreshButtonStyles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: 'powderblue',
         margin: 1,//10
-        marginTop: 1,//5
-        padding: 1,
-        height: 30,
+//        marginTop: 1,//5
+//        padding: 1,
+//        height: 40,
+//        backgroundColor: '#FFDDAA',
       },
       refreshText: {
-//        textAlign: 'center',
-        fontSize: 35,
+        textAlign: 'center',
+        fontSize: 35, //35
+//        marginTop: 10,
+//        paddingTop: 0,
+//        backgroundColor: '#DDCCFF',
       },
 });
