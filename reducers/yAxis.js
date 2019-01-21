@@ -59,29 +59,30 @@ const yAxis = (state = initialState, action) => {
            yAxisMinMaxDefaults: newMinMaxs,
            dataQueryKey: action.dataQueryKey,
          })
-     case 'TOGGLE_TEMP_TYPE':
-       let tempType;
-       let yAxisType =state.yAxisType;
-       if (state.tempType == 'F') {
-         tempType = 'C';
-         if (yAxisType == 'TempF') {
-           yAxisType = 'TempC';
-         }
-       } else {
-         tempType = 'F';
-         if(yAxisType == 'TempC') {
-           yAxisType = 'TempF';
-         }
-       }
-       index = getDefaultsIndex(yAxisType);
-       return ({
-                 ...state,
-                 tempType: tempType,
-                 yAxisType: yAxisType,
-                 dataQueryKey: yMinMaxDefaults[index].dataQueryKey,
-                 lowThreshold: yMinMaxDefaults[index].lowThreshold,
-                 highThreshold: yMinMaxDefaults[index].highThreshold,
-                })
+    case 'TOGGLE_TEMP_TYPE':
+      console.log('yAxis reducer - TOGGLE_TEMP_TYPE');
+      let tempType;
+      let yAxisType =state.yAxisType;
+      if (state.tempType == 'F') {
+        tempType = 'C';
+        if (yAxisType == 'TempF') {
+          yAxisType = 'TempC';
+        }
+      } else {
+        tempType = 'F';
+        if(yAxisType == 'TempC') {
+          yAxisType = 'TempF';
+        }
+      }
+      index = getDefaultsIndex(yAxisType);
+      return ({
+              ...state,
+              tempType: tempType,
+              yAxisType: yAxisType,
+              dataQueryKey: yMinMaxDefaults[index].dataQueryKey,
+              lowThreshold: yMinMaxDefaults[index].lowThreshold,
+              highThreshold: yMinMaxDefaults[index].highThreshold,
+      })
     default:
       return state;
   }
