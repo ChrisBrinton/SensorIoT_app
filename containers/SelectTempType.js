@@ -3,17 +3,19 @@ import { toggleTempType } from '../actions'
 import TypeSwitch from '../components/TypeSwitch'
 
 const mapStateToProps = (state, ownProps) => {
-  //console.log('SelectTempType mapStateToProps state', state);
+  console.log('SelectTempType mapStateToProps state', state);
   return ({
     tempType: state.yAxis.tempType,
   })
 }
 
 const mapDispatchToProps = (dispatch) => {
+  console.log('SelectTempType mapDispatchToProps');
   return {
- onValueChange: () => {
-      return(dispatch(toggleTempType()))
-     }
+    onValueChange: () => {
+        console.log('SelectTempType onValueChange');
+        return(dispatch(toggleTempType()))
+      }
   }
 }
 

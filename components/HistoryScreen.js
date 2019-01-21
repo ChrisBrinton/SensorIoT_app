@@ -218,7 +218,8 @@ const sensoriotScreenPortraitStyles = StyleSheet.create({
   },
   controlsRowContainer: {
     flexDirection: 'row',
-    alignItems: 'center',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
     margin: 1, //5
 //    height: 45,
 //    backgroundColor: '#776655',
