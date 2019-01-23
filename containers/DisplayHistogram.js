@@ -41,16 +41,24 @@ function getLabelFromType(type) {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  console.log('Histogram mapStateToProps state:', state);
+  //console.log('Histogram mapStateToProps state:', state);
   let newRange = getRangeFromType(state);
   let data = state.histogramDataSet.data;
+
+  //If the user has chosen to display temp data in C, do the conversion
+  //here.
   if ( state.yAxis.yAxisType == 'TempC') {
-    data = state.histogramDataSet.data
-           .map((item, index) => {
-              return({value: (item.value-32)/1.8, date: item.date})
-              }
-                    );
-    console.log('Histogram after temp transform to C', data);
+    data = [];
+    for (let i=0; i < state.histogramDataSet.data.length; i++) {
+      data.push({nodeID: state.histogramDataSet.data[i].nodeID, sensorData: state.histogramDataSet.data[i].sensorData
+        .map((item, index) => {
+          //console.log("histogram data map function item ", item);
+          return({value: (item.value-32)/1.8, date: item.date})
+          }
+        )
+        });
+    }
+    //console.log('Histogram after temp transform to C', data);
   }
 
   return (
