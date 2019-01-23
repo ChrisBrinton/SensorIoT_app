@@ -22,7 +22,7 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  console.log('DisplayDashboardScrollView mapDispatchToProps ownProps:', ownProps);
+  //console.log('DisplayDashboardScrollView mapDispatchToProps ownProps:', ownProps);
   return {
     onScrollEndDrag: ({nativeEvent}) => {
       if ( isScrollAtAnEnd(nativeEvent) ) {

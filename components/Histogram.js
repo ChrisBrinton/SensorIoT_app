@@ -50,7 +50,7 @@ function getNodeColor(nodeID, nodeList) {
 const Histogram = ({ ...args }) => {
   //console.log('HistogramYAxis min', props.yAxisMin, 'max', props.yAxisMax, 'yAxisLabel', props.yAxisLabel, 'data', props.data,);
   let dataSets = [];
-  //console.log('Histogram args.data', args.data);
+  //console.log('Histogram args', args);
   for (let i=0; i < args.data.length; i++) {
     let color = getNodeColor(args.data[i].nodeID, args.nodeList);
     dataSets.push(
@@ -133,7 +133,7 @@ const histogramStyles = StyleSheet.create({
     justifyContent: 'center',
     margin: 10,
     marginBottom: 0,
-    marginTop: 40,
+    marginTop: 4,//40
     height: 300,
 //    backgroundColor: 'skyblue',
   },

@@ -10,10 +10,12 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
+  console.log('SelectTempType mapDispatchToProps');
   return {
- onValueChange: () => {
-      return(dispatch(toggleTempType()))
-     }
+    onValueChange: () => {
+        console.log('SelectTempType onValueChange');
+        return(dispatch(toggleTempType()))
+      }
   }
 }
 
