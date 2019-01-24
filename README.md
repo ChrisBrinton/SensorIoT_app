@@ -12,6 +12,9 @@ Prerequisites:
 Once the prereqs are installed, in your dev area on your local machine:
   - npm install react-native -g
   - react-native init SensorIoT_app (or whatever you what to call the project)
+  - npm install
+  - react-native link react-native-svg
+  - react-native link react-native-splash-screen
   - cd SensorIoT_app
   - git clone https://github.com/ChrisBrinton/SensorIoT_app.git
   - react-native run-android (or react-native run-ios)
