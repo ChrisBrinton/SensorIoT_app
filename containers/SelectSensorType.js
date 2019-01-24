@@ -9,7 +9,7 @@ const mapStateToProps = (state, ownProps) => {
   } else {
     active = (state.yAxis.yAxisType == ownProps.yAxisType) ? true : false;
   }
-  console.log('SelectSensorType mapStateToProps state yAxisType', state.yAxis.yAxisType, 'ownProps:', ownProps, 'active:', active);
+  //console.log('SelectSensorType mapStateToProps state yAxisType', state.yAxis.yAxisType, 'ownProps:', ownProps, 'active:', active);
   return ({
     yAxisType: ownProps.yAxisType,
     yAxisMin: ownProps.yAxisMin,
@@ -21,7 +21,7 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  console.log('SelectSensorType mapDispatchToProps');
+  //console.log('SelectSensorType mapDispatchToProps');
   return {
   onPress: () => {
       return(dispatch(setYAxisType(ownProps.yAxisType)))
