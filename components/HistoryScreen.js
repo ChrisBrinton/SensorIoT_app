@@ -10,10 +10,7 @@ import {
   TouchableHighlight,
   View
 } from 'react-native';
-import { G, Line, Rect } from 'react-native-svg';
-import { LineChart, YAxis, XAxis } from 'react-native-svg-charts';
-import * as d3Scale from 'd3-scale';
-import dateFns from 'date-fns';
+
 import DisplayHistogram from '../containers/DisplayHistogram';
 import SelectSensorType from '../containers/SelectSensorType';
 import SelectRange from '../containers/SelectRange';
@@ -21,13 +18,6 @@ import NodeList from '../containers/NodeList';
 import DisplayRefreshButton from '../containers/DisplayRefreshButton';
 import HistoryActivityIndicator from '../containers/HistoryActivityIndicator';
 import { yAxisTypes, fetchNodeList } from '../actions';
-
-const refresh = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' +
-    'Cmd+D or shake for dev menu',
-  android: 'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
 
 export class HistoryScreen extends Component {
 
@@ -89,47 +79,6 @@ export class HistoryScreen extends Component {
     const contentInsetY = { top: 10, bottom: 10, left: 0, right: 0 };
     const contentInsetX = { top: 0, bottom: 0, left: 15, right: 5 };
 
-    const CustomGrid = ({ x, y, data, ticks }) => {
-
-      const xValues = data.map((item, index) => item.date)
-      const xDomain = d3Scale.scaleTime()
-              .domain(xValues)
-              .range(0, 0)
-
-      const xTicks = xDomain.ticks(7)
-
-      return (
-        <G>
-              {
-                  // Horizontal grid
-                  ticks.map(tick => (
-                      <Line
-                          key={ tick }
-                          x1={ '0%' }
-                          x2={ '100%' }
-                          y1={ y(tick) }
-                          y2={ y(tick) }
-                          stroke={ 'rgba(0,0,0,0.2)' }
-                      />
-                  ))
-              }
-              {
-                  // Vertical grid
-                  xTicks.map((value, index) => (
-                      <Line
-                          key={ index }
-                          y1={ '0%' }
-                          y2={ '100%' }
-                          x1={ x(value) }
-                          x2={ x(value) }
-                          stroke={ 'rgba(0,0,0,0.2)' }
-                      />
-                  ))
-              }
-          </G>
-      )
-  }
-
     return (
       <View style={sensoriotScreenPortraitStyles.appContainer}>
         <DisplayHistogram
@@ -140,7 +89,6 @@ export class HistoryScreen extends Component {
           svgY={{
             fontSize: 10,
           }}
-          renderGrid={ CustomGrid }
           svgX={{
             fill: 'black',
             fontSize: 8,
@@ -149,7 +97,8 @@ export class HistoryScreen extends Component {
             originY: 0,
             y: 3,
           }}
-        />
+          >
+        </DisplayHistogram>
         <View style={sensoriotScreenPortraitStyles.controlsContainer}>
           <View style={sensoriotScreenPortraitStyles.controlsRowContainer}>
             <SelectRange xDateRange={'1'}>
