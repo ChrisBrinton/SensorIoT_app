@@ -1,29 +1,68 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-import { LineChart, XAxis, YAxis } from 'react-native-svg-charts'
+import { Grid, LineChart, XAxis, YAxis } from 'react-native-svg-charts'
 import * as d3Scale from 'd3-scale';
 import dateFns from 'date-fns';
-import { Line, Rect } from 'react-native-svg';
+import { G, Line, Rect } from 'react-native-svg';
 
-const HorizontalLine = (threshold, color) => {
-  //console.log('HorizontalLine Threshold', threshold);
-  if (typeof threshold != 'undefined') {
-    return (({ y }) => (
-      <Line
-        key={ threshold }
-        x1={ '0%' }
-        x2={ '100%' }
-        y1={ y(threshold) }
-        y2={ y(threshold) }
-        stroke={ color }
-        strokeDasharray={ [ 4, 8 ] }
-        strokeWidth={ 2 }
-      />
-    ))
-  } else {
-    return (() => {return})
-  }
+const CustomGrid = ({ x, y, data, ticks }) => {
+
+  const xValues = data.map((item, index) => item.date)
+  const xDomain = d3Scale.scaleTime()
+          .domain(xValues)
+          .range(0, 0)
+
+  const xTicks = xDomain.ticks(7)
+
+  return (
+    <G>
+          {
+              // Horizontal grid
+              ticks.map(tick => (
+                  <Line
+                      key={ tick }
+                      x1={ '0%' }
+                      x2={ '100%' }
+                      y1={ y(tick) }
+                      y2={ y(tick) }
+                      stroke={ 'rgba(0,0,0,0.2)' }
+                  />
+              ))
+          }
+          {
+              // Vertical grid
+              xTicks.map((value, index) => (
+                  <Line
+                      key={ index }
+                      y1={ '0%' }
+                      y2={ '100%' }
+                      x1={ x(value) }
+                      x2={ x(value) }
+                      stroke={ 'rgba(0,0,0,0.2)' }
+                  />
+              ))
+          }
+      </G>
+  )
 }
+
+
+const HorizontalLine = ({ y, threshold, color }) => {
+  console.log('HorizonalLine threshold ', threshold, ' color ', color);
+  return(
+    <Line
+      key={ threshold }
+      x1={ '0%' }
+      x2={ '100%' }
+      y1={ y(threshold) }
+      y2={ y(threshold) }
+      stroke={ color }
+      strokeDasharray={ '4, 8' }
+      strokeWidth={ 2 }
+    />
+  )
+}
+
 
 const GridBorder = (({width, height}) => (
   <Rect
@@ -51,21 +90,23 @@ const Histogram = ({ ...args }) => {
   //console.log('HistogramYAxis min', props.yAxisMin, 'max', props.yAxisMax, 'yAxisLabel', props.yAxisLabel, 'data', props.data,);
   let dataSets = [];
   //console.log('Histogram args', args);
-  for (let i=0; i < args.data.length; i++) {
+  //start at 1 to avoid redrawing the first graph
+  for (let i=1; i < args.data.length; i++) {
     let color = getNodeColor(args.data[i].nodeID, args.nodeList);
     dataSets.push(
       <LineChart
         key={i}
         style={histogramStyles.overlayGraph}
         data={args.data[i].sensorData}
-        gridMax={args.yAxisMax}
-        gridMin={args.yAxisMin}
+        yMax={args.yAxisMax}
+        yMin={args.yAxisMin}
         yAccessor={args.yAccessor}
         xAccessor={args.xAccessor}
         xScale={d3Scale.scaleTime}
         svg={{ stroke: color }}
         contentInset={args.contentInsetY}
-        />
+        >
+      </LineChart>
     )
   }
   color = getNodeColor(args.data[0].nodeID, args.nodeList);
@@ -85,16 +126,19 @@ const Histogram = ({ ...args }) => {
         <LineChart
           style={histogramStyles.histogram}
           data={args.data[0].sensorData}
-          gridMax={args.yAxisMax}
-          gridMin={args.yAxisMin}
+          yMax={args.yAxisMax}
+          yMin={args.yAxisMin}
           yAccessor={args.yAccessor}
           xAccessor={args.xAccessor}
           xScale={d3Scale.scaleTime}
-          svg={{ stroke: args.nodeList[0].color }}
+          svg={{ stroke: color }}
           contentInset={args.contentInsetY}
-          renderGrid={args.renderGrid}
-          extras={[HorizontalLine(args.lowThreshold,'blue'), HorizontalLine(args.highThreshold,'red'), GridBorder]}
-        />
+        >
+          <HorizontalLine threshold={args.lowThreshold} color={'blue'}/>
+          <HorizontalLine threshold={args.highThreshold} color={'red'}/>
+          <CustomGrid/>
+          <GridBorder/>
+        </LineChart>
         {dataSets}
       </View>
       <View style={histogramStyles.histogramXLegend}>
