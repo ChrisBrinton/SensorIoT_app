@@ -3,34 +3,53 @@ The app for the SensorIoT suite
 
 The SensorIoT app is a react-native app that works with the SensorIoT GW, SensorIoT nodes and the SensorIoT server and broker components to display current and historical data collected by the system.
 
-Building the SensorIoT App
+# Installation
+Prerequisites:
+- [python](https://www.python.org/)
+- [node.js](https://nodejs.org/en/)
+- [XCode](https://developer.apple.com/xcode/) or [Android Studio](https://developer.android.com/studio/index.html) (or both)
+
+Once the prereqs are installed, in your dev area on your local machine:
+  - npm install react-native -g
+  - react-native init SensorIoT_app (or whatever you what to call the project)
+  - npm install
+  - react-native link react-native-svg
+  - react-native link react-native-splash-screen
+  - cd SensorIoT_app
+  - git clone https://github.com/ChrisBrinton/SensorIoT_app.git
+  - react-native run-android (or react-native run-ios)
+
+See the react-native documentation for build details on different platforms and targets [here](https://facebook.github.io/react-native/docs/running-on-device)
+
+
+## Building the SensorIoT app
 The current build instructions are based on running the Android Studio build environment on Windows using VSCode as an IDE and the Android Simulator to test & debug.
 
 node.js packages will likely need to be updated if any significant time has passed since the project was last touched.
--update node.js itself by downloading the windows installer from https://nodejs.org
+- Update node.js itself by downloading the windows installer from https://nodejs.org
  
--in SensorIoT project dir
- npm outdated - will list all local packages that need an update
- edit the package.json file with newer version numbers for any desired updated (This is potentially a PITA of incompatibility, so proceed cautiously)
- npm install will pull any versions from package.json that are not installed. 
+- In SensorIoT_app project dir
+  - npm outdated - will list all local packages that need an update
+  edit the package.json file with newer version numbers for any desired updated (This is potentially a PITA of incompatibility, so proceed cautiously)
+  - npm install will pull any versions from package.json that are not installed. 
  
-react-native may need to be updated:
-react-native-git-upgrade
+- react-native may need to be updated:
+  react-native-git-upgrade
  
-Building SensorIoT on Android
+### Building SensorIoT on Android
 Make sure you are running the latest version of Android Studio: Help->Check for Updates
 The "AVD Manager" menu holds the simulators. We've been using a "Pixel 2 no sound" simulator profile. Start the simulator
 react-native run-android - will build the project and start execution on the simulator
 react-native log-android - this will show the debug log info coming from the simulator
 ./gradew clean - run this from the android directory
 
-Building SensorIoT on iOS
+### Building SensorIoT on iOS
 The target project is in ~SensorIoT/ios/SensorIoT.xcodeproj
 This needs to be loaded on an up to date version of XCode running on a Mac
 To test/debug, make sure a legitimate simulator or target device is selected in the XCode product->destination menu.
 Press the "Play" button to build and deploy onto target device
 
-Deploying the app
+## Deploying the app
 Most of the information about this process was gleaned from this article:
 https://medium.com/the-react-native-log/checklist-to-deploy-react-native-to-production-47157f8f85ed
 
@@ -50,7 +69,8 @@ time only either for a given account, or for a given app. For the same app, but 
     - Testing the release version on the simulator:
       react-native run-android --variant=release
 
-  - iOS - after you have a functioning build, in XCode do a Product->Archive with a target of a Generic iOS Device.
+  - iOS - after you have a functioning build, in XCode make sure the target is set to Generic iOS Device, then do a Product->Archive (this option isnt
+      available until you select Generic iOS Device).
 
 - Upload the app to the appropriate service:
   - Android - You control the deployment through the Google Play Console: https://play.google.com/apps/publish
@@ -61,7 +81,8 @@ time only either for a given account, or for a given app. For the same app, but 
     - The new version can take many minutes to hours to become available to testers.
 
 
-  - iOS - You use App Store Connect: https://appstoreconnect.apple.com
+  - iOS - Once the archive build is done, select "Distribute App" and choose iTunes Store via App Store Connect. The rest of the questions can take the
+      default answers. You then go to App Store Connect: https://appstoreconnect.apple.com to manage.
 
 - Distribute to test users
   - Android - log into the Google Play Console, select the app and click on "Manage" for the appropriate track. There will be a "Manage testers"
@@ -72,16 +93,16 @@ time only either for a given account, or for a given app. For the same app, but 
     recieve an email with an offer to download it. The email has full instructions and seems to be pretty easy for people
     to execute these days. More details in the TestFlight article mentioned below.
 
-Icon assets were created with:
+## Icon assets were created with:
 http://appiconmaker.co
 
-Create a clean project from Git repo (On Windows for Android)
+## Create a clean project from Git repo (On Windows for Android)
   git clone https://github.com/ChrisBrinton/SensorIoT_app.git SensorIoT
   cd SensorIoT
   npm install
   react-native run-android
 
-Upload app to TestFlight
+## Upload app to TestFlight
 Instructions here: https://medium.com/@dmathewwws/steps-to-put-your-app-on-testflight-and-then-the-ios-app-store-10a7996411b1
 TL;DR:
   Create an Product->Archive with a target of Generic iOS Device. 

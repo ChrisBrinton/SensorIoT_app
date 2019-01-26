@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StackNavigator } from 'react-navigation';
+import { createAppContainer, createStackNavigator } from 'react-navigation';
 import { SettingsScreen } from './SettingsScreen';
 import { HistoryScreen } from './HistoryScreen';
 import DashboardScreen from './DashboardScreen';
@@ -8,7 +8,7 @@ import { fetchNodeList, fetchSensorData, fetchNodeLatestData } from '../actions'
 import SplashScreen from 'react-native-splash-screen';
 
 //static navigationOptions = ({navigation}) => {
-const RootStack = StackNavigator(
+const RootStack = createStackNavigator(
     {
       Dashboard: {
         screen: DashboardScreen,
@@ -25,6 +25,8 @@ const RootStack = StackNavigator(
     },
 );
 
+const AppContainer = createAppContainer(RootStack);
+
 class App extends Component {
   componentDidMount() {
     this.props.fetchNodeList();
@@ -34,10 +36,17 @@ class App extends Component {
   }
 
   render() {
-    return <RootStack />
+    return <AppContainer
+      onNavigationStateChange={handleNavigationChange}
+      uriPrefix="/app"
+     />
   }
 }
 
+function handleNavigationChange() {
+  console.log("handleNavigationChange");
+  return;
+}
 const mapStateToProps = (state) => ({
   init: state.init
 })

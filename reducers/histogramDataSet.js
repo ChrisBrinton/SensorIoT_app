@@ -1,6 +1,6 @@
 import dateFns from 'date-fns';
 
-const nodeColors = ['#C14242','#3F3FBF','#3FBF3F','#DD7C1C','#B33BB3'];
+const nodeColors = ['#C14242','#3F3FBF','#3FBF3F','#DD7C1C','#B33BB3','#990033','#6666FF','#33CCCC','#CC6600','#FFB3FF'];
 const initialState = {
   nodeList: [ {'nodeID': 1, 'isActive': false, 'color': '#fc3b19'},
               {'nodeID': 2, 'isActive': false, 'color': '#19bffc'},
