@@ -8,15 +8,15 @@ import { PersistGate } from 'redux-persist/integration/react';
 import thunkMiddleware from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 import App from './components/App';
-import rootReducer from './reducers';
+import AppReducer from './reducers';
 
 const persistConfig = {
   key: 'root',
   storage,
-  blacklist: ['dashboardDataSet', 'histogramDataSet', 'yAxis'],
+  blacklist: ['dashboardDataSet', 'histogramDataSet', 'yAxis', 'navigation'],
 };
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+const persistedReducer = persistReducer(persistConfig, AppReducer);
 
 const loggerMiddleware = createLogger();
 

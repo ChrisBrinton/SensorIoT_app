@@ -4,15 +4,19 @@ import PropTypes from 'prop-types';
 
 const RefreshButton = ({ onPress }) => {
   return (
-    <TouchableHighlight
-    onPress={onPress}
-    underlayColor="white">
-    <View style={RefreshButtonStyles.refreshContainer}>
-      <Text style={RefreshButtonStyles.refreshText}>
-        Refresh
-      </Text>
-    </View>
-  </TouchableHighlight>
+    <TouchableHighlight 
+      style={RefreshButtonStyles.refreshContainer}
+      onPress={onPress}
+      underlayColor="white">
+      <View style={RefreshButtonStyles.refreshContainer}>
+        <Text 
+          style={RefreshButtonStyles.refreshText}
+          adjustFontSizeToFit={true}
+          >
+          Refresh
+        </Text>
+      </View>
+    </TouchableHighlight>
   )
 }
 
@@ -28,12 +32,17 @@ const RefreshButtonStyles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: 'powderblue',
-        margin: 10,
-        marginTop: 5,
-        height: 75,
+        margin: 1,//10
+//        marginTop: 1,//5
+//        padding: 1,
+//        height: 40,
+//        backgroundColor: '#FFDDAA',
       },
       refreshText: {
         textAlign: 'center',
-        fontSize: 35,
+        fontSize: 35, //35
+//        marginTop: 10,
+//        paddingTop: 0,
+//        backgroundColor: '#DDCCFF',
       },
 });

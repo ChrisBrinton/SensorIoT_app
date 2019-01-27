@@ -27,6 +27,7 @@ project.xcworkspace
 build/
 .idea
 .gradle
+gradle.properties
 local.properties
 *.iml
 
@@ -54,3 +55,4 @@ buck-out/
 
 #VSCode
 .vscode/.react
+android/gradle.properties

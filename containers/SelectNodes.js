@@ -3,7 +3,7 @@ import { toggleNode } from '../actions'
 import ControlsButton from '../components/ControlsButton'
 
 const mapStateToProps = (state, ownProps) => {
-  console.log('SelectNodes mapStateToProps ownProps:', ownProps);
+  //console.log('SelectNodes mapStateToProps ownProps:', ownProps);
   return ({
     nodeIndex: ownProps.nodeIndex,
     nodeID: state.histogramDataSet.nodeList[ownProps.nodeIndex].nodeID,

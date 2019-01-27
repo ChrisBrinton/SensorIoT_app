@@ -9,46 +9,86 @@ import {
 } from 'react-native';
 import DisplayDashboardList from '../containers/DisplayDashboardList';
 import DashboardActivityIndicator from '../containers/DashboardActivityIndicator';
-import DisplayDashboardRefresh from '../containers/DisplayDashboardRefresh';
 import DisplayDashboardScrollView from '../containers/DisplayDashboardScrollView';
+import { fetchNodeList, fetchNodeLatestData } from '../actions';
+import { connect } from 'react-redux';
 
-export class DashboardScreen extends Component {
+let createHandlers = function(dispatch) {
+  let componentDidFocus = function(payload) {
+    console.log('DashboardScreen - didFocus ');
+    dispatch(fetchNodeList());
+    dispatch(fetchNodeLatestData());
+  }
 
-    static navigationOptions = ({navigation}) => {
-        const params = navigation.state.params || {};
-    
-        return {
-          title: 'Dashboard',
-          headerStyle: {
-            backgroundColor: 'powderblue',
-          },
-          headerTintColor: 'steelblue',
-          headerTitleStyle: {
-            fontWeight: 'bold',
-            width: '90%',
-            textAlign: 'center',
-            alignSelf: 'center',
-          },
-          headerLeft:(
-            <View>
-              <Button
-                onPress={() => navigation.navigate('History', {parent: params.parent})}
-                title="History"
-                color="steelblue"
-              />
-            </View>
-          ),
-          headerRight:(
-            <View>
-              <Button
-                onPress={() => navigation.navigate('Settings', {parent: params.parent})}
-                title="Settings"
-                color="steelblue"
-              />
-            </View>
-          ),
-        }
-      };
+  let componentWillBlur = function() {
+    console.log('DashboardScreen - didBlur');
+  }
+
+  return {
+    componentDidFocus,
+    componentWillBlur,
+  };
+}
+
+class DashboardScreen extends Component {
+
+  constructor(props) {
+    super(props);
+    this.handlers = createHandlers(this.props.dispatch);
+    //console.log('Output of createHandlers - this.handlers: ', this.handlers);
+  }
+
+  componentDidMount() {
+    console.log('DashboardScreen - componentDidMount')
+    this.subs = [
+      this.props.navigation.addListener("didFocus", payload => {this.handlers.componentDidFocus(payload)}),
+      this.props.navigation.addListener("willBlur", () => {this.handlers.componentWillBlur()})
+    ];
+  }
+
+  componentWillUnmount() {
+    this.subs.forEach(sub => sub.remove());
+  }
+
+  componentWillMount() {
+    console.log('DashboardScreen - componentWillMount')
+  }
+ 
+  static navigationOptions = ({navigation}) => {
+      const params = navigation.state.params || {};
+  
+      return {
+        title: 'Dashboard',
+        headerStyle: {
+          backgroundColor: 'powderblue',
+        },
+        headerTintColor: 'steelblue',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+          width: '90%',
+          textAlign: 'center',
+          alignSelf: 'center',
+        },
+        headerLeft:(
+          <View>
+            <Button
+              onPress={() => navigation.navigate('History', {parent: params.parent})}
+              title="History"
+              color="steelblue"
+            />
+          </View>
+        ),
+        headerRight:(
+          <View>
+            <Button
+              onPress={() => navigation.navigate('Settings', {parent: params.parent})}
+              title="Settings"
+              color="steelblue"
+            />
+          </View>
+        ),
+      }
+    };
 
     render() {
         return (
@@ -60,3 +100,4 @@ export class DashboardScreen extends Component {
     }
 }
 
+export default connect()(DashboardScreen);
