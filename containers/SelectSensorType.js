@@ -2,6 +2,9 @@ import { connect } from 'react-redux'
 import { setYAxisType } from '../actions'
 import ControlsButton from '../components/ControlsButton'
 
+import RefreshButton from '../components/RefreshButton';
+import { fetchSensorData } from '../actions';
+
 const mapStateToProps = (state, ownProps) => {
   let active;
   if ((state.yAxis.yAxisType == 'TempC' || state.yAxis.yAxisType == 'TempF') && ownProps.yAxisType == 'TempF') {
@@ -24,7 +27,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   //console.log('SelectSensorType mapDispatchToProps');
   return {
   onPress: () => {
-      return(dispatch(setYAxisType(ownProps.yAxisType)))
+     
+      dispatch(setYAxisType(ownProps.yAxisType));
+      return dispatch(fetchSensorData());
     }
   }
 }
