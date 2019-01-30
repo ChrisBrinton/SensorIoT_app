@@ -131,14 +131,6 @@ export class HistoryScreen extends Component {
             <NodeList>
             </NodeList>
           </View>
-          <View style={sensoriotScreenPortraitStyles.refreshContainer}>
-            <Text 
-              style={sensoriotScreenPortraitStyles.refreshText}
-              adjustFontSizeToFit={true}
-            >Click on a node to Load
-            </Text>
-            <Text />
-          </View>
         </View>
         <HistoryActivityIndicator>
           Loading...
@@ -160,7 +152,7 @@ const sensoriotScreenPortraitStyles = StyleSheet.create({
   controlsContainer: {
     flex: 1,
     flexDirection: 'column',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
     alignItems: 'center',
     margin: 10, //10
     marginTop: 20,
@@ -176,20 +168,5 @@ const sensoriotScreenPortraitStyles = StyleSheet.create({
     margin: 1, //5
 //    height: 45,
 //    backgroundColor: '#776655',
-  },
-  refreshText: {
-    textAlign: 'center',
-    color: '#333333',
-    fontSize: 20, //35
-  },
-  refreshContainer: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'space-around',
-    backgroundColor: 'powderblue',
-    margin: 1, //10
-    marginTop: 1, //5
-//    height: 75,
-//    backgroundColor: '#665544',
   },
 });
