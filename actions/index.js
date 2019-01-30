@@ -10,6 +10,11 @@ export const yAxisTypes = {
   Batt: 'Batt',
 }
 
+//This shouldnt be handled by any reducer. It here to have a legit 'no op' passed through redux if necessary
+export const noAction = () => ({
+  type: 'NO_ACTION',
+})
+
 export const setYAxisType = (type) => ({
   type: 'SET_Y_AXIS_TYPE',
   yAxisType: type,
@@ -45,6 +50,18 @@ export const setGatewayID = value => ({
   myGatewayID: value,
 })
 
+export const setShortNickname = (nodeID, value) => ({
+  type: 'SET_SHORT_NICKNAME',
+  nodeID: nodeID,
+  value: value,
+})
+
+export const setLongNickname = (nodeID, value) => ({
+  type: 'SET_LONG_NICKNAME',
+  nodeID: nodeID,
+  value: value,
+})
+
 export const requestServerData = () => ({
   type: 'REQUEST_SERVER_DATA',
 })
@@ -59,6 +76,10 @@ export const resetServerRequests = () => ({
 
 export const queryServerConfigured = () => ({
   type: 'QUERY_SERVER_CONFIGURED',
+})
+
+export const saveNicknames = () => ({
+  type: 'SAVE_NICKNAMES',
 })
 
 function serverConfigured(dispatch, state) {
