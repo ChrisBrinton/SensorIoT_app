@@ -15,7 +15,6 @@ import DisplayHistogram from '../containers/DisplayHistogram';
 import SelectSensorType from '../containers/SelectSensorType';
 import SelectRange from '../containers/SelectRange';
 import NodeList from '../containers/NodeList';
-import DisplayRefreshButton from '../containers/DisplayRefreshButton';
 import HistoryActivityIndicator from '../containers/HistoryActivityIndicator';
 import { yAxisTypes, fetchNodeList } from '../actions';
 
@@ -132,9 +131,6 @@ export class HistoryScreen extends Component {
             <NodeList>
             </NodeList>
           </View>
-          <View style={sensoriotScreenPortraitStyles.refreshContainer}>
-            <DisplayRefreshButton/>
-          </View>
         </View>
         <HistoryActivityIndicator>
           Loading...
@@ -156,7 +152,7 @@ const sensoriotScreenPortraitStyles = StyleSheet.create({
   controlsContainer: {
     flex: 1,
     flexDirection: 'column',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
     alignItems: 'center',
     margin: 10, //10
     marginTop: 20,
@@ -172,20 +168,5 @@ const sensoriotScreenPortraitStyles = StyleSheet.create({
     margin: 1, //5
 //    height: 45,
 //    backgroundColor: '#776655',
-  },
-  refreshButtonText: {
-    textAlign: 'center',
-    color: '#333333',
-    fontSize: 15, //35
-  },
-  refreshContainer: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'powderblue',
-    margin: 1, //10
-    marginTop: 1, //5
-//    height: 75,
-//    backgroundColor: '#665544',
   },
 });
