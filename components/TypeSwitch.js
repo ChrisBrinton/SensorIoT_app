@@ -1,7 +1,6 @@
 import React from 'React'
-import { TouchableHighlight, Text } from 'react-native'
-import PropTypes from 'prop-types'
-import { Switch } from 'react-native-switch';
+import { StyleSheet, Text } from 'react-native'
+import { Switch } from 'react-native'
 
 const TypeSwitch = ({ tempType, onValueChange }) => {
   //console.log('TypeSwitch created with tempType:', tempType, 'onValueChange:', onValueChange);
@@ -10,14 +9,26 @@ const TypeSwitch = ({ tempType, onValueChange }) => {
     <Switch
       value={value}
       disabled={false}
-      activeText={'F'}
-      inActiveText={'C'}
+      activeText={'Farenheit'}
+      inActiveText={'Celcius'}
       backgroundActive={'green'}
-      backgroundInactive={'green'}
-      style={{marginTop:0}}
+      backgroundInactive={'grey'}
+      circleActiveColor={'#30a566'}
+      circleInActiveColor={'#000000'}
       onValueChange={onValueChange}>
     </Switch>
   )
 }
 
 export default TypeSwitch
+
+const typeSwitchStyles = StyleSheet.create({
+  switchStyle: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: 'powderblue',
+      margin: 1,
+      borderWidth: 2,
+    },
+
+});

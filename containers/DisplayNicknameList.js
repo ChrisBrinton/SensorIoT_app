@@ -1,19 +1,19 @@
 import { connect } from 'react-redux'
-import ControlsButtonList from '../components/ControlsButtonList'
+import NicknameList from '../components/NicknameList'
 
 const mapStateToProps = (state, ownProps) => {
-  console.log('NodeList mapStateToProps ownProps:', ownProps);
+  //console.log('NicknameList mapStateToProps ownProps:', ownProps);
   return ({
     list: state.histogramDataSet.nodeList,
   })
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  console.log('NodeList mapDispatchToProps ownProps:', ownProps);
+  //console.log('NicknameList mapDispatchToProps ownProps:', ownProps);
   return {}
 }
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-) (ControlsButtonList)
+) (NicknameList)

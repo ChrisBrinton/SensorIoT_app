@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { createAppContainer, createStackNavigator } from 'react-navigation';
-import { SettingsScreen } from './SettingsScreen';
+import SettingsScreen from './SettingsScreen';
 import { HistoryScreen } from './HistoryScreen';
 import DashboardScreen from './DashboardScreen';
 import { connect } from 'react-redux'

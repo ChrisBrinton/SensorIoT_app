@@ -14,7 +14,7 @@ import {
 import DisplayHistogram from '../containers/DisplayHistogram';
 import SelectSensorType from '../containers/SelectSensorType';
 import SelectRange from '../containers/SelectRange';
-import NodeList from '../containers/NodeList';
+import DisplayControlsButtonList from '../containers/DisplayControlsButtonList';
 import DisplayRefreshButton from '../containers/DisplayRefreshButton';
 import HistoryActivityIndicator from '../containers/HistoryActivityIndicator';
 import { yAxisTypes, fetchNodeList } from '../actions';
@@ -129,8 +129,7 @@ export class HistoryScreen extends Component {
             </SelectSensorType>
           </View>
           <View style={sensoriotScreenPortraitStyles.controlsRowContainer}>
-            <NodeList>
-            </NodeList>
+            <DisplayControlsButtonList/>
           </View>
           <View style={sensoriotScreenPortraitStyles.refreshContainer}>
             <DisplayRefreshButton/>
