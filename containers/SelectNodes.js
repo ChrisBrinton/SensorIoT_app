@@ -2,6 +2,10 @@ import { connect } from 'react-redux'
 import { toggleNode } from '../actions'
 import ControlsButton from '../components/ControlsButton'
 
+
+import RefreshButton from '../components/RefreshButton';
+import { fetchSensorData } from '../actions';
+
 const mapStateToProps = (state, ownProps) => {
   //console.log('SelectNodes mapStateToProps ownProps:', ownProps);
   return ({
@@ -17,7 +21,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
   onPress: () => {
       //console.log('SelectNodes onPress ownProps:', ownProps);
-      return(dispatch(toggleNode(ownProps.nodeIndex)))
+      dispatch(toggleNode(ownProps.nodeIndex));
+      return(dispatch(fetchSensorData()));
+      //return(dispatch(toggleNode(ownProps.nodeIndex)))
     }
   }
 }
