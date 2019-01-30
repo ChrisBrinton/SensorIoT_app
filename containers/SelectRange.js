@@ -2,6 +2,10 @@ import { connect } from 'react-redux'
 import { setXDateRange } from '../actions'
 import ControlsButton from '../components/ControlsButton'
 
+
+import RefreshButton from '../components/RefreshButton';
+import { fetchSensorData } from '../actions';
+
 const mapStateToProps = (state, ownProps) => {
   let active = (state.xAxis.xDateRange == ownProps.xDateRange) ? true : false;
   console.log('SelectRange mapStateToProps ownProps:', ownProps);
@@ -15,7 +19,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   console.log('SelectRange mapDispatchToProps');
   return {
   onPress: () => {
-      return(dispatch(setXDateRange(ownProps.xDateRange)))
+      dispatch(setXDateRange(ownProps.xDateRange));
+      return dispatch(fetchSensorData());
     }
   }
 }
