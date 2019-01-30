@@ -35,11 +35,7 @@ const Gauge = ( { type, value, min, max, size } ) => {
                         )
                     }
                 }/>
-<<<<<<< 4089862416898ec76f58a3db1f9859b084f1e9b9
-            <View style={{ flexDirection:'row', width: 85, height: 12, margin: 0, justifyContent: 'space-between', alignItems: 'center' }}>
-=======
             <View style={{ flexDirection:'row', width: size, height: 10, margin: 0, justifyContent: 'space-between', alignItems: 'center' }}>
->>>>>>> Make gauge width related to screen width
                 <Text style={{fontSize:12, marginLeft: 5, textAlign: 'left'}}>
                     {min}
                 </Text>
