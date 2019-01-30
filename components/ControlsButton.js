@@ -61,7 +61,10 @@ ControlsButton.propTypes = {
 const controlsButtonStyles = StyleSheet.create({
   controlsButton: {
     margin:5, //10
-    width: 60,
+    width: 75,
+//    borderWidth: 1,
+//    borderRadius: 8,
+//    borderColor: '#318f9b',
     backgroundColor: 'powderblue',
   },
   controlsButtonText: {
