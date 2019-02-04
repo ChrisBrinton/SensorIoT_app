@@ -76,27 +76,6 @@ export class HistoryScreen extends Component {
     this.props.navigation.navigate('Settings', { updateSettings: () => this.updateSettings() });
   }
 
-  isScrollAtAnEnd = ({layoutMeasurement, contentOffset, contentSize}) => {
-    const paddingToBottom=5;
-    console.log('checking position', layoutMeasurement.height, contentOffset.y, contentSize.height, paddingToBottom);
-    if (contentOffset.y <= 0) {
-        return true;
-    } else if ( layoutMeasurement.height + contentOffset.y >= contentSize.height - paddingToBottom ) {
-        return true;
-    } else {
-        return false;
-    }
-  }
-
-  onScrollEndDrag = ({ nativeEvent }) => {
-    console.log("Scroll drag")
-    if (isScrollAtAnEnd(nativeEvent)) {
-      return (dispatch(fetchNodeLatestData()));
-    } else {
-      return;
-    }
-  }
-
   render() {
 
     const contentInsetY = { top: 10, bottom: 10, left: 0, right: 0 };
