@@ -5,18 +5,24 @@ The SensorIoT app is a react-native app that works with the SensorIoT GW, Sensor
 
 # Installation
 Prerequisites:
-- [python](https://www.python.org/)
-- [node.js](https://nodejs.org/en/)
-- [XCode](https://developer.apple.com/xcode/) or [Android Studio](https://developer.android.com/studio/index.html) (or both)
+- [react-native](https://facebook.github.io/react-native/docs/getting-started) and follow the "Building Projects with Native Code" directions for your platform.
+  Follow these directions until you can successfully run the test app (AwesomeProject) in the emulator.
+  
+  This will have you install the other following dependencies as appropriate:
+  - [python](https://www.python.org/)
+  - [node.js](https://nodejs.org/en/)
+  - [XCode](https://developer.apple.com/xcode/) or [Android Studio](https://developer.android.com/studio/index.html) (or both)
+  - [java](https://www.java.com) java SE Development Kit (JDK) (version 8 or better)
+
 
 Once the prereqs are installed, in your dev area on your local machine:
-  - npm install react-native -g
-  - react-native init SensorIoT_app (or whatever you what to call the project)
+  - git clone https://github.com/ChrisBrinton/SensorIoT_app
+  - react-native init SensorIoT_app
+  - cd SensorIoT_app
+  - (discard changes to git for this repo)
   - npm install
   - react-native link react-native-svg
   - react-native link react-native-splash-screen
-  - cd SensorIoT_app
-  - git clone https://github.com/ChrisBrinton/SensorIoT_app.git
   - react-native run-android (or react-native run-ios)
 
 See the react-native documentation for build details on different platforms and targets [here](https://facebook.github.io/react-native/docs/running-on-device)
