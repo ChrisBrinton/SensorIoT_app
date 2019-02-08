@@ -60,7 +60,7 @@ const mapStateToProps = (state, ownProps) => {
     }
     //console.log('Histogram after temp transform to C', data);
   }
-
+  
   return (
     {
       ...ownProps,
@@ -75,6 +75,8 @@ const mapStateToProps = (state, ownProps) => {
     }
   )
 }
+
+
 
 const mapDispatchToProps = dispatch => ({
 })
