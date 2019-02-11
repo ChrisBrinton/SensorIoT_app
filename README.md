@@ -5,7 +5,7 @@ The SensorIoT app is a react-native app that works with the SensorIoT GW, Sensor
 
 # Installation
 Prerequisites:
-- [react-native](https://facebook.github.io/react-native/docs/getting-started) and follow the "Building Projects with Native Code" directions for your platform.
+- The first order of business is to make sure you have a functional [react-native](https://facebook.github.io/react-native/docs/getting-started) development environment. Follow the "Building Projects with Native Code" directions for your platform.
   Follow these directions until you can successfully run the test app (AwesomeProject) in the emulator.
   
   This will have you install the other following dependencies as appropriate:
@@ -14,19 +14,15 @@ Prerequisites:
   - [XCode](https://developer.apple.com/xcode/) or [Android Studio](https://developer.android.com/studio/index.html) (or both)
   - [java](https://www.java.com) java SE Development Kit (JDK) (version 8 or better)
 
+- You will also need git if you dont already have it [git](https://www.git-scm.com/downloads)
 
 Once the prereqs are installed, in your dev area on your local machine:
   - git clone https://github.com/ChrisBrinton/SensorIoT_app
-  - react-native init SensorIoT_app
   - cd SensorIoT_app
-  - (discard changes to git for this repo)
   - npm install
-  - react-native link react-native-svg
-  - react-native link react-native-splash-screen
   - react-native run-android (or react-native run-ios)
 
-See the react-native documentation for build details on different platforms and targets [here](https://facebook.github.io/react-native/docs/running-on-device)
-
+On Android, depending on how many revisions Android Studio and react-native have moved forward, you may need to fiddle with the android/app/build.gradle file to get the sdk version matched properly.
 
 ## Building the SensorIoT app
 The current build instructions are based on running the Android Studio build environment on Windows using VSCode as an IDE and the Android Simulator to test & debug.
