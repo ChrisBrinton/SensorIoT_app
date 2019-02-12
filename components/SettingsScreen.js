@@ -8,12 +8,14 @@ import SelectTempType from '../containers/SelectTempType'
 import SetTextField from '../containers/SetTextField'
 import DisplayNicknameList from '../containers/DisplayNicknameList'
 import DisplaySettingsScrollView from '../containers/DisplaySettingsScrollView'
-import { saveNicknames } from '../actions';
+import SettingsActivityIndicator from '../containers/SettingsActivityIndicator'
+import { getNicknames, saveNicknames } from '../actions';
 import { connect } from 'react-redux';
 
 let createHandlers = function(dispatch) {
   let componentDidFocus = function(payload) {
     console.log('SettingsScreen - didFocus ');
+    dispatch(getNicknames());
   }
 
   let componentWillBlur = function() {
@@ -79,6 +81,9 @@ class SettingsScreen extends Component {
               <DisplayNicknameList/>
           </View>
         </DisplaySettingsScrollView>
+        <SettingsActivityIndicator>
+            Loading...
+        </SettingsActivityIndicator>
       </View>
     )
   }

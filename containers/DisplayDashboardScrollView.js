@@ -30,6 +30,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       } else {
         return;
       }
+    },
+    onRefresh: () => {
+      console.log('onRefresh');
+      return(dispatch(fetchNodeLatestData()));
     }
   }
 }

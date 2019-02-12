@@ -84,12 +84,97 @@ export const resetServerRequests = () => ({
   type: 'RESET_SERVER_REQUESTS',
 })
 
+export const requestNicknames = () => ({
+  type: 'REQUEST_NICKNAMES',
+})
+
+export const settingsSaved = () => ({
+  type: 'SETTINGS_SAVED',
+})
+
 export const queryServerConfigured = () => ({
   type: 'QUERY_SERVER_CONFIGURED',
 })
 
-export const saveNicknames = () => ({
-  type: 'SAVE_NICKNAMES',
+export function getNicknames() {
+  console.log('getNicknames');
+  return (dispatch, getState) => {
+    currentState = getState();
+    if (!serverConfigured(dispatch, currentState)) return;
+    dispatch(requestNicknames());
+    let url = 'https://' 
+              + currentState.settings.myMQTTServer
+              + '/SensorIoT/get_nicknames?gw='+ currentState.settings.myGatewayID;
+    console.log('get_nicknames using url:', url);
+    return fetch(url)
+    .then(response => response.json())
+    .then(json => dispatch(receiveNicknames(json)))
+    .catch(error => handleError(dispatch, error))
+  }
+}
+
+export const receiveNicknames = (json) => ({
+  type: 'RECEIVE_NICKNAMES',
+  json: json,
+})
+
+export function saveNicknames() {
+  console.log('saveNicknames');
+  return (dispatch, getState) => {
+    currentState = getState();
+    if (!serverConfigured(dispatch, currentState)) return;
+    let clean = true;
+    for(i=0; i<currentState.settings.nodeNicknames.length; i++){
+      if(currentState.settings.nodeNicknames[i].dirty == true) {
+        clean = false;
+      }
+    }
+    if(clean){
+      console.log('no nicknames have changed, not saving');
+      return;
+    }
+
+    dispatch(resetDirtyNicknames());
+
+    let url = 'https://' 
+    + currentState.settings.myMQTTServer
+    + '/SensorIoT/save_nicknames';
+    
+    let config = { 'gatewayConfig': [
+                    { 'gatewayID': currentState.settings.myGatewayID,
+                    'nodeNicknames': currentState.settings.nodeNicknames
+                    },
+                  ]
+                };
+
+    let body = JSON.stringify(config);
+    console.log('saveNicknames using url:', url, 'with body ', body);
+    return fetch(url, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: body,
+      }
+    )
+    .then(function(response) {
+      if (!response.ok) {
+        throw Error(response.statusText);
+      }
+      return response;
+    })
+    .then(function(response) {
+      console.log("saveNicknames received success from server");
+      dispatch(settingsSaved());
+    })
+    .catch(error => handleError(dispatch, error))
+
+  }
+}
+
+export const resetDirtyNicknames = () => ({
+  type: 'RESET_DIRTY_NICKNAMES',
 })
 
 function serverConfigured(dispatch, state) {
