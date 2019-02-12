@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import DisplayGaugeRow from '../containers/DisplayGaugeRow';
 import PropTypes from 'prop-types';
 
-const DashboardList = ({ list }) => {
+const DashboardList = ({ list, navigation }) => {
   console.log('DashboardList created with list:', list);
   let gaugeRows = [];
   for (let i=0; i < list.length; i++) {
@@ -11,8 +11,10 @@ const DashboardList = ({ list }) => {
       <DisplayGaugeRow
         key={i}
         nodeIndex={i}
-        style={styles.dashboardList}>
+        style={styles.dashboardList}
+        navigation={navigation}>
           {list[i].nodeID}
+        
       </DisplayGaugeRow>
     )
   }

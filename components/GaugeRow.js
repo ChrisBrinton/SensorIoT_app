@@ -3,8 +3,9 @@ import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import PropTypes from 'prop-types';
 import DisplayGauge from '../containers/DisplayGauge';
 import { format } from 'date-fns';
+import {withNavigation} from 'react-navigation'
 
-const GaugeRow = ({ node, label, children }) => {
+const GaugeRow = ({ node, label, navigation ,children }) => {
     let deviceWidth = Dimensions.get('window').width;
     let gaugeSize = parseInt((deviceWidth - 20*2)/4 - 2*2);
 
@@ -23,22 +24,26 @@ const GaugeRow = ({ node, label, children }) => {
                 <DisplayGauge
                     type='Temp'
                     size={gaugeSize}
-                    value={node.latestData.F}>
+                    value={node.latestData.F}
+                    onPress={() => { navigation.navigate('History', {defaultNode : node.nodeID, sensor : 'TempF'}) } }>
                 </DisplayGauge>
                 <DisplayGauge
                     type='Hum'
                     size={gaugeSize}
-                    value={node.latestData.H}>
+                    value={node.latestData.H}
+                    onPress={() => { navigation.navigate('History', {defaultNode : node.nodeID, sensor : 'Hum'}) } }>
                 </DisplayGauge>
                 <DisplayGauge
                     type='Pres'
                     size={gaugeSize}
-                    value={node.latestData.P}>
+                    value={node.latestData.P}
+                    onPress={() => { navigation.navigate('History', {defaultNode : node.nodeID, sensor : 'Pres'}) } }>
                 </DisplayGauge>
                 <DisplayGauge
                     type='Batt'
                     size={gaugeSize}
-                    value={node.latestData.BAT}>
+                    value={node.latestData.BAT}
+                    onPress={() => { navigation.navigate('History', {defaultNode : node.nodeID, sensor : 'Batt'}) } }>
                 </DisplayGauge>
             </View>
         </View>

@@ -1,7 +1,6 @@
 import React from 'React';
 import { TouchableHighlight, StyleSheet, Text, View } from 'react-native';
 import SelectNodes from '../containers/SelectNodes';
-import PropTypes from 'prop-types';
 
 const getNicknameForNodeID = (nodeID, nicknames) => {
   let label=nodeID;
@@ -13,7 +12,7 @@ const getNicknameForNodeID = (nodeID, nicknames) => {
   return label;
 }
 
-const ControlsButtonList = ({ list, nicknames, children }) => {
+const ControlsButtonList = ({ list, nicknames,  defaultNode, children }) => {
   console.log('controlsButtonList created with list:', list);
   let nodeButtons = [];
   for (let i=0; i < list.length; i++) {
@@ -26,6 +25,8 @@ const ControlsButtonList = ({ list, nicknames, children }) => {
       </SelectNodes>
     )
   }
+
+  
 
   //console.log('ControlsButtonList returning nodeButtons',nodeButtons);
   return (
