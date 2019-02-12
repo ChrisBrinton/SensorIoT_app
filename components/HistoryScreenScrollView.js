@@ -1,5 +1,5 @@
 import React from 'React';
-import { ScrollView, StyleSheet } from 'react-native';
+import { RefreshControl, ScrollView, StyleSheet } from 'react-native';
 import { connect } from 'react-redux'
 import { fetchSensorData } from '../actions';
 
@@ -17,14 +17,14 @@ isScrollAtAnEnd = ({ layoutMeasurement, contentOffset, contentSize }) => {
 
 
 const mapStateToProps = (state, ownProps) => {
-    //console.log('DisplayDashboardScrollView mapStateToProps ownProps:', ownProps);
+    //console.log('HistoryScreenScrollView mapStateToProps ownProps:', ownProps);
     return ({
         isLoading: state.histogramDataSet.isLoading,
     })
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-    //console.log('DisplayDashboardScrollView mapDispatchToProps ownProps:', ownProps);
+    console.log('HistoryScreenScrollView mapDispatchToProps ownProps:', ownProps);
     return {
         onScrollEndDrag: ({ nativeEvent }) => {
             if (isScrollAtAnEnd(nativeEvent)) {
@@ -32,18 +32,29 @@ const mapDispatchToProps = (dispatch, ownProps) => {
             } else {
                 return;
             }
+        },
+        onRefresh: () => {
+            //console.log('onRefresh');
+            return(dispatch(fetchSensorData()));
         }
     }
 }
 
 
 
-const HistoryScreenScrollView = ({ children, onScrollEndDrag }) => {
+const HistoryScreenScrollView = ({ children, onScrollEndDrag, onRefresh }) => {
     //console.log('ControlsButton created with children:', children);
     return (
         <ScrollView
             style={styles.HistoryScreenScrollView}
-            onScrollEndDrag={onScrollEndDrag}>
+            refreshControl={ 
+                <RefreshControl
+                  refreshing={false}
+                  onRefresh={onRefresh}
+                  />
+            }
+//            onScrollEndDrag={onScrollEndDrag}
+        >
             {children}
         </ScrollView>
     )

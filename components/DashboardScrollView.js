@@ -1,12 +1,25 @@
 import React from 'React';
-import { ScrollView, StyleSheet } from 'react-native';
+import { Dimensions, RefreshControl, ScrollView, StyleSheet } from 'react-native';
 
-const DashboardScrollView = ({ children, onScrollEndDrag }) => {
-  //console.log('ControlsButton created with children:', children);
+//_onRefresh = () => {
+//  console.log('refreshing');
+//}
+
+const DashboardScrollView = ({ children, onScrollEndDrag, onRefresh }) => {
+  console.log('DashboardScrollview created with Dimensions ', Dimensions);
   return (
       <ScrollView
+
         style={styles.dashboardScrollView}
-        onScrollEndDrag={onScrollEndDrag}>
+        refreshControl={ 
+          <RefreshControl
+            refreshing={false}
+            onRefresh={onRefresh}
+            />
+         }
+//        onScrollEndDrag={onScrollEndDrag}
+
+      >
         {children}
       </ScrollView>
   )

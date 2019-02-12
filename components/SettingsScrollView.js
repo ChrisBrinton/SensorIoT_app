@@ -2,7 +2,7 @@ import React from 'React';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import PropTypes from 'prop-types';
 
-const DashboardScrollView = ({ children, onScrollEndDrag }) => {
+const SettingsScrollView = ({ children, onScrollEndDrag }) => {
   //console.log('ControlsButton created with children:', children);
   return (
       <ScrollView
@@ -13,7 +13,7 @@ const DashboardScrollView = ({ children, onScrollEndDrag }) => {
   )
 }
 
-export default DashboardScrollView
+export default SettingsScrollView
 
 const styles = StyleSheet.create({
   scrollView: {
