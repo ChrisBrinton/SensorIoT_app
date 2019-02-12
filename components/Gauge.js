@@ -1,8 +1,9 @@
 import React from 'React';
 import { StyleSheet, Text, View } from 'react-native';
 import AnimatedCircularProgress from './AnimatedCircularProgress';
+import { TouchableHighlight} from 'react-native';
 
-const Gauge = ( { type, value, min, max, size } ) => {
+const Gauge = ( { type, value, min, max, size , onPress} ) => {
     if ( value > max ) {
         max = value;
     }
@@ -12,41 +13,46 @@ const Gauge = ( { type, value, min, max, size } ) => {
     let adjustedValue = ((value-min)/(max - min))*100;
     //console.log('creating Gauge ', type, value, min, max);
     return (
-        <View style={GaugePortraitStyles.dashboardGaugeContainer}>
-            <AnimatedCircularProgress
-                style={{ margin: 0, marginBottom: 0, width: size, height: 65, alignItems: 'center' }}
-                size={size}
-                width={12}
-                fill={adjustedValue}
-                value={value}
-                rotation={-120}
-                arcSweepAngle={240}
-                tintColor="#00e0FF"
-                onAnimationComplete={() => {
+        <TouchableHighlight
+            onPress={ onPress }
+            underlayColor='#BFE6EB'
+        >
+            <View style={GaugePortraitStyles.dashboardGaugeContainer}>
+                <AnimatedCircularProgress
+                    style={{ margin: 0, marginBottom: 0, width: size, height: 65, alignItems: 'center' }}
+                    size={size}
+                    width={12}
+                    fill={adjustedValue}
+                    value={value}
+                    rotation={-120}
+                    arcSweepAngle={240}
+                    tintColor="#00e0FF"
+                    onAnimationComplete={() => {
                         //console.log('onAnimationComplete')
                         return
-                }}
-                backgroundColor="#3D5875"
-                renderChild={ (value) => {
+                    }}
+                    backgroundColor="#3D5875"
+                    renderChild={(value) => {
                         return (
-                        <Text style={GaugePortraitStyles.dashboardGaugeText}>
-                            {Number.parseFloat(value).toFixed(1)}
-                        </Text>
+                            <Text style={GaugePortraitStyles.dashboardGaugeText}>
+                                {Number.parseFloat(value).toFixed(1)}
+                            </Text>
                         )
                     }
-                }/>
-            <View style={{ flexDirection:'row', width: size, height: 12, margin: 0, justifyContent: 'space-between', alignItems: 'center' }}>
-                <Text style={{fontSize:12, marginLeft: 5, textAlign: 'left'}}>
-                    {min}
+                    } />
+                <View style={{ flexDirection: 'row', width: size, height: 12, margin: 0, justifyContent: 'space-between', alignItems: 'center' }}>
+                    <Text style={{ fontSize: 12, marginLeft: 5, textAlign: 'left' }}>
+                        {min}
+                    </Text>
+                    <Text style={{ fontSize: 12, marginRight: 5, textAlign: 'right' }}>
+                        {max}
+                    </Text>
+                </View>
+                <Text style={{ fontSize: 18, textAlign: 'center', marginTop: 0 }}>
+                    {type}
                 </Text>
-                <Text style={{fontSize:12, marginRight: 5, textAlign: 'right'}}>
-                    {max}
-                </Text>        
             </View>
-            <Text style={{fontSize:18, textAlign:'center', marginTop: 0 }}>
-                {type}
-            </Text>
-        </View>
+        </TouchableHighlight>
     )
 }
 

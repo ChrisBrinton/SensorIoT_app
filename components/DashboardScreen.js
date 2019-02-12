@@ -13,6 +13,7 @@ import DisplayDashboardScrollView from '../containers/DisplayDashboardScrollView
 import { fetchNodeList, fetchNodeLatestData } from '../actions';
 import { connect } from 'react-redux';
 
+
 let createHandlers = function(dispatch) {
   let componentDidFocus = function(payload) {
     console.log('DashboardScreen - didFocus ');
@@ -29,6 +30,8 @@ let createHandlers = function(dispatch) {
     componentWillBlur,
   };
 }
+
+
 
 class DashboardScreen extends Component {
 
@@ -54,6 +57,8 @@ class DashboardScreen extends Component {
     console.log('DashboardScreen - componentWillMount')
   }
  
+  
+  
   static navigationOptions = ({navigation}) => {
       const params = navigation.state.params || {};
   
@@ -93,7 +98,7 @@ class DashboardScreen extends Component {
     render() {
         return (
             <DisplayDashboardScrollView >
-                <DisplayDashboardList/>
+                <DisplayDashboardList navigation={this.props.navigation}/>
                 <DashboardActivityIndicator/>
             </DisplayDashboardScrollView>
         )

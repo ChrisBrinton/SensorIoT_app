@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native'
 import { Grid, LineChart, XAxis, YAxis } from 'react-native-svg-charts'
 import * as d3Scale from 'd3-scale';
@@ -89,46 +90,41 @@ function getNodeColor(nodeID, nodeList) {
   return 'red' //default color
 }
 
-const Histogram = ({ ...args }) => {
-  //console.log('HistogramYAxis min', props.yAxisMin, 'max', props.yAxisMax, 'yAxisLabel', props.yAxisLabel, 'data', props.data,);
-  let dataSets = [];
-  console.log('Histogram args', args);
-  //start at 1 to avoid redrawing the first graph
-  for (let i=1; i < args.data.length; i++) {
-    let color = getNodeColor(args.data[i].nodeID, args.nodeList);
-    dataSets.push(
-      <LineChart
-        key={i}
-        style={histogramStyles.overlayGraph}
-        data={args.data[i].sensorData}
-        yMax={args.yAxisMax}
-        yMin={args.yAxisMin}
-        yAccessor={args.yAccessor}
-        xAccessor={args.xAccessor}
-        xScale={d3Scale.scaleTime}
-        svg={{ stroke: color }}
-        contentInset={args.contentInsetY}
-        >
-      </LineChart>
-    )
+//const Histogram = ({ ...args }) => {
+class Histogram extends Component {
+
+  constructor(props) {
+    super(props);
   }
-  color = getNodeColor(args.data[0].nodeID, args.nodeList);
-  return (
-    <View>
-      <View style={histogramStyles.histogramContainer}>
-        <YAxis
-          style={histogramStyles.histogramYLegend}
-          data={args.data[0].sensorData}
-          min={args.yAxisMin}
-          max={args.yAxisMax}
-          yAccessor={args.yAccessor}
-          contentInset={args.contentInsetY}
-          svg={args.svgY}
-          formatLabel={args.yAxisLabel}>
-        </YAxis>
+
+  componentDidMount() {
+    console.log('Histogram - componentDidMount');
+    this.props.loadDefaultNodeData();
+  }
+
+  componentWillUnmount() {
+    this.props.clearSelectedNodes();
+  }
+
+  render() {
+    args = Object.assign({}, this.props);
+    //console.log('HistogramYAxis min', props.yAxisMin, 'max', props.yAxisMax, 'yAxisLabel', props.yAxisLabel, 'data', props.data,);
+    let dataSets = [];
+    console.log('Histogram args', args);
+    //start at 1 to avoid redrawing the first graph
+    hasSensorData = false;
+    for (let i = 1; i < args.data.length; i++) {
+      let color = getNodeColor(args.data[i].nodeID, args.nodeList);
+
+      if (args.data[i].sensorData) {
+        hasSensorData = true;
+      }
+      dataSets.push(
+
         <LineChart
-          style={histogramStyles.histogram}
-          data={args.data[0].sensorData}
+          key={i}
+          style={histogramStyles.overlayGraph}
+          data={args.data[i].sensorData}
           yMax={args.yAxisMax}
           yMin={args.yAxisMin}
           yAccessor={args.yAccessor}
@@ -137,39 +133,71 @@ const Histogram = ({ ...args }) => {
           svg={{ stroke: color }}
           contentInset={args.contentInsetY}
         >
-          <HorizontalLine threshold={args.lowThreshold} color={'blue'}/>
-          <HorizontalLine threshold={args.highThreshold} color={'red'}/>
-          <CustomGrid/>
-          <GridBorder/>
         </LineChart>
-        {dataSets}
+      )
+    }
+    color = getNodeColor(args.data[0].nodeID, args.nodeList);
+
+    return (
+      <View>
+        <View style={histogramStyles.histogramContainer}>
+          <YAxis
+            style={histogramStyles.histogramYLegend}
+            data={args.data[0].sensorData}
+            min={args.yAxisMin}
+            max={args.yAxisMax}
+            yAccessor={args.yAccessor}
+            contentInset={args.contentInsetY}
+            svg={args.svgY}
+            formatLabel={args.yAxisLabel}>
+          </YAxis>
+          <LineChart
+            style={histogramStyles.histogram}
+            data={args.data[0].sensorData}
+            yMax={args.yAxisMax}
+            yMin={args.yAxisMin}
+            yAccessor={args.yAccessor}
+            xAccessor={args.xAccessor}
+            xScale={d3Scale.scaleTime}
+            svg={{ stroke: color }}
+            contentInset={args.contentInsetY}
+          >
+            <HorizontalLine threshold={args.lowThreshold} color={'blue'} />
+            <HorizontalLine threshold={args.highThreshold} color={'red'} />
+            <CustomGrid />
+            <GridBorder />
+          </LineChart>
+          {dataSets}
+        </View>
+        <View style={histogramStyles.histogramXLegend}>
+          <XAxis
+            data={args.data[0].sensorData}
+            xAccessor={args.xAccessor}
+            scale={d3Scale.scaleTime}
+            numberOfTicks={7}
+            style={histogramStyles.histogramXLegend}
+            formatLabel={(value) => dateFns.format(value, 'HH:mm')}
+            contentInset={args.contentInsetX}
+            svg={args.svgX}
+          />
+        </View>
+        <View style={histogramStyles.histogramXLegend}>
+          <XAxis
+            data={args.data[0].sensorData}
+            xAccessor={({ item }) => item.date}
+            scale={d3Scale.scaleTime}
+            numberOfTicks={7}
+            style={histogramStyles.histogramXLegend}
+            formatLabel={(value) => dateFns.format(value, 'MMM DD')}
+            contentInset={args.contentInsetX}
+            svg={args.svgX}
+          />
+        </View>
       </View>
-      <View style={histogramStyles.histogramXLegend}>
-        <XAxis
-          data={args.data[0].sensorData}
-          xAccessor={args.xAccessor}
-          scale={d3Scale.scaleTime}
-          numberOfTicks={7}
-          style={histogramStyles.histogramXLegend}
-          formatLabel={(value) => dateFns.format(value, 'HH:mm')}
-          contentInset={args.contentInsetX}
-          svg={args.svgX}
-        />
-      </View>
-      <View style={histogramStyles.histogramXLegend}>
-        <XAxis
-          data={args.data[0].sensorData}
-          xAccessor={({ item }) => item.date}
-          scale={d3Scale.scaleTime}
-          numberOfTicks={7}
-          style={histogramStyles.histogramXLegend}
-          formatLabel={(value) => dateFns.format(value, 'MMM DD')}
-          contentInset={args.contentInsetX}
-          svg={args.svgX}
-        />
-      </View>
-    </View>
-  )
+    )
+  }
+
+
 }
 
 export default Histogram
