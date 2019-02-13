@@ -92,7 +92,7 @@ function getNodeColor(nodeID, nodeList) {
 const Histogram = ({ ...args }) => {
   //console.log('HistogramYAxis min', props.yAxisMin, 'max', props.yAxisMax, 'yAxisLabel', props.yAxisLabel, 'data', props.data,);
   let dataSets = [];
-  console.log('Histogram args', args);
+  //console.log('Histogram args', args);
   //start at 1 to avoid redrawing the first graph
   for (let i=1; i < args.data.length; i++) {
     let color = getNodeColor(args.data[i].nodeID, args.nodeList);

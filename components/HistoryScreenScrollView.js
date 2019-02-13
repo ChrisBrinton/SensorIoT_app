@@ -17,14 +17,14 @@ isScrollAtAnEnd = ({ layoutMeasurement, contentOffset, contentSize }) => {
 
 
 const mapStateToProps = (state, ownProps) => {
-    //console.log('HistoryScreenScrollView mapStateToProps ownProps:', ownProps);
+    console.log('HistoryScreenScrollView mapStateToProps');
     return ({
         isLoading: state.histogramDataSet.isLoading,
     })
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-    console.log('HistoryScreenScrollView mapDispatchToProps ownProps:', ownProps);
+    console.log('HistoryScreenScrollView mapDispatchToProps');
     return {
         onScrollEndDrag: ({ nativeEvent }) => {
             if (isScrollAtAnEnd(nativeEvent)) {
