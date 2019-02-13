@@ -18,7 +18,7 @@ import SelectRange from '../containers/SelectRange';
 import DisplayControlsButtonList from '../containers/DisplayControlsButtonList';
 
 import HistoryActivityIndicator from '../containers/HistoryActivityIndicator';
-import { yAxisTypes, fetchNodeList } from '../actions';
+import { yAxisTypes, fetchNodeList, toggleNode, fetchSensorData } from '../actions';
 import HistoryScreenScrollView from './HistoryScreenScrollView';
 
 export class HistoryScreen extends Component {
@@ -28,7 +28,7 @@ export class HistoryScreen extends Component {
   }
 
   componentDidMount() {
-    console.log('HistoryScreen - componentDidMount')
+    console.log('HistoryScreen - componentDidMount');
   }
 
   componentWillMount() {
@@ -78,6 +78,9 @@ export class HistoryScreen extends Component {
 
   render() {
 
+    defaultNode = this.props.navigation.getParam('defaultNode', 1);
+    defaultSensor = this.props.navigation.getParam('sensor', 'TempF');
+
     const contentInsetY = { top: 10, bottom: 10, left: 0, right: 0 };
     const contentInsetX = { top: 0, bottom: 0, left: 15, right: 5 };
 
@@ -100,6 +103,8 @@ export class HistoryScreen extends Component {
               originY: 0,
               y: 3,
             }}
+            defaultNode={defaultNode}
+            sensor={defaultSensor}
           >
           </DisplayHistogram>
 
@@ -143,6 +148,7 @@ export class HistoryScreen extends Component {
           </HistoryActivityIndicator>
         </View>
       </HistoryScreenScrollView>
+
     );
   }
 }

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { setYAxisType, setYAxisRange } from '../actions'
+import { setYAxisType, setYAxisRange , toggleNode , fetchSensorData, setDefaultNode, clearActiveFlags} from '../actions'
 import Histogram from '../components/Histogram'
 
 function getRangeFromType(reduxState) {
@@ -41,7 +41,7 @@ function getLabelFromType(type) {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  //console.log('Histogram mapStateToProps state:', state);
+  console.log('Histogram mapStateToProps state:', state);
   let newRange = getRangeFromType(state);
   let data = state.histogramDataSet.data;
 
@@ -61,6 +61,7 @@ const mapStateToProps = (state, ownProps) => {
     //console.log('Histogram after temp transform to C', data);
   }
   
+  
   return (
     {
       ...ownProps,
@@ -72,14 +73,30 @@ const mapStateToProps = (state, ownProps) => {
       highThreshold: state.yAxis.highThreshold,
       data: data,
       nodeList: state.histogramDataSet.nodeList,
+      initialized : state.initialized
     }
   )
 }
 
 
 
-const mapDispatchToProps = dispatch => ({
-})
+const mapDispatchToProps = (dispatch,ownProps) => {
+  console.log('Histogram mapDispatchToProps ');
+ 
+  return {
+
+    loadDefaultNodeData: () => {
+      console.log(`in loadDefaultNodeData: is initialized ${ownProps.initialized}`)
+      if (!ownProps.initialized) {
+        dispatch(setDefaultNode(dispatch, ownProps,ownProps.defaultNode, ownProps.sensor));
+        return (dispatch(fetchSensorData()));
+      }
+
+    },
+    clearSelectedNodes: () => {
+      return (dispatch(clearActiveFlags()));
+    }
+}}
 
 export default connect(
   mapStateToProps,

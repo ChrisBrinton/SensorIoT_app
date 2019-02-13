@@ -36,6 +36,16 @@ export const toggleNode = (nodeIndex) => ({
   nodeIndex: nodeIndex,
 })
 
+export function setDefaultNode(dispatch, state, nodeID, sensor) {
+  
+  dispatch(setYAxisType(sensor));
+
+  return {type: 'SET_DEFAULT_NODE',
+  nodeID : nodeID,
+  sensor : sensor
+  }
+}
+
 export const toggleTempType = () => ({
   type: 'TOGGLE_TEMP_TYPE',
 })
@@ -180,7 +190,7 @@ function serverConfigured(dispatch, state) {
 }
 
 function handleError(dispatch, error) {
-  console.log('Error caught',error,error.name,error.message);
+  //console.log('Error caught',error,error.name,error.message);
   if (typeof error != 'undefined'){
     switch (error.message) {
       case 'Network request failed':
@@ -270,6 +280,12 @@ export function fetchNodeList() {
       .catch(error => handleError(dispatch, error));
   }
 }
+
+export const clearActiveFlags = () => ( 
+  {
+    type : 'CLEAR_ACTIVE_FLAGS'
+  }
+)
 
 export const receiveNodeList = (json) => ({
   type: 'RECEIVE_NODELIST',
