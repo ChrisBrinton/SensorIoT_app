@@ -17,12 +17,47 @@ Prerequisites:
 - You will also need git if you dont already have it [git](https://www.git-scm.com/downloads)
 
 Once the prereqs are installed, in your dev area on your local machine:
-  - git clone https://github.com/ChrisBrinton/SensorIoT_app
-  - cd SensorIoT_app
-  - npm install
-  - react-native run-android (or react-native run-ios)
+
+    git clone https://github.com/ChrisBrinton/SensorIoT_app
+    cd SensorIoT_app
+    npm install
+    react-native run-android (or react-native run-ios)
 
 On Android, depending on how many revisions Android Studio and react-native have moved forward, you may need to fiddle with the android/app/build.gradle file to get the sdk version matched properly.
+
+To recreate the project on iOS after the build is hopelessly buggered:
+
+    git clone https://github.com/ChrisBrinton/SensorIoT_app
+    react-native init SensorIoT (yes, a different app with a different name)
+    cp SensorIoT_app/actions/* SensorIoT
+    cp SensorIoT_app/components/* SensorIoT
+    cp SensorIoT_app/containers/* SensorIoT
+    cp SensorIoT_app/reducers/* SensorIoT
+    cp SensorIoT_app/package.json SensorIoT
+    cp SensorIoT_app/package-lock.json SensorIoT
+
+      for iOS
+    cp SensorIoT_app/ios/SensorIoT/AppDelegate.m SensorIoT/ios
+    cp SensorIoT_app/ios/SensorIoT/Base.lproj SensorIoT/ios/SensorIoT/Base.lproj
+    rm SensorIoT/ios/Images.xcassets
+    cp SensotIoT_app/ios/Images.xcassets SensorIoT/ios/SensorIoT
+
+    manually link ART.xcodeproj [react-native instructions](https://facebook.github.io/react-native/docs/linking-libraries-ios.html#manual-linking) or the more specific [stack overflow instructions](https://stackoverflow.com/questions/37658957/no-component-found-for-view-with-name-artshape/49381982#49381982)
+
+    cd SensorIoT
+
+    npm install
+    react-native link
+    react-native run-ios
+
+    Once the build is recovered, replace the original ios folder with the working one:
+    cd ..
+    rm -rf SensorIoT_app/ios
+    cp -r SensorIoT/ios/ SensorIoT/ios
+    
+    fingers crossed, the ios build now works.
+
+
 
 ## Building the SensorIoT app
 The current build instructions are based on running the Android Studio build environment on Windows using VSCode as an IDE and the Android Simulator to test & debug.
@@ -31,19 +66,23 @@ node.js packages will likely need to be updated if any significant time has pass
 - Update node.js itself by downloading the windows installer from https://nodejs.org
  
 - In SensorIoT_app project dir
-  - npm outdated - will list all local packages that need an update
-  edit the package.json file with newer version numbers for any desired updated (This is potentially a PITA of incompatibility, so proceed cautiously)
-  - npm install will pull any versions from package.json that are not installed. 
+
+      npm outdated - will list all local packages that need an update
+        edit the package.json file with newer version numbers for any desired updated (This is potentially a PITA of incompatibility, so proceed cautiously)
+      npm install will pull any versions from package.json that are not installed. 
  
 - react-native may need to be updated:
-  react-native-git-upgrade
- 
+
+      react-native-git-upgrade
+    
 ### Building SensorIoT on Android
 Make sure you are running the latest version of Android Studio: Help->Check for Updates
 The "AVD Manager" menu holds the simulators. We've been using a "Pixel 2 no sound" simulator profile. Start the simulator
-react-native run-android - will build the project and start execution on the simulator
-react-native log-android - this will show the debug log info coming from the simulator
-./gradew clean - run this from the android directory
+
+
+    react-native run-android - will build the project and start execution on the simulator
+    react-native log-android - this will show the debug log info coming from the simulator
+    ./gradew clean - run this from the android directory
 
 ### Building SensorIoT on iOS
 The target project is in ~SensorIoT/ios/SensorIoT.xcodeproj
@@ -99,14 +138,19 @@ time only either for a given account, or for a given app. For the same app, but 
 http://appiconmaker.co
 
 ## Create a clean project from Git repo (On Windows for Android)
-  git clone https://github.com/ChrisBrinton/SensorIoT_app.git SensorIoT
-  cd SensorIoT
-  npm install
-  react-native run-android
+
+    git clone https://github.com/ChrisBrinton/SensorIoT_app.git SensorIoT
+    cd SensorIoT
+    npm install
+    react-native run-android
 
 ## Upload app to TestFlight
-Instructions here: https://medium.com/@dmathewwws/steps-to-put-your-app-on-testflight-and-then-the-ios-app-store-10a7996411b1
+Instructions here: 
+[put your app on testflight](https://medium.com/@dmathewwws/steps-to-put-your-app-on-testflight-and-then-the-ios-app-store-10a7996411b1)
+
 TL;DR:
+
   Create an Product->Archive with a target of Generic iOS Device. 
+  
   Once the Archive is created use the "Distribute App" button on the right or the archive pane to push it to the app store.
   
