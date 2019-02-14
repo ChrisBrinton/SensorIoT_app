@@ -49,21 +49,21 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  //console.log('SetTextField mapDispatchToProps ownProps:', ownProps);
+  //console.log('SetTextField mapDispatchToProps ownProps:', ownProps, 'value:', value);
+  let action = noAction();
+  let subTitle = '';
+  let bits = [];
+  if(ownProps.title.indexOf('nickname') !== -1){
+    bits = ownProps.title.split(' ');
+    subTitle = bits[0];
+    nodeID = parseInt(bits[bits.length-1]);
+  } else {
+    subTitle = ownProps.title;
+  }
   return {
-      onChangeText: (value) => {
+    onChangeText: (value) => {
       //console.log('SetTextField mapDispatchToProps subTitle ', subTitle, ' nodeID ', nodeID, ' value ', value);
-        let action = noAction();
-        let subTitle = '';
-        let bits = [];
-        if(ownProps.title.indexOf('nickname') !== -1){
-          bits = ownProps.title.split(' ');
-          subTitle = bits[0];
-          nodeID = parseInt(bits[bits.length-1]);
-        } else {
-          subTitle = ownProps.title;
-        }
-        switch(subTitle) {
+      switch(subTitle) {
         case 'MQTT Server':
           action = setMQTTServer(value);
           break;
@@ -71,7 +71,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
           action = setGatewayID(value);
           break;
         case 'nicknameShort':
-          console.log('SetTextField mapDispatchToProps ShortName nodeID:', nodeID, 'value:', value);
+          //console.log('SetTextField mapDispatchToProps ShortName nodeID:', nodeID, 'value:', value);
           action = setShortNickname(nodeID, value);
           break;
         case 'nicknameLong':
@@ -85,15 +85,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     onEndEditing: () => {
       console.log('TextInput onEndEditing');
-      let subTitle = '';
-      let bits = [];
-      if(ownProps.title.indexOf('nickname') !== -1){
-        bits = ownProps.title.split(' ');
-        subTitle = bits[0];
-        nodeID = parseInt(bits[bits.length-1]);
-      } else {
-        subTitle = ownProps.title;
-      }
       switch(subTitle) {
         case 'MQTT Server':
           dispatch(getNicknames());
