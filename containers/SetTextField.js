@@ -94,6 +94,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
           return(dispatch(fetchNodeList()));
         case 'nicknameShort':
           //console.log('SetTextField mapDispatchToProps ShortName nodeID:', nodeID, 'value:', value);
+          action = noAction();
           break;
         case 'nicknameLong':
           //console.log('SetTextField mapDispatchToProps LongName nodeID:', nodeID, 'value:', value);
