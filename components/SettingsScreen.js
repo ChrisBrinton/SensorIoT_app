@@ -71,9 +71,10 @@ class SettingsScreen extends Component {
               Temperature Format
             </Text>
             <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', margin: 5 }}>
-              <Text style={{ padding: 5 }}>C</Text>
+
+              <Text style={{ paddingRight: 6 }}>C</Text>
               <SelectTempType/>
-              <Text style={{ padding: 5 }}>F</Text>
+              <Text style={{ paddingLeft: 6 }}>F</Text>
             </View>
           </View>
           <View style={settingsScreenPortraitStyles.nicknameList}>

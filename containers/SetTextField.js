@@ -84,7 +84,16 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       return(dispatch(action));
     },
     onEndEditing: () => {
-      console.log('TextInput onEndEditing');
+      console.log('TextInput onEndEditing ');
+      let subTitle = '';
+      let bits = [];
+      if(ownProps.title.indexOf('nickname') !== -1){
+        bits = ownProps.title.split(' ');
+        subTitle = bits[0];
+        nodeID = parseInt(bits[bits.length-1]);
+      } else {
+        subTitle = ownProps.title;
+      }
       switch(subTitle) {
         case 'MQTT Server':
           dispatch(getNicknames());
@@ -94,6 +103,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
           return(dispatch(fetchNodeList()));
         case 'nicknameShort':
           //console.log('SetTextField mapDispatchToProps ShortName nodeID:', nodeID, 'value:', value);
+          action = noAction();
           break;
         case 'nicknameLong':
           //console.log('SetTextField mapDispatchToProps LongName nodeID:', nodeID, 'value:', value);
