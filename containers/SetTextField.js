@@ -84,7 +84,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       return(dispatch(action));
     },
     onEndEditing: () => {
-      console.log('TextInput onEndEditing');
+      console.log('TextInput onEndEditing ');
       let subTitle = '';
       let bits = [];
       if(ownProps.title.indexOf('nickname') !== -1){
