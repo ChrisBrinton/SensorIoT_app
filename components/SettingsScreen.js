@@ -52,7 +52,7 @@ class SettingsScreen extends Component {
   render() {
 
     return (
-      <View style={settingsScreenPortraitStyles.settingsContainer}>
+      <View style={settingsScreenPortraitStyles.settingsContainer}>        
         <DisplaySettingsScrollView>
           <View style={settingsScreenPortraitStyles.MQTTrow}>
             <SetTextField
@@ -71,9 +71,9 @@ class SettingsScreen extends Component {
               Temperature Format
             </Text>
             <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', margin: 5 }}>
-              <Text>C</Text>
+              <Text style={{ padding: 5 }}>C</Text>
               <SelectTempType/>
-              <Text>F</Text>
+              <Text style={{ padding: 5 }}>F</Text>
             </View>
           </View>
           <View style={settingsScreenPortraitStyles.nicknameList}>
