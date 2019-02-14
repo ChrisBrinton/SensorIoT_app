@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import NickNameRow from '../components/NicknameRow'
+import NicknameRow from '../components/NicknameRow'
 
 const mapStateToProps = (state, ownProps) => {
   //console.log('DisplayNickNameRow mapStateToProps state.settings ', state.settings, 'ownProps:', ownProps);
@@ -19,4 +19,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-) (NickNameRow)
+) (NicknameRow)
