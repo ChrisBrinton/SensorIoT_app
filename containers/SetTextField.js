@@ -50,19 +50,19 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   //console.log('SetTextField mapDispatchToProps ownProps:', ownProps, 'value:', value);
-  let action = noAction();
-  let subTitle = '';
-  let bits = [];
-  if(ownProps.title.indexOf('nickname') !== -1){
-    bits = ownProps.title.split(' ');
-    subTitle = bits[0];
-    nodeID = parseInt(bits[bits.length-1]);
-  } else {
-    subTitle = ownProps.title;
-  }
   return {
     onChangeText: (value) => {
       //console.log('SetTextField mapDispatchToProps subTitle ', subTitle, ' nodeID ', nodeID, ' value ', value);
+      let action = noAction();
+      let subTitle = '';
+      let bits = [];
+      if(ownProps.title.indexOf('nickname') !== -1){
+        bits = ownProps.title.split(' ');
+        subTitle = bits[0];
+        nodeID = parseInt(bits[bits.length-1]);
+      } else {
+        subTitle = ownProps.title;
+      }
       switch(subTitle) {
         case 'MQTT Server':
           action = setMQTTServer(value);
