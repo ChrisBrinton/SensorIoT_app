@@ -110,7 +110,7 @@ class Histogram extends Component {
     args = Object.assign({}, this.props);
     //console.log('HistogramYAxis min', props.yAxisMin, 'max', props.yAxisMax, 'yAxisLabel', props.yAxisLabel, 'data', props.data,);
     let dataSets = [];
-    console.log('Histogram args', args);
+    //console.log('Histogram args', args);
     //start at 1 to avoid redrawing the first graph
     hasSensorData = false;
     for (let i = 1; i < args.data.length; i++) {

@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import DashboardList from '../components/DashboardList'
 
 const mapStateToProps = (state, ownProps) => {
-  console.log('DisplayDashboardList mapStateToProps ownProps:', ownProps);
+  console.log('DisplayDashboardList mapStateToProps');
   return ({
     list: state.dashboardDataSet.nodeData,
     navigation : ownProps.navigation
@@ -10,7 +10,7 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  console.log('DisplayDashboardList mapDispatchToProps ownProps:', ownProps);
+  console.log('DisplayDashboardList mapDispatchToProps');
   return {}
 }
 

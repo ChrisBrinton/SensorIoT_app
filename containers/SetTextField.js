@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { setMQTTServer, setGatewayID, setShortNickname, setLongNickname, noAction } from '../actions'
+import { setMQTTServer, setGatewayID, setShortNickname, setLongNickname, getNicknames, fetchNodeList, noAction } from '../actions'
 import SettingsTextField from '../components/SettingsTextField'
 
 const mapStateToProps = (state, ownProps) => {
@@ -49,19 +49,19 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
+  //console.log('SetTextField mapDispatchToProps ownProps:', ownProps, 'value:', value);
+  let action = noAction();
+  let subTitle = '';
+  let bits = [];
+  if(ownProps.title.indexOf('nickname') !== -1){
+    bits = ownProps.title.split(' ');
+    subTitle = bits[0];
+    nodeID = parseInt(bits[bits.length-1]);
+  } else {
+    subTitle = ownProps.title;
+  }
   return {
-  onChangeText: (value) => {
-      //console.log('SetTextField mapDispatchToProps ownProps:', ownProps, 'value:', value);
-      let action = noAction();
-      let subTitle = '';
-      let bits = [];
-      if(ownProps.title.indexOf('nickname') !== -1){
-        bits = ownProps.title.split(' ');
-        subTitle = bits[0];
-        nodeID = parseInt(bits[bits.length-1]);
-      } else {
-        subTitle = ownProps.title;
-      }
+    onChangeText: (value) => {
       //console.log('SetTextField mapDispatchToProps subTitle ', subTitle, ' nodeID ', nodeID, ' value ', value);
       switch(subTitle) {
         case 'MQTT Server':
@@ -82,7 +82,28 @@ const mapDispatchToProps = (dispatch, ownProps) => {
           action = {};
       }
       return(dispatch(action));
-    }
+    },
+    onEndEditing: () => {
+      console.log('TextInput onEndEditing');
+      switch(subTitle) {
+        case 'MQTT Server':
+          dispatch(getNicknames());
+          return(dispatch(fetchNodeList()));
+        case 'Gateway ID':
+          dispatch(getNicknames());
+          return(dispatch(fetchNodeList()));
+        case 'nicknameShort':
+          //console.log('SetTextField mapDispatchToProps ShortName nodeID:', nodeID, 'value:', value);
+          break;
+        case 'nicknameLong':
+          //console.log('SetTextField mapDispatchToProps LongName nodeID:', nodeID, 'value:', value);
+          action = noAction();
+          break;
+        default:
+          action = noAction();
+      }
+      return;
+    },
   }
 }
 

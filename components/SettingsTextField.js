@@ -3,7 +3,8 @@ import { TextField } from 'react-native-material-textfield';
 
 const SettingsTextField = ({ label, 
                               value, 
-                              onChangeText, 
+                              onChangeText,
+                              onEndEditing, 
                               key, 
                               characterRestriction, 
                               containerStyle, 
@@ -15,6 +16,7 @@ const SettingsTextField = ({ label,
       label={label}
       value={value}
       onChangeText={onChangeText}
+      onEndEditing={onEndEditing}
       key={key}
       characterRestriction={characterRestriction}
       containerStyle={containerStyle}
