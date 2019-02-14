@@ -16,11 +16,11 @@ const initialState = {
 }
 
 function _toggleNode(state, nodeIndex) {
-  //console.log('toggleNode state:', state, 'nodeIndex', nodeIndex);
   //console.log('toggleNode returning', newState);
   let newList = [];
   for (i in state.nodeList) {
     if (i == nodeIndex){
+      
       newList.push({nodeID: state.nodeList[i].nodeID,
                     isActive: !state.nodeList[i].isActive,
                     color: state.nodeList[i].color});
@@ -29,7 +29,28 @@ function _toggleNode(state, nodeIndex) {
       }
     }
   let newState = {nodeList: newList};
+
   return newState;
+}
+
+function _setDefaultNode(state, nodeID, sensor) {
+  let newList = [];
+  
+  for (i = 0; i < state.nodeList.length; i++) {
+    node = state.nodeList[i];
+    if (node.nodeID == nodeID) {
+      newList.push({
+        nodeID: node.nodeID,
+        isActive: true,
+        color: node.color
+      });
+    } else {
+      newList.push(node);
+    }
+
+  }
+
+  return  { nodeList: newList };
 }
 
 function findNode(nodeList, nodeID) {
@@ -51,13 +72,45 @@ function unpackSensorData(json) {
   return list;
 }
 
+function clearActiveFlags(getState) {
+  
+    let list = [];
+    for (i = 0 ; i<  getState.nodeList.length; i++) {
+      node = getState.nodeList[i];
+      nodeCopy = Object.assign({}, node, { isActive: false });
+      list.push(nodeCopy);
+    }
+
+    return Object.assign({}, getState, { nodeList: list , initialized : false});
+  
+}
+
 const histogramDataSet = (state = initialState, action) => {
   //console.log('histogramDataSet reducer - action', action, 'state:', state);
   switch (action.type) {
+    
+    case 'CLEAR_ACTIVE_FLAGS':
+      return  clearActiveFlags(state);
+
+    
+    case 'SET_DEFAULT_NODE':
+      if (state.initialized) {
+        console.log('already initialized');
+        return state;
+      }
+
+      console.log('initializing in historgramDataSet');
+    
+      newState = Object.assign({}, state,  _setDefaultNode(state, action.nodeID, action.sensor), {initialized: true});
+      
+      return newState;
+
     case 'TOGGLE_NODE':
-      return Object.assign({}, state, _toggleNode(state, action.nodeIndex));
+       return Object.assign({}, state, _toggleNode(state, action.nodeIndex));
+    
     case 'REQUEST_SERVER_DATA':
       return Object.assign({}, state, {isLoading: state.isLoading+1});
+    
     case 'RECEIVE_NODELIST':
       let nodeData = [];
       for (let i = 0; i < action.json.length; i++) {
