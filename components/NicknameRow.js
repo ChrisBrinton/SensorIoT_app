@@ -3,7 +3,7 @@ import SetTextField from '../containers/SetTextField'
 import { StyleSheet, Text, View } from 'react-native';
 import { TextField } from 'react-native-material-textfield';
 
-const NickNameRow = ({ label, viewcolor, titlecolor, onChangeShortText, onChangeLongText }) => {
+const NicknameRow = ({ label, viewcolor, titlecolor, onChangeShortText, onChangeLongText }) => {
   //console.log('NickNameRow - label', label, 'value', value, 'onChangeText', onChangeText);
   let shortKey = 'nicknameShort ' + label;
   let longKey = 'nicknameLong ' + label;
@@ -35,7 +35,7 @@ const NickNameRow = ({ label, viewcolor, titlecolor, onChangeShortText, onChange
     </View>
 )}
 
-export default NickNameRow
+export default NicknameRow
 
 const styles = StyleSheet.create({
   rowContainer: {

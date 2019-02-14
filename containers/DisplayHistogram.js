@@ -41,7 +41,7 @@ function getLabelFromType(type) {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  console.log('Histogram mapStateToProps state:', state);
+  console.log('Histogram mapStateToProps');
   let newRange = getRangeFromType(state);
   let data = state.histogramDataSet.data;
 
@@ -81,7 +81,7 @@ const mapStateToProps = (state, ownProps) => {
 
 
 const mapDispatchToProps = (dispatch,ownProps) => {
-  console.log('Histogram mapDispatchToProps ');
+  console.log('Histogram mapDispatchToProps');
  
   return {
 

@@ -181,6 +181,7 @@ function serverConfigured(dispatch, state) {
   if (state.settings.MQTTConfigured && state.settings.gatewayConfigured) {
     return true;
   } else {
+    console.log('server is not configured');
     if (state.settings.configMessageAlert == false) {
     dispatch(queryServerConfigured());
     Alert.alert('Please configure MQTT server and gateway in settings');
