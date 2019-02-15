@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { setMQTTServer, setGatewayID, setShortNickname, setLongNickname, getNicknames, fetchNodeList, noAction } from '../actions'
+import { setMQTTServer, setGatewayID, setShortNickname, setLongNickname, fetchNicknames, fetchNodeList, noAction } from '../actions'
 import SettingsTextField from '../components/SettingsTextField'
 
 const mapStateToProps = (state, ownProps) => {
@@ -96,10 +96,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       }
       switch(subTitle) {
         case 'MQTT Server':
-          dispatch(getNicknames());
+          dispatch(fetchNicknames());
           return(dispatch(fetchNodeList()));
         case 'Gateway ID':
-          dispatch(getNicknames());
+          dispatch(fetchNicknames());
           return(dispatch(fetchNodeList()));
         case 'nicknameShort':
           //console.log('SetTextField mapDispatchToProps ShortName nodeID:', nodeID, 'value:', value);

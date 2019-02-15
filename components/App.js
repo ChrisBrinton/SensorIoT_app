@@ -4,7 +4,7 @@ import SettingsScreen from './SettingsScreen';
 import { HistoryScreen } from './HistoryScreen';
 import DashboardScreen from './DashboardScreen';
 import { connect } from 'react-redux'
-import { fetchNodeList, fetchSensorData, fetchNodeLatestData } from '../actions';
+import { fetchNodeList, fetchNicknames, fetchNodeLatestData } from '../actions';
 import SplashScreen from 'react-native-splash-screen';
 
 //static navigationOptions = ({navigation}) => {
@@ -32,6 +32,7 @@ class App extends Component {
     this.props.fetchNodeList();
     //this.props.fetchSensorData();
     this.props.fetchNodeLatestData();
+    this.props.fetchNicknames();
     SplashScreen.hide();
   }
 
@@ -58,6 +59,9 @@ const mapDispatchToProps = (dispatch, getState) => {
     },
     fetchSensorData: () => {
       return(dispatch(fetchSensorData()))
+    },
+    fetchNicknames: () => {
+      return(dispatch(fetchNicknames()))
     },
     fetchNodeLatestData: () => {
       return(dispatch(fetchNodeLatestData()))
