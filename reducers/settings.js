@@ -23,6 +23,15 @@ function replaceNicknameRow(newNicknames, newNickNameRow) {
       }
     
   }
+  let obj = {
+    nodeID: newNicknameRow['node_id'], 
+    shortname: newNicknameRow['shortname'], 
+    longname: newNicknameRow['longname'], 
+    seq_no: newNicknameRow['seq_no'], 
+    dirty: false,
+  };
+
+  newNicknames.push(obj);
 }
 
 const settings = (state = initialState, action) => {
@@ -35,7 +44,6 @@ const settings = (state = initialState, action) => {
         myMQTTServer: action.myMQTTServer,
         MQTTConfigured: true,
         settingsUpdated: true,
-        configMessageAlert: false,
       })
     case 'SET_GATEWAY_ID':
       return ({
@@ -43,7 +51,6 @@ const settings = (state = initialState, action) => {
         myGatewayID: action.myGatewayID,
         gatewayConfigured: true,
         settingsUpdated: true,
-        configMessageAlert: false,
       })
     case 'QUERY_SERVER_CONFIGURED':
       return ({
@@ -56,14 +63,15 @@ const settings = (state = initialState, action) => {
         newNicknames = JSON.parse(JSON.stringify( state.nodeNicknames ));
       }
       //If we've received a nickname list back from the server, overwrite what we have
-//      console.log('receive nicknames action.json ', action.json);
-      for (i=0; i<action.json.length; i++) {
-        for (j=0; j<action.json[i]['nicknames'].length; j++) {
+      console.log('receive nicknames action.json ', action.json);
+      for (let i=0; i<action.json.length; i++) {
+        for (let j=0; j<action.json[i]['nicknames'].length; j++) {
           newNicknameRow = action.json[i]['nicknames'][j];
-//          console.log('before replaceNicknameRow newNicknames ', newNicknames, ' newNicknameRow ', newNicknameRow);
+          console.log('before replaceNicknameRow newNicknames ', newNicknames, ' newNicknameRow ', newNicknameRow, ' i ', i, ' j ', j);
           replaceNicknameRow(newNicknames, newNicknameRow);
         }
       }
+      console.log('Nicknames set to ', newNicknames);
       return({
         ...state,
         isLoading: 0,

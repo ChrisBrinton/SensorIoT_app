@@ -9,13 +9,13 @@ import SetTextField from '../containers/SetTextField'
 import DisplayNicknameList from '../containers/DisplayNicknameList'
 import DisplaySettingsScrollView from '../containers/DisplaySettingsScrollView'
 import SettingsActivityIndicator from '../containers/SettingsActivityIndicator'
-import { getNicknames, saveNicknames } from '../actions';
+import { fetchNicknames, saveNicknames } from '../actions';
 import { connect } from 'react-redux';
 
 let createHandlers = function(dispatch) {
   let componentDidFocus = function(payload) {
     console.log('SettingsScreen - didFocus ');
-    dispatch(getNicknames());
+    dispatch(fetchNicknames());
   }
 
   let componentWillBlur = function() {

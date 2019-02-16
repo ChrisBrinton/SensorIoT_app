@@ -96,8 +96,8 @@ export const queryServerConfigured = () => ({
   type: 'QUERY_SERVER_CONFIGURED',
 })
 
-export function getNicknames() {
-  console.log('getNicknames');
+export function fetchNicknames() {
+  console.log('fetchNicknames');
   return (dispatch, getState) => {
     currentState = getState();
     if (!serverConfigured(dispatch, currentState)) return;
@@ -181,7 +181,7 @@ function serverConfigured(dispatch, state) {
   if (state.settings.MQTTConfigured && state.settings.gatewayConfigured) {
     return true;
   } else {
-    console.log('server is not configured');
+    console.log('server is not configured - state.settings.configMessageAlert is ', state.settings.configMessageAlert);
     if (state.settings.configMessageAlert == false) {
     dispatch(queryServerConfigured());
     Alert.alert('Please configure MQTT server and gateway in settings');
