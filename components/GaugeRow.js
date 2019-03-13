@@ -61,11 +61,12 @@ const GaugeRowPortraitStyles = StyleSheet.create({
     },
     dashboardRow: {
         flexDirection: 'row',
+        justifyContent: 'space-between',
         height: 120,
         //backgroundColor: 'powderblue',
         margin:0,
-        marginLeft:20,
-        marginRight:20,
+        marginLeft:10,
+        marginRight:10,
         //backgroundColor: '#889900',
   },
 })
