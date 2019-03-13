@@ -30,6 +30,7 @@ build/
 gradle.properties
 local.properties
 *.iml
+android/gradle.properties
 
 # node.js
 #
@@ -55,4 +56,4 @@ buck-out/
 
 #VSCode
 .vscode/.react
-android/gradle.properties
+
