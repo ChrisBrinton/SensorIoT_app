@@ -99,14 +99,16 @@ time only either for a given account, or for a given app. For the same app, but 
 
 - Create a build for both playforms. 
   - Android - create a release build and then a "Signed APK" - https://facebook.github.io/react-native/docs/signed-apk-android.html
-    - The keystore file is called SensorIoT.keystore and the alias is sensoriot-alias. The password is stored in android/gradle.properties
+    - The keystore file is called SensorIoT.keystore and the alias is sensoriot-alias. The password is stored in android/app/gradle.properties
       and this needs to be in .gitignore for hopefully obvious reasons.
-    - Increment the versionCode and versionName in android/build.gradle. VersionCode needs to be a positive integer, so just versionCode++ is as
+    - Increment the versionCode and versionName in android/app/build.gradle. VersionCode needs to be a positive integer, so just versionCode++ is as
       this number is internal and only used to tell if a version is older or newer than another. VersionName is the version that will be seen
       by the user. This is what should match the version for iOS.
     - Assuming the build.gradle has been setup as per the above instructions, create the signed release APKs by executing:
       cd android
       ./gradlew assembleRelease
+        - Note that build behavior between debug and release can be quite different. Release can fail while debug is fine. It may require modifying the build.gradle files in libs that have native code to bring them up to consistent versions with SDK and SDK tools.
+        - The output is in ~/android/app/build/outputs/apk/release and there is an APK for both arm7 and x86.
     - Testing the release version on the simulator:
       react-native run-android --variant=release
 
@@ -117,7 +119,7 @@ time only either for a given account, or for a given app. For the same app, but 
   - Android - You control the deployment through the Google Play Console: https://play.google.com/apps/publish
     - Once logged in, select the SensorIoT app, then open the Release management tree from the lefthand menu and select App releases
     - Depending on the state of the app release cycle (whether its production, open beta or closed beta track), select the app that needs
-      to be updated and click "Manage" on the right-hand side, then select the "Edit Release" button.
+      to be updated and click "Manage" on the right-hand side, then select the "Create Release" button.
     - Upload the APK files created in the previous section. Enter release notes, save and review, then rollout.
     - The new version can take many minutes to hours to become available to testers.
 
