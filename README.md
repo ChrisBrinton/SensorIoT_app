@@ -97,7 +97,7 @@ https://medium.com/the-react-native-log/checklist-to-deploy-react-native-to-prod
 This explains the process for both iOS and Android, and is a high level checklist but very useful. Many of the steps are one
 time only either for a given account, or for a given app. For the same app, but newer version here is a summary:
 
-- Create a build for both playforms. 
+- Create a build for both platforms. 
   - Android - create a release build and then a "Signed APK" - https://facebook.github.io/react-native/docs/signed-apk-android.html
     - The keystore file is called SensorIoT.keystore and the alias is sensoriot-alias. The password is stored in android/app/gradle.properties
       and this needs to be in .gitignore for hopefully obvious reasons.

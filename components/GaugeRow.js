@@ -9,12 +9,13 @@ const GaugeRow = ({ node, label, navigation ,children }) => {
     let deviceWidth = Dimensions.get('window').width;
     let gaugeSize = parseInt((deviceWidth - 20*2)/4 - 2*2);
 
+    //console.log('GaugeRow created with node:', node, deviceWidth, gaugeSize);
+
     if(label){
         showlabel = label;
     } else {
         showlabel = 'Sensor ' + node.nodeID;
     }
-    console.log('GaugeRow created with node:', node, deviceWidth, gaugeSize);
     return (
         <View style={{ marginBottom: 10, backgroundColor: '#BFE6EB' }}>
             <Text style={GaugeRowPortraitStyles.dashboardRowLabel}>

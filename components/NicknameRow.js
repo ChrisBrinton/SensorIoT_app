@@ -8,7 +8,7 @@ const NicknameRow = ({ label, viewcolor, titlecolor, onChangeShortText, onChange
   let shortKey = 'nicknameShort ' + label;
   let longKey = 'nicknameLong ' + label;
   return (
-    <View style={{marginLeft:10, marginRight:10, marginTop:10, borderRadius:8, backgroundColor: viewcolor}}>
+    <View style={{marginLeft:30, marginRight:10, marginTop:10, borderRadius:8, backgroundColor: viewcolor}}>
       <Text style={{marginLeft:5, backgroundColor: titlecolor}}>
         {label}
       </Text>

@@ -6,7 +6,7 @@ const mapStateToProps = (state, ownProps) => {
   console.log('ControlsButtonList mapStateToProps ownProps:', ownProps);
   return ({
     list: state.histogramDataSet.nodeList,
-    nicknames: state.settings.nodeNicknames,
+    nicknames: state.settings.nodeNicknamesList,
     defaultNode : ownProps.defaultNode
   })
 }

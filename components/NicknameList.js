@@ -1,31 +1,41 @@
-import React from 'React';
-import DisplayNicknameRow from '../containers/DisplayNicknameRow';
+import React from "React";
+import DisplayNicknameRow from "../containers/DisplayNicknameRow";
+import DisplayGWNicknameRow from "../containers/DisplayGWNicknameRow";
 
 const NicknameList = ({ list, children }) => {
-  console.log('NicknameList created with list:', list);
+  console.log('NicknameList created with list: ', list);
   let nicknames = [];
-  for (let i=0; i < list.length; i++) {
-    const nicknamelabel = 'Node ID: ' + list[i].nodeID;
-    color='#C5E8ED';
-    if(i%2==0) {
-      color='#9ED9E0';
-    }
+  for (i in list) {
+    const gwNicknameLabel = 'Gateway ID: ' + list[i].gateway_id;
+    let color = "#A5D8FD";
     nicknames.push(
-      <DisplayNicknameRow
+      <DisplayGWNicknameRow
         key={i}
-        nodeIndex={i}
-        label={nicknamelabel}
+        gateway_id={list[i].gateway_id}
+        label={gwNicknameLabel}
         viewcolor={color}
-//        titlecolor={list[i].color}
-      >
-      </DisplayNicknameRow>
-    )
+      ></DisplayGWNicknameRow>
+    );
+    for (j in list[i].nodes) {
+      const nicknameLabel = "Node ID: " + list[i].nodes[j].nodeID;
+      color = "#C5E8ED";
+      if (i % 2 == 0) {
+        color = "#9ED9E0";
+      }
+      nicknames.push(
+        <DisplayNicknameRow
+          key={i * list.length + j}
+          gateway_id = {list[i].gateway_id}
+          nodeID = {list[i].nodes[j].nodeID}
+          label={nicknameLabel}
+          viewcolor={color}
+          //        titlecolor={list[i].color}
+        ></DisplayNicknameRow>
+      );
+    }
   }
 
-  //console.log('ControlsButtonList returning nodeButtons',nodeButtons);
-  return (
-    nicknames
-  )
-}
+  return nicknames;
+};
 
-export default NicknameList
+export default NicknameList;

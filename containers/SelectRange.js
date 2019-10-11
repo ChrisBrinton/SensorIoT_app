@@ -4,7 +4,7 @@ import ControlsButton from '../components/ControlsButton'
 
 const mapStateToProps = (state, ownProps) => {
   let active = (state.xAxis.xDateRange == ownProps.xDateRange) ? true : false;
-  console.log('SelectRange mapStateToProps ownProps:', ownProps);
+  //console.log('SelectRange mapStateToProps ownProps:', ownProps);
   return ({
     xDateRange: ownProps.xDateRange,
     active: active,
@@ -12,7 +12,7 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  console.log('SelectRange mapDispatchToProps');
+  //console.log('SelectRange mapDispatchToProps');
   return {
   onPress: () => {
       dispatch(setXDateRange(ownProps.xDateRange));

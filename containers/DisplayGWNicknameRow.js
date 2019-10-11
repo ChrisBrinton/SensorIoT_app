@@ -1,11 +1,10 @@
 import { connect } from 'react-redux'
-import NicknameRow from '../components/NicknameRow'
+import GWNicknameRow from '../components/GWNicknameRow'
 
 const mapStateToProps = (state, ownProps) => {
   //console.log('DisplayNickNameRow mapStateToProps state.settings ', state.settings, 'ownProps:', ownProps);
 return ({
-    nodeID: ownProps.nodeID,
-    nodeColor: ownProps.viewcolor,
+    gateway_id: ownProps.gateway_id,
     label: ownProps.label, 
   })
 }
@@ -19,4 +18,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-) (NicknameRow)
+) (GWNicknameRow)

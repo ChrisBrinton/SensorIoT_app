@@ -78,7 +78,6 @@ export class HistoryScreen extends Component {
 
   render() {
 
-    defaultNode = this.props.navigation.getParam('defaultNode', 1);
     defaultSensor = this.props.navigation.getParam('sensor', 'TempF');
 
     const contentInsetY = { top: 10, bottom: 10, left: 0, right: 0 };
@@ -103,7 +102,6 @@ export class HistoryScreen extends Component {
               originY: 0,
               y: 3,
             }}
-            defaultNode={defaultNode}
             sensor={defaultSensor}
           >
           </DisplayHistogram>

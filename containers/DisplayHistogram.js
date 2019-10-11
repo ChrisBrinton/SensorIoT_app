@@ -41,7 +41,7 @@ function getLabelFromType(type) {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  console.log('Histogram mapStateToProps');
+  //console.log('Histogram mapStateToProps data ', state.histogramDataSet.data);
   let newRange = getRangeFromType(state);
   let data = state.histogramDataSet.data;
 
@@ -49,14 +49,16 @@ const mapStateToProps = (state, ownProps) => {
   //here.
   if ( state.yAxis.yAxisType == 'TempC') {
     data = [];
-    for (let i=0; i < state.histogramDataSet.data.length; i++) {
-      data.push({nodeID: state.histogramDataSet.data[i].nodeID, sensorData: state.histogramDataSet.data[i].sensorData
-        .map((item, index) => {
-          //console.log("histogram data map function item ", item);
-          return({value: (item.value-32)/1.8, date: item.date})
-          }
-        )
-        });
+    for (i in state.histogramDataSet.data) {
+      for (j in state.histogramDataSet.data[i].nodes) {
+        data.push({nodeID: state.histogramDataSet.data[i].nodes[j].nodeID, sensorData: state.histogramDataSet.data[i].nodes[j].sensorData
+          .map((item, index) => {
+            //console.log("histogram data map function item ", item);
+            return({value: (item.value-32)/1.8, date: item.date})
+            }
+          )
+          });  
+      }
     }
     //console.log('Histogram after temp transform to C', data);
   }
@@ -86,9 +88,10 @@ const mapDispatchToProps = (dispatch,ownProps) => {
   return {
 
     loadDefaultNodeData: () => {
-      console.log(`in loadDefaultNodeData: is initialized ${ownProps.initialized}`)
+
+      console.log(`Histogram mapDispatchToProps - in loadDefaultNodeData: is initialized ${ownProps.initialized}`);
       if (!ownProps.initialized) {
-        dispatch(setDefaultNode(dispatch, ownProps,ownProps.defaultNode, ownProps.sensor));
+        dispatch(setDefaultNode(dispatch, ownProps.sensor));
         return (dispatch(fetchSensorData()));
       }
 
