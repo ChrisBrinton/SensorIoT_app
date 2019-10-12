@@ -31,17 +31,16 @@ export const setXDateRange = (days) => ({
   xDateRange: days,
 })
 
-export const toggleNode = (nodeIndex) => ({
+export const toggleNode = (gateway_id, nodeID) => ({
   type: 'TOGGLE_NODE',
-  nodeIndex: nodeIndex,
+  gateway_id: gateway_id,
+  nodeID: nodeID,
 })
 
-export function setDefaultNode(dispatch, state, nodeID, sensor) {
-  
+export function setDefaultNode(dispatch, sensor) {
   dispatch(setYAxisType(sensor));
 
   return {type: 'SET_DEFAULT_NODE',
-  nodeID : nodeID,
   sensor : sensor
   }
 }
@@ -57,7 +56,7 @@ export const setMQTTServer = value => ({
 
 export const setGatewayID = value => ({
   type: 'SET_GATEWAY_ID',
-  myGatewayID: value,
+  myGatewayIDList: value,
 })
 
 export const setShortNickname = (nodeID, value) => ({
@@ -69,6 +68,12 @@ export const setShortNickname = (nodeID, value) => ({
 export const setLongNickname = (nodeID, value) => ({
   type: 'SET_LONG_NICKNAME',
   nodeID: nodeID,
+  value: value,
+})
+
+export const setGWNickname = (gateway_id, value) => ({
+  type: 'SET_GW_NICKNAME',
+  gateway_id: gateway_id,
   value: value,
 })
 
@@ -102,10 +107,17 @@ export function fetchNicknames() {
     currentState = getState();
     if (!serverConfigured(dispatch, currentState)) return;
     dispatch(requestNicknames());
+    let gwList = '';
+    for(let i=0; i<(currentState.settings.myGatewayIDList.length-1); i++){
+      gwList = gwList + 'gw=' + currentState.settings.myGatewayIDList[i] + '&';
+    }  
+    gwList = gwList + 'gw=' + currentState.settings.myGatewayIDList[currentState.settings.myGatewayIDList.length-1];
+
     let url = 'https://' 
-              + currentState.settings.myMQTTServer
-              + '/SensorIoT/get_nicknames?gw='+ currentState.settings.myGatewayID;
+    + currentState.settings.myMQTTServer
+    + '/SensorIoT/get_nicknames?' + gwList;
     console.log('get_nicknames using url:', url);
+
     return fetch(url)
     .then(response => response.json())
     .then(json => dispatch(receiveNicknames(json)))
@@ -124,9 +136,15 @@ export function saveNicknames() {
     currentState = getState();
     if (!serverConfigured(dispatch, currentState)) return;
     let clean = true;
-    for(i=0; i<currentState.settings.nodeNicknames.length; i++){
-      if(currentState.settings.nodeNicknames[i].dirty == true) {
+    console.log('nodeNicknamesList ', currentState.settings.nodeNicknamesList);
+    for (let i in currentState.settings.nodeNicknamesList) {
+      if (currentState.settings.nodeNicknamesList[i].dirty == true) {
         clean = false;
+      }
+      for (let j in currentState.settings.nodeNicknamesList[i].nicknames) {
+        if (currentState.settings.nodeNicknamesList[i].nicknames[j].dirty == true) {
+          clean = false;
+        }
       }
     }
     if(clean){
@@ -139,15 +157,10 @@ export function saveNicknames() {
     let url = 'https://' 
     + currentState.settings.myMQTTServer
     + '/SensorIoT/save_nicknames';
-    
-    let config = { 'gatewayConfig': [
-                    { 'gatewayID': currentState.settings.myGatewayID,
-                    'nodeNicknames': currentState.settings.nodeNicknames
-                    },
-                  ]
-                };
 
-    let body = JSON.stringify(config);
+    let config = { 'gatewayConfig': currentState.settings.nodeNicknamesList };
+
+    let body = JSON.stringify(currentState.settings.nodeNicknamesList);
     console.log('saveNicknames using url:', url, 'with body ', body);
     return fetch(url, {
       method: 'POST',
@@ -169,7 +182,6 @@ export function saveNicknames() {
       dispatch(settingsSaved());
     })
     .catch(error => handleError(dispatch, error))
-
   }
 }
 
@@ -191,7 +203,7 @@ function serverConfigured(dispatch, state) {
 }
 
 function handleError(dispatch, error) {
-  //console.log('Error caught',error,error.name,error.message);
+  console.log('Error caught',error,error.name,error.message);
   if (typeof error != 'undefined'){
     switch (error.message) {
       case 'Network request failed':
@@ -214,9 +226,16 @@ export function fetchNodeLatestData() {
     currentState = getState();
     if (!serverConfigured(dispatch, currentState)) return;
     dispatch(requestNodeLatestData());
+
+    let gwList = '';
+    for(let i=0; i<(currentState.settings.myGatewayIDList.length-1); i++){
+      gwList = gwList + 'gw=' + currentState.settings.myGatewayIDList[i] + '&';
+    }  
+    gwList = gwList + 'gw=' + currentState.settings.myGatewayIDList[currentState.settings.myGatewayIDList.length-1];
+
     let url = 'https://' 
-              + currentState.settings.myMQTTServer
-              + '/SensorIoT/latest/'+ currentState.settings.myGatewayID;
+      + currentState.settings.myMQTTServer
+      + '/SensorIoT/latests?' + gwList;
     console.log('fetchNodeLatestData using url:', url);
     return fetch(url)
     .then(response => response.json())
@@ -231,37 +250,48 @@ export const receiveNodeLatestData = (json) => ({
 })
 
 export function fetchSensorData() {
-  //console.log('fetchSensorData nodeID', nodeID);
+  console.log('fetchSensorData');
   return (dispatch, getState) => {
+    dispatch(clearServerData());
     currentState = getState();
     if (!serverConfigured(dispatch, currentState)) return;
-    let nodes = '';
-    for ( node in currentState.histogramDataSet.nodeList ) {
-      nodeID = currentState.histogramDataSet.nodeList[node].nodeID;
-      active = currentState.histogramDataSet.nodeList[node].isActive;
-      if (active) {
-        nodes += 'node=' + nodeID + '&'
+
+    //then loop through each GW and recieve any nicknames for that GW
+    console.log('fetchSensorData finding nodes to query in ', currentState.histogramDataSet.nodeList);
+    for(let i in currentState.histogramDataSet.nodeList){
+      let nodes = '';
+      for (let j in currentState.histogramDataSet.nodeList[i].nodes) {
+        nodeID = currentState.histogramDataSet.nodeList[i].nodes[j].nodeID;
+        active = currentState.histogramDataSet.nodeList[i].nodes[j].isActive;
+        if (active) {
+          nodes += 'node=' + nodeID + '&';
+        }
+      }
+      if ( nodes == '' ) {
+        console.log(' no nodes to fetch. nodeList ', currentState.histogramDataSet.nodeList);
+      } else {
+        console.log('fetchSensorData for gw ', currentState.histogramDataSet.nodeList[i].gateway_id, ' for nodes', nodes);
+        dispatch(requestServerData());
+        let url = 'https://' 
+                  + currentState.settings.myMQTTServer
+                  + '/SensorIoT/gw/'+ currentState.histogramDataSet.nodeList[i].gateway_id 
+                  + '?' + nodes 
+                  + 'type=' + currentState.yAxis.dataQueryKey 
+                  + '&period=' + currentState.xAxis.xDateRange + '&timezone=EST5EDT';
+        console.log('fetchSensorData using url:', url);
+        fetch(url)
+        .then(response => response.json())
+        .then(json => dispatch(receiveSensorData(currentState.histogramDataSet.nodeList[i].gateway_id, json)))
+        .catch(error => handleError(dispatch, error))  
       }
     }
-    if ( nodes == '' ) return //if there are no nodes, dont fetch!
-    dispatch(requestServerData());
-    let url = 'https://' 
-              + currentState.settings.myMQTTServer
-              + '/SensorIoT/gw/'+ currentState.settings.myGatewayID 
-              + '?' + nodes 
-              + 'type=' + currentState.yAxis.dataQueryKey 
-              + '&period=' + currentState.xAxis.xDateRange + '&timezone=EST5EDT';
-    console.log('fetchSensorData using url:', url);
-    return fetch(url)
-    .then(response => response.json())
-    .then(json => dispatch(receiveSensorData(currentState.histogramDataSet.nodeList[node].nodeID, json)))
-    .catch(error => handleError(dispatch, error))
+    return;
   }
 }
 
-export const receiveSensorData = (nodeID, json) => ({
+export const receiveSensorData = (gateway_id, json) => ({
   type: 'RECEIVE_SENSOR_DATA',
-  nodeID: nodeID,
+  gateway_id: gateway_id,
   json: json,
 })
 
@@ -270,10 +300,17 @@ export function fetchNodeList() {
     currentState = getState();
     if (!serverConfigured(dispatch, currentState)) return;
     dispatch(requestServerData());
+
+    let gwList = '';
+    for(let i=0; i<(currentState.settings.myGatewayIDList.length-1); i++){
+      gwList = gwList + 'gw=' + currentState.settings.myGatewayIDList[i] + '&';
+    }  
+    gwList = gwList + 'gw=' + currentState.settings.myGatewayIDList[currentState.settings.myGatewayIDList.length-1];
+
     let url = 'https://' 
-              + currentState.settings.myMQTTServer
-              + '/SensorIoT/nodelist/'+ currentState.settings.myGatewayID 
-              + '?period=' + currentState.xAxis.xDateRange;
+            + currentState.settings.myMQTTServer
+            + '/SensorIoT/nodelists?'+ gwList 
+            + '&period=' + currentState.xAxis.xDateRange;
     console.log('fetchNodeList using url:', url);
     return fetch(url)
       .then(response => response.json())
@@ -295,4 +332,8 @@ export const receiveNodeList = (json) => ({
 
 export const invalidateSensorData = () => ({
   type: 'INVALIDATE_SENSOR_DATA',
+})
+
+export const clearServerData = () => ({
+  type: 'CLEAR_SERVER_DATA',
 })

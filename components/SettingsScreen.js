@@ -62,8 +62,8 @@ class SettingsScreen extends Component {
           </View>
           <View style={settingsScreenPortraitStyles.GWIDrow}>
             <SetTextField
-              title='Gateway ID'
-              label='Gateway ID'
+              title='Gateway IDs'
+              label='Gateway IDs (comma separated list)'
             />
           </View>
           <View style={settingsScreenPortraitStyles.tempSwitchRow}>

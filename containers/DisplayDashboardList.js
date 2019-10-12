@@ -5,6 +5,7 @@ const mapStateToProps = (state, ownProps) => {
   console.log('DisplayDashboardList mapStateToProps');
   return ({
     list: state.dashboardDataSet.nodeData,
+    nicknames: state.settings.nodeNicknamesList,
     navigation : ownProps.navigation
   })
 }

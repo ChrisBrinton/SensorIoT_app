@@ -35,7 +35,7 @@ function getButtonStyle(active, nodeColor) {
   return newStyle;
 }
 
-const ControlsButton = ({ active, nodeColor, children, onPress }) => {
+const ControlsButton = ({ active, nodeColor, viewColor, children, onPress }) => {
   //console.log('ControlsButton created with children:', children);
   return (
     <TouchableHighlight
@@ -43,7 +43,7 @@ const ControlsButton = ({ active, nodeColor, children, onPress }) => {
       style={controlsButtonStyles.buttonStyle}
       underlayColor="white"
       >
-      <View style={controlsButtonStyles.controlsButton}>
+      <View style={{margin: 5, width: 75, backgroundColor: viewColor}}>
         <Text style={getButtonStyle(active, nodeColor)}>
           {children}
         </Text>
@@ -59,14 +59,14 @@ ControlsButton.propTypes = {
 }
 
 const controlsButtonStyles = StyleSheet.create({
-  controlsButton: {
-    margin:5, //10
-    width: 75,
+//  controlsButton: {
+//    margin:5, //10
+//    width: 75,
 //    borderWidth: 1,
 //    borderRadius: 8,
 //    borderColor: '#318f9b',
-    backgroundColor: 'powderblue',
-  },
+//    backgroundColor: viewColor,
+//  },
   controlsButtonText: {
     textAlign: 'center',
     fontSize: 18,

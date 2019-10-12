@@ -8,6 +8,8 @@ import { G, Line, Rect } from 'react-native-svg';
 
 const CustomGrid = ({ x, y, data, ticks }) => {
 
+  //console.log('CustomGrid - x ', x, ' y ', y, ' data ', data, ' ticks ', ticks);
+
   const xValues = data.map((item, index) => item.date)
   const xDomain = d3Scale.scaleTime()
           .domain(xValues)
@@ -81,10 +83,14 @@ const GridBorder = (({width, height}) => (
   />
 ))
 
-function getNodeColor(nodeID, nodeList) {
-  for (i in nodeList) {
-    if (nodeList[i].nodeID == nodeID) {
-      return nodeList[i].color
+function getNodeColor(gateway_id, nodeID, nodeList) {
+  for (let i in nodeList) {
+    if (nodeList[i].gateway_id == gateway_id) {
+      for (let j in nodeList[i].nodes) {
+        if (nodeList[i].nodes[j].nodeID == nodeID) {
+          return nodeList[i].nodes[j].color;
+        }    
+      }
     }
   }
   return 'red' //default color
@@ -109,41 +115,49 @@ class Histogram extends Component {
   render() {
     args = Object.assign({}, this.props);
     //console.log('HistogramYAxis min', props.yAxisMin, 'max', props.yAxisMax, 'yAxisLabel', props.yAxisLabel, 'data', props.data,);
+    
     let dataSets = [];
-    //console.log('Histogram args', args);
-    //start at 1 to avoid redrawing the first graph
-    hasSensorData = false;
-    for (let i = 1; i < args.data.length; i++) {
-      let color = getNodeColor(args.data[i].nodeID, args.nodeList);
-
-      if (args.data[i].sensorData) {
-        hasSensorData = true;
+//    console.log('Histogram args', args);
+    for (let i in args.data) {
+      for (let j in args.data[i].nodes) {
+        let color = getNodeColor(args.data[i].gateway_id, args.data[i].nodes[j].nodeID, args.nodeList);
+        console.log('Histogram - adding gw ', args.data[i].gateway_id, ' node ', args.data[i].nodes[j].nodeID);
+        dataSets.push(
+          <LineChart
+            key={i*args.data.length+j}
+            style={histogramStyles.overlayGraph}
+            data={args.data[i].nodes[j].sensorData}
+            yMax={args.yAxisMax}
+            yMin={args.yAxisMin}
+            yAccessor={args.yAccessor}
+            xAccessor={args.xAccessor}
+            xScale={d3Scale.scaleTime}
+            svg={{ stroke: color }}
+            contentInset={args.contentInsetY}
+          >
+          </LineChart>
+        )
       }
-      dataSets.push(
-
-        <LineChart
-          key={i}
-          style={histogramStyles.overlayGraph}
-          data={args.data[i].sensorData}
-          yMax={args.yAxisMax}
-          yMin={args.yAxisMin}
-          yAccessor={args.yAccessor}
-          xAccessor={args.xAccessor}
-          xScale={d3Scale.scaleTime}
-          svg={{ stroke: color }}
-          contentInset={args.contentInsetY}
-        >
-        </LineChart>
-      )
     }
-    color = getNodeColor(args.data[0].nodeID, args.nodeList);
+    //remove the first dataSet to avoid drawing the first graph twice
+    dataSets.shift();
+    if(args.data.length > 0) {
+      graphData = args.data[0].nodes[0].sensorData;
+      console.log('Histogram - adding gw ', args.data[0].gateway_id, ' node ', args.data[0].nodes[0].nodeID);
+      color = getNodeColor(args.data[0].gateway_id, args.data[0].nodes[0].nodeID, args.nodeList);
+    } else {
+      console.log('Histogram - no data to display');
+      graphData = [{ value: 68, date: dateFns.setHours(new Date(2019, 9, 3), 6) }, { value: 68, date: dateFns.setHours(new Date(2019, 9, 4), 6) }]
+      color = 'red';
+    }
 
+   
     return (
       <View>
         <View style={histogramStyles.histogramContainer}>
           <YAxis
             style={histogramStyles.histogramYLegend}
-            data={args.data[0].sensorData}
+            data={graphData}
             min={args.yAxisMin}
             max={args.yAxisMax}
             yAccessor={args.yAccessor}
@@ -153,7 +167,7 @@ class Histogram extends Component {
           </YAxis>
           <LineChart
             style={histogramStyles.histogram}
-            data={args.data[0].sensorData}
+            data={graphData}
             yMax={args.yAxisMax}
             yMin={args.yAxisMin}
             yAccessor={args.yAccessor}
@@ -171,7 +185,7 @@ class Histogram extends Component {
         </View>
         <View style={histogramStyles.histogramXLegend}>
           <XAxis
-            data={args.data[0].sensorData}
+            data={graphData}
             xAccessor={args.xAccessor}
             scale={d3Scale.scaleTime}
             numberOfTicks={7}
@@ -183,7 +197,7 @@ class Histogram extends Component {
         </View>
         <View style={histogramStyles.histogramXLegend}>
           <XAxis
-            data={args.data[0].sensorData}
+            data={graphData}
             xAccessor={({ item }) => item.date}
             scale={d3Scale.scaleTime}
             numberOfTicks={7}
