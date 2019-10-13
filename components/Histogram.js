@@ -6,6 +6,8 @@ import * as d3Scale from 'd3-scale';
 import dateFns from 'date-fns';
 import { G, Line, Rect } from 'react-native-svg';
 
+var format = require('date-fns/format');
+
 const CustomGrid = ({ x, y, data, ticks }) => {
 
   //console.log('CustomGrid - x ', x, ' y ', y, ' data ', data, ' ticks ', ticks);
@@ -147,11 +149,10 @@ class Histogram extends Component {
       color = getNodeColor(args.data[0].gateway_id, args.data[0].nodes[0].nodeID, args.nodeList);
     } else {
       console.log('Histogram - no data to display');
-      graphData = [{ value: 68, date: dateFns.setHours(new Date(2019, 9, 3), 6) }, { value: 68, date: dateFns.setHours(new Date(2019, 9, 4), 6) }]
+      graphData = [{ value: 68, date: new Date(2019, 9, 3, 6, 0, 0) }, { value: 68, date: new Date(2019, 9, 4, 6, 0, 0) }]
       color = 'red';
     }
 
-   
     return (
       <View>
         <View style={histogramStyles.histogramContainer}>
@@ -190,7 +191,7 @@ class Histogram extends Component {
             scale={d3Scale.scaleTime}
             numberOfTicks={7}
             style={histogramStyles.histogramXLegend}
-            formatLabel={(value) => dateFns.format(value, 'HH:mm')}
+            formatLabel={(value) => format(value, 'HH:mm')}
             contentInset={args.contentInsetX}
             svg={args.svgX}
           />
@@ -202,7 +203,7 @@ class Histogram extends Component {
             scale={d3Scale.scaleTime}
             numberOfTicks={7}
             style={histogramStyles.histogramXLegend}
-            formatLabel={(value) => dateFns.format(value, 'MMM DD')}
+            formatLabel={(value) => format(value, 'LLL dd')}
             contentInset={args.contentInsetX}
             svg={args.svgX}
           />
