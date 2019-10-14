@@ -3,7 +3,7 @@ import { AppRegistry } from 'react-native';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { persistStore, persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
+import AsyncStorage from '@react-native-community/async-storage';
 import { PersistGate } from 'redux-persist/integration/react';
 import thunkMiddleware from 'redux-thunk';
 import { createLogger } from 'redux-logger';
@@ -12,7 +12,7 @@ import AppReducer from './reducers';
 
 const persistConfig = {
   key: 'root',
-  storage,
+  storage: AsyncStorage,
   blacklist: ['dashboardDataSet', 'histogramDataSet', 'yAxis', 'navigation'],
 };
 
