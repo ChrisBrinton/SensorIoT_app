@@ -19,7 +19,7 @@ const GaugeRow = ({ node, label, navigation ,children }) => {
     return (
         <View style={{ marginBottom: 10, backgroundColor: '#BFE6EB' }}>
             <Text style={GaugeRowPortraitStyles.dashboardRowLabel}>
-                {showlabel} - {format(node.nodeTime, 'MM/DD/YYYY HH:mm')}
+                {showlabel} - {format(node.nodeTime, 'MM/dd/yyyy HH:mm')}
             </Text>
             <View style={GaugeRowPortraitStyles.dashboardRow}>
                 <DisplayGauge
