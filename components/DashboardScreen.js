@@ -53,8 +53,12 @@ class DashboardScreen extends Component {
     this.subs.forEach(sub => sub.remove());
   }
 
-  componentWillMount() {
-    console.log('DashboardScreen - componentWillMount')
+  getSnapshotBeforeUpdate() {
+    console.log('DashboardScreen - getSnapshotBeforeUpdate (used to be componentWillMount, part a)')
+  }
+ 
+  componentDidUpdate() {
+    console.log('DashboardScreen - componentDidUpdate (used to be componentWillMount, part b)')
   }
  
   

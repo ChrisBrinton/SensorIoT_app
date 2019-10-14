@@ -1,4 +1,4 @@
-import React from 'React';
+import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import AnimatedCircularProgress from './AnimatedCircularProgress';
 import { TouchableHighlight} from 'react-native';

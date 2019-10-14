@@ -1,6 +1,6 @@
-import React from "React";
-import { StyleSheet, Text, View } from "react-native";
-import DisplayGaugeRow from "../containers/DisplayGaugeRow";
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import DisplayGaugeRow from '../containers/DisplayGaugeRow';
 import PropTypes from "prop-types";
 
 function getGWNickname(gateway_id, nicknames) {

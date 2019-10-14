@@ -31,11 +31,14 @@ export class HistoryScreen extends Component {
     console.log('HistoryScreen - componentDidMount');
   }
 
-  componentWillMount() {
-    console.log('HistoryScreen - componentWillMount')
+  getSnapshotBeforeUpdate() {
+    console.log('HistoryScreen - getSnapshotBeforeUpdate (used to be componentWillMount, part a)')
   }
-
-
+ 
+  componentDidUpdate() {
+    console.log('HistoryScreen - componentDidUpdate (used to be componentWillMount, part b)')
+  }
+ 
   static navigationOptions = ({ navigation }) => {
     const params = navigation.state.params || {};
 

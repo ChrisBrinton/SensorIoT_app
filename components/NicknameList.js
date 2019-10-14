@@ -1,6 +1,6 @@
-import React from "React";
-import DisplayNicknameRow from "../containers/DisplayNicknameRow";
-import DisplayGWNicknameRow from "../containers/DisplayGWNicknameRow";
+import React from 'react';
+import DisplayNicknameRow from '../containers/DisplayNicknameRow';
+import DisplayGWNicknameRow from '../containers/DisplayGWNicknameRow';
 
 const NicknameList = ({ list, children }) => {
   console.log('NicknameList created with list: ', list);

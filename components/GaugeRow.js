@@ -1,4 +1,4 @@
-import React from 'React';
+import React from 'react';
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import PropTypes from 'prop-types';
 import DisplayGauge from '../containers/DisplayGauge';

@@ -1,4 +1,4 @@
-import React from 'React';
+import React from 'react';
 import { RefreshControl, ScrollView, StyleSheet } from 'react-native';
 import { connect } from 'react-redux'
 import { fetchSensorData } from '../actions';

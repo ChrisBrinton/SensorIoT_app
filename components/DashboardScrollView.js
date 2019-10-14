@@ -1,4 +1,4 @@
-import React from 'React';
+import React from 'react';
 import { Dimensions, RefreshControl, ScrollView, StyleSheet } from 'react-native';
 
 //_onRefresh = () => {

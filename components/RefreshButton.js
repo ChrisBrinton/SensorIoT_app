@@ -1,4 +1,4 @@
-import React from 'React';
+import React from 'react';
 import { TouchableHighlight, StyleSheet, Text, View } from 'react-native';
 import PropTypes from 'prop-types';
 
