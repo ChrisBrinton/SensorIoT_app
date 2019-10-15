@@ -2,6 +2,7 @@ import React from 'react';
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import PropTypes from 'prop-types';
 import DisplayGauge from '../containers/DisplayGauge';
+import DisplayBattRSSI from '../containers/DisplayBattRSSI';
 import { format } from 'date-fns';
 import {withNavigation} from 'react-navigation'
 
@@ -40,12 +41,13 @@ const GaugeRow = ({ node, label, navigation ,children }) => {
                     value={node.latestData.P}
                     onPress={() => { navigation.navigate('History', {defaultNode : node.nodeID, sensor : 'Pres'}) } }>
                 </DisplayGauge>
-                <DisplayGauge
+                <DisplayBattRSSI
                     type='Batt'
                     size={gaugeSize}
-                    value={node.latestData.BAT}
+                    batVal={node.latestData.BAT}
+                    sigVal={node.latestData.RSSI}
                     onPress={() => { navigation.navigate('History', {defaultNode : node.nodeID, sensor : 'Batt'}) } }>
-                </DisplayGauge>
+                </DisplayBattRSSI>
             </View>
         </View>
     )
