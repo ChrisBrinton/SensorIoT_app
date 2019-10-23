@@ -13,16 +13,20 @@ jobs:
         node-version: [8.x, 10.x, 12.x]
 
     steps:
-    - uses: actions/checkout@v1
+    - name: checkout code
+      uses: actions/checkout@v1
+
     - name: Setup python
-    - uses: actions/setup-python@v1
+      uses: actions/setup-python@v1
       with:
         python-version: '3.x' # Version range or exact version of a Python version to use, using semvers version range syntax.
         architecture: 'x64' # (x64 or x86)
+
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+        
     - name: npm install, build, and test
       run: |
         npm ci
