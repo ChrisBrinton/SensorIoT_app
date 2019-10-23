@@ -12,7 +12,7 @@ jobs:
         # os: [ubuntu-latest, macOS-latest]
         os: [ubuntu-latest]
         # node-version: [8.x, 10.x, 12.x]
-        node-version: [12.x]
+        node-version: [8.x]
         python-version: [3.x]
         java-version: [9.0.4]
     
@@ -42,6 +42,6 @@ jobs:
         npm install -g react-native-cli
         npm run build --if-present
         # npm test
-        # react-native run-android
+        react-native run-android
       env:
         CI: true
