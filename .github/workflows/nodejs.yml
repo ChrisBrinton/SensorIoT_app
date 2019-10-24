@@ -39,9 +39,11 @@ jobs:
 
     - name: npm install, build, and test
       run: |
+        # npm ci
         npm install -g react-native-cli
         npm run build --if-present
         # npm test
-        react-native run-android
+        # react-native run-android
+        gem install xcode-install
       env:
         CI: true
