@@ -9,8 +9,11 @@ import SetTextField from '../containers/SetTextField'
 import DisplayNicknameList from '../containers/DisplayNicknameList'
 import DisplaySettingsScrollView from '../containers/DisplaySettingsScrollView'
 import SettingsActivityIndicator from '../containers/SettingsActivityIndicator'
+import DisplayHeaderButton from '../containers/DisplayHeaderButton'
 import { fetchNicknames, saveNicknames } from '../actions';
 import { connect } from 'react-redux';
+
+let configured = false;
 
 let createHandlers = function(dispatch) {
   let componentDidFocus = function(payload) {
@@ -48,6 +51,32 @@ class SettingsScreen extends Component {
   componentWillUnmount() {
     this.subs.forEach(sub => sub.remove());
   }
+
+  static navigationOptions = ({ navigation }) => {
+    const params = navigation.state.params || {};
+    return {
+      title: 'Setttings',
+      headerStyle: {
+        backgroundColor: 'powderblue',
+      },
+      heaterTintColor: 'steelblue',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+        width: '90%',
+        textAlign: 'center',
+        alignSelf: 'center',
+      },
+      headerLeft: (
+        <View>
+          <DisplayHeaderButton
+            onPress={() => navigation.navigate('Dashboard', { parent: params.parent })}
+            title="Dashboard"
+            color="steelblue"
+          />
+        </View>
+      ),
+    }  
+  };
 
   render() {
 

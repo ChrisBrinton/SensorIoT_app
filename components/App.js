@@ -1,32 +1,39 @@
 import React, { Component } from 'react';
-import { createAppContainer } from 'react-navigation';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import SettingsScreen from './SettingsScreen';
 import { HistoryScreen } from './HistoryScreen';
 import DashboardScreen from './DashboardScreen';
+import SettingsCheckScreen from './SettingsCheckScreen';
 import { connect } from 'react-redux'
 import { fetchNodeList, fetchNicknames, fetchNodeLatestData } from '../actions';
 import SplashScreen from 'react-native-splash-screen';
 
-//static navigationOptions = ({navigation}) => {
 const RootStack = createStackNavigator(
     {
-      Dashboard: {
-        screen: DashboardScreen,
-      },
-      History: {
-        screen: HistoryScreen,
-      },
-      Settings: {
-        screen: SettingsScreen,
-      },
-    },
-    {
-      initialRouteName: 'Dashboard',
-    },
+      Dashboard: DashboardScreen,
+      History: HistoryScreen,
+      Settings: SettingsScreen,
+    }
 );
 
-const AppContainer = createAppContainer(RootStack);
+const SettingsStack = createStackNavigator(
+  {
+    Settings: SettingsScreen,
+  }
+)
+const AppContainer = createAppContainer(
+  createSwitchNavigator(
+    {
+      SettingsCheck: SettingsCheckScreen,
+      Root: RootStack,
+      Settings: SettingsStack,
+    },
+    {
+      initialRouteName: 'SettingsCheck',
+    }
+  )
+);
 
 class App extends Component {
   componentDidMount() {
