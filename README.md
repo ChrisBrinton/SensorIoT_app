@@ -109,18 +109,24 @@ time only either for a given account, or for a given app. For the same app, but 
       ./gradlew assembleRelease
         - Note that build behavior between debug and release can be quite different. Release can fail while debug is fine. It may require modifying the build.gradle files in libs that have native code to bring them up to consistent versions with SDK and SDK tools.
         - The output is in ~/android/app/build/outputs/apk/release and there is an APK for both arm7 and x86.
+    - Additionally (alternatively?) the release can be "bundled" after being assembled, which optimizes the size of the download. This produces .aab files instead of .apk files
+      cd android
+      ./gradlew bundleRelease
+      - The output of the bundle is in ~/android/app/build/outputs/bundle/release/app.aab
     - Testing the release version on the simulator:
       react-native run-android --variant=release
 
-  - iOS - after you have a functioning build, in XCode make sure the target is set to Generic iOS Device, then do a Product->Archive (this option isnt
-      available until you select Generic iOS Device).
+  - iOS - after you have a functioning build
+    - in XCode make sure the target is set to Generic iOS Device
+    - increment the build/version info in Info.plist (either edited in the file or changed graphically by selecting the root project in the project navigator and selecting the SensorIoT target)
+    - do a Product->Archive (this option isnt available until you select Generic iOS Device).
 
 - Upload the app to the appropriate service:
   - Android - You control the deployment through the Google Play Console: https://play.google.com/apps/publish
     - Once logged in, select the SensorIoT app, then open the Release management tree from the lefthand menu and select App releases
     - Depending on the state of the app release cycle (whether its production, open beta or closed beta track), select the app that needs
       to be updated and click "Manage" on the right-hand side, then select the "Create Release" button.
-    - Upload the APK files created in the previous section. Enter release notes, save and review, then rollout.
+    - Upload the APK/AAB file(s) created in the previous section. Enter release notes, save and review, then rollout.
     - The new version can take many minutes to hours to become available to testers.
 
 
