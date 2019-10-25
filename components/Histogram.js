@@ -97,8 +97,6 @@ function getNodeColor(gateway_id, nodeID, nodeList) {
   }
   return 'red' //default color
 }
-
-//const Histogram = ({ ...args }) => {
 class Histogram extends Component {
 
   constructor(props) {
@@ -116,10 +114,10 @@ class Histogram extends Component {
 
   render() {
     args = Object.assign({}, this.props);
-    //console.log('HistogramYAxis min', props.yAxisMin, 'max', props.yAxisMax, 'yAxisLabel', props.yAxisLabel, 'data', props.data,);
+    console.log('HistogramYAxis min', this.props.yAxisMin, 'max', this.props.yAxisMax, 'yAxisLabel', this.props.yAxisLabel, 'data', this.props.data,);
     
     let dataSets = [];
-//    console.log('Histogram args', args);
+    console.log('Histogram args', args);
     for (let i in args.data) {
       for (let j in args.data[i].nodes) {
         let color = getNodeColor(args.data[i].gateway_id, args.data[i].nodes[j].nodeID, args.nodeList);
@@ -143,6 +141,7 @@ class Histogram extends Component {
     }
     //remove the first dataSet to avoid drawing the first graph twice
     dataSets.shift();
+    let graphData = [];
     if(args.data.length > 0) {
       graphData = args.data[0].nodes[0].sensorData;
       console.log('Histogram - adding gw ', args.data[0].gateway_id, ' node ', args.data[0].nodes[0].nodeID);
