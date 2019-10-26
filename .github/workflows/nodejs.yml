@@ -10,7 +10,7 @@ jobs:
     strategy:
       matrix:
         # os: [ubuntu-latest, macOS-latest]
-        os: [ubuntu-latest]
+        os: [windows-latest]
         # node-version: [8.x, 10.x, 12.x]
         node-version: [8.x]
         python-version: [3.x]
@@ -43,7 +43,6 @@ jobs:
         npm install -g react-native-cli
         npm run build --if-present
         # npm test
-        # react-native run-android
-        gem install xcode-install
+        ./android/gradlew
       env:
         CI: true
