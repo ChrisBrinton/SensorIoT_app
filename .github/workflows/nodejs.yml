@@ -43,6 +43,7 @@ jobs:
         npm install -g react-native-cli
         npm run build --if-present
         # npm test
+        -name: Running gradle build...
         ./android/gradlew
       env:
         CI: true
