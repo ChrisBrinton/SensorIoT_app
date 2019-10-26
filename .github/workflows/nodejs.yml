@@ -44,6 +44,6 @@ jobs:
           # npm test
           echo "Running gradle build..."
           ./android/gradlew
-        shell: bash
+        #shell: bash
       env:
         CI: true
