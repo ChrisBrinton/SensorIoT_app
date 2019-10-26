@@ -4,9 +4,13 @@ on: [push]
 
 jobs:
   windows-build:
-    build:
+    name: Windows Build
 
     runs-on: [windows-latest]
+    
+    # environment vars for script
+    env:
+      CI: true
 
     strategy:
       matrix:
@@ -14,36 +18,35 @@ jobs:
         node-version: [8.x]
         python-version: [3.x]
         java-version: [8.x]
-    
+  
     steps:
-      - name: checkout code
-        uses: actions/checkout@v1
+    - name: checkout code
+      uses: actions/checkout@v1
 
-      - name: Setup python ${{ matrix.python-version }}
-        uses: actions/setup-python@v1
-        with:
-          python-version: ${{ matrix.python-version }} 
-          architecture: 'x64' # (x64 or x86)
+    - name: Setup python ${{ matrix.python-version }}
+      uses: actions/setup-python@v1
+      with:
+        python-version: ${{ matrix.python-version }} 
+        architecture: 'x64' # (x64 or x86)
 
-      - name: Setup java ${{ matrix.java-version }}
-        uses: actions/setup-java@v1
-        with:
-          java-version: ${{ matrix.java-version }}
-          architecture: x64 // (x64 or x86) - defaults to x64
+    - name: Setup java ${{ matrix.java-version }}
+      uses: actions/setup-java@v1
+      with:
+        java-version: ${{ matrix.java-version }}
+        architecture: x64 // (x64 or x86) - defaults to x64
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
 
-      - name: npm install, build, and test
-        run: |
-          # npm ci
-          npm install -g react-native-cli
-          npm run build --if-present
-          # npm test
-          echo "Running gradle build..."
-          ./android/gradlew
-        #shell: bash
-      env:
-        CI: true
+    - name: npm install, build, and test
+      run: |
+        # npm ci
+        npm install -g react-native-cli
+        npm run build --if-present
+        # npm test
+        echo "Running gradle build..."
+        ./android/gradlew
+      #shell: bash
+
