@@ -20,13 +20,13 @@ jobs:
     - name: checkout code
       uses: actions/checkout@v1
 
-    - name: Setup python
+    - name: Setup python ${{ matrix.python-version }}
       uses: actions/setup-python@v1
       with:
         python-version: ${{ matrix.python-version }} 
         architecture: 'x64' # (x64 or x86)
 
-    - name: Setup java
+    - name: Setup java ${{ matrix.java-version }}
       uses: actions/setup-java@v1
       with:
         java-version: ${{ matrix.java-version }}
@@ -36,6 +36,9 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+
+    - name: Debug Action
+      uses: hmarr/debug-action@v1.0.0
 
     - name: npm install, build, and test
       run: |
