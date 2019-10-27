@@ -37,11 +37,13 @@ export const toggleNode = (gateway_id, nodeID) => ({
   nodeID: nodeID,
 })
 
-export function setDefaultNode(dispatch, sensor) {
+export function setDefaultNode(dispatch, gateway_id, sensor, nodeID) {
   dispatch(setYAxisType(sensor));
 
   return {type: 'SET_DEFAULT_NODE',
-  sensor : sensor
+    gateway_id: gateway_id,
+    sensor : sensor,
+    nodeID : nodeID,
   }
 }
 
@@ -190,14 +192,28 @@ export const resetDirtyNicknames = () => ({
 })
 
 function serverConfigured(dispatch, state) {
-  if (state.settings.MQTTConfigured && state.settings.gatewayConfigured) {
+  let configured = false;
+  try {
+    //The version is hard coded here. When the structure changes in a non backwards compatible way, this needs to be manually
+    //incremented.
+    if (state.settings.MQTTConfigured && state.settings.gatewayConfigured && state.settings.configVersion == "1.0") {
+      configured = true;
+    } else {
+      configured = false;
+      }
+  } catch(error) {
+    console.error(error);
+    configured = false;
+  }
+
+  if (configured == true) {
     return true;
   } else {
     console.log('server is not configured - state.settings.configMessageAlert is ', state.settings.configMessageAlert);
     if (state.settings.configMessageAlert == false) {
-    dispatch(queryServerConfigured());
-    Alert.alert('Please configure MQTT server and gateway in settings');
-    return false;
+      dispatch(queryServerConfigured());
+      Alert.alert('Please configure MQTT server and gateway in settings');
+      return false;
     }
   }
 }

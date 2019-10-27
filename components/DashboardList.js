@@ -15,7 +15,7 @@ function getGWNickname(gateway_id, nicknames) {
 const DashboardList = ({ list, nicknames, navigation }) => {
   //console.log("DashboardList created with list:", list);
   let gaugeRows = [];
-  for (i in list) {
+  for (let i in list) {
     if (list.length > 1) {
       gaugeRows.push(
         <Text 
@@ -26,7 +26,7 @@ const DashboardList = ({ list, nicknames, navigation }) => {
         </Text>
       );
     }
-    for (j in list[i].latest) {
+    for (let j in list[i].latest) {
       gaugeRows.push(
         <DisplayGaugeRow
           key={i * list.length + j}
@@ -39,7 +39,7 @@ const DashboardList = ({ list, nicknames, navigation }) => {
           {list[i].latest[j].nodeID}
         </DisplayGaugeRow>
       );
-    }
+    }  
   }
 
   //console.log('DashboardList returning gaugeRows', gaugeRows);

@@ -88,22 +88,31 @@ function _toggleNode(state, gateway_id, nodeID) {
   return obj;
 }
 
-function _setDefaultNode(state) {
+function _setDefaultNode(state, gateway_id, nodeID) {
   //This is a neat trick for deep copying objects
   //unfortunately, it doesnt work for date objects so this needs to be fixed after
   let newState = JSON.parse(JSON.stringify(state));
-
-  //The default node will just be the first node
-  newState.nodeList[0].nodes[0].isActive = true;
-
-  for (i in newState.data) {
-    for (j in newState.data[i].nodes) {
-      for (k in newState.data[i].nodes[j].sensorData) {
+  //fix the dates from the deep copy
+  for (let i in newState.data) {
+    for (let j in newState.data[i].nodes) {
+      for (let k in newState.data[i].nodes[j].sensorData) {
         newState.data[i].nodes[j].sensorData[k].date =
           state.data[i].nodes[j].sensorData[k].date;
       }
     }
   }
+
+  //The default node must be passed in
+  for (let i in newState.nodeList) {
+    if (newState.nodeList[i].gateway_id == gateway_id) {
+      for (let j in newState.nodeList[i].nodes) {
+        if (newState.nodeList[i].nodes[j].nodeID == nodeID) {
+          newState.nodeList[i].nodes[j].isActive = true;
+        }
+      }  
+    }
+  }
+
   return newState;
 }
 
@@ -151,12 +160,21 @@ function insertSensorData(data, gw, nodeData) {
   return results;
 }
 
-function clearActiveFlags(getState) {
-  //This is a neat trick for deep copying objects
-  let newState = JSON.parse(JSON.stringify(getState));
+function clearActiveFlags(state) {
+  //This is a neat trick for deep copying objects (doesnt work for dates though)
+  let newState = JSON.parse(JSON.stringify(state));
+  //fix the dates from the deep copy
+  for (let i in newState.data) {
+    for (let j in newState.data[i].nodes) {
+      for (let k in newState.data[i].nodes[j].sensorData) {
+        newState.data[i].nodes[j].sensorData[k].date =
+          state.data[i].nodes[j].sensorData[k].date;
+      }
+    }
+  }
 
-  for (i in getState.nodeList) {
-    for (j in getState.nodeList[i].nodes) {
+  for (let i in state.nodeList) {
+    for (let j in state.nodeList[i].nodes) {
       newState.nodeList[i].nodes[j].isActive = false;
     }
   }
@@ -169,6 +187,10 @@ function clearActiveFlags(getState) {
 const histogramDataSet = (state = initialState, action) => {
   //console.log('histogramDataSet reducer - action', action, 'state:', state);
   switch (action.type) {
+    case "QUERY_SERVER_CONFIGURED":
+      return {
+        ...initialState,
+      };
     case "CLEAR_SERVER_DATA":
       let newState = Object.assign({}, state, { data: [] });
       //console.log('CLEAR_SERVER_DATA newState ', newState);
@@ -183,16 +205,16 @@ const histogramDataSet = (state = initialState, action) => {
         return state;
       }
 
-      console.log("initializing in historgramDataSet");
+      console.log("initializing in historgramDataSet action: ", action);
 
       newState = Object.assign(
         {},
         state,
-        _setDefaultNode(state, action.sensor),
+        _setDefaultNode(state, action.gateway_id, action.nodeID),
         { initialized: true }
       );
 
-      //console.log('SET_DEFAULT_NODE - newState ', newState);
+      console.log('SET_DEFAULT_NODE - newState ', newState);
       return newState;
 
     case "TOGGLE_NODE":

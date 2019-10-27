@@ -4,8 +4,9 @@ const initialState = {
   isLoading: 0,
   myMQTTServer: "myMQTTServer:5000",
   MQTTConfigured: false,
-  myGatewayIDList: ["myGatewayID"],
   gatewayConfigured: false,
+  configVersion: "1.0",
+  myGatewayIDList: ["myGatewayID"],
   settingsUpdated: false,
   configMessageAlert: false,
   nodeNicknamesList: [],
@@ -67,7 +68,7 @@ const settings = (state = initialState, action) => {
       };
     case "QUERY_SERVER_CONFIGURED":
       return {
-        ...state,
+        ...initialState,
         configMessageAlert: true
       };
     case "RECEIVE_NICKNAMES":

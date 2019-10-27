@@ -31,6 +31,7 @@ function getLatestNode(dashboardDataSet, gateway_id, node_id) {
 const mapStateToProps = (state, ownProps) => {
   //console.log('DiplayGaugeRow mapStateToProps state ', state, ' ownProps:', ownProps);
   return ({
+    gateway_id: ownProps.gateway_id,
     node: getLatestNode(state.dashboardDataSet, ownProps.gateway_id, ownProps.node_id ),
     label: getLongNickname(state.settings.nodeNicknamesList, ownProps.gateway_id, ownProps.node_id ),
     navigation : ownProps.navigation

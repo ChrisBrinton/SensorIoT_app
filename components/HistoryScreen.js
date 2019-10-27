@@ -81,7 +81,11 @@ export class HistoryScreen extends Component {
 
   render() {
 
-    defaultSensor = this.props.navigation.getParam('sensor', 'TempF');
+    let defaultSensor = this.props.navigation.getParam('sensor');
+    let defaultNodeID = this.props.navigation.getParam('defaultNode');
+    let defaultGW = this.props.navigation.getParam('gateway_id')
+
+    console.log('HistoryScreen - defaultGW ', defaultGW, ' defaultSensor ', defaultSensor, ' defaultNodeID ', defaultNodeID);
 
     const contentInsetY = { top: 10, bottom: 10, left: 0, right: 0 };
     const contentInsetX = { top: 0, bottom: 0, left: 15, right: 5 };
@@ -106,6 +110,8 @@ export class HistoryScreen extends Component {
               y: 3,
             }}
             sensor={defaultSensor}
+            nodeID={defaultNodeID}
+            gateway_id={defaultGW}
           >
           </DisplayHistogram>
 

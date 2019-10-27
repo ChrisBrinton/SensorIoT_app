@@ -91,7 +91,7 @@ const mapDispatchToProps = (dispatch,ownProps) => {
 
       console.log(`Histogram mapDispatchToProps - in loadDefaultNodeData: is initialized ${ownProps.initialized}`);
       if (!ownProps.initialized) {
-        dispatch(setDefaultNode(dispatch, ownProps.sensor));
+        dispatch(setDefaultNode(dispatch, ownProps.gateway_id, ownProps.sensor, ownProps.nodeID));
         return (dispatch(fetchSensorData()));
       }
 
