@@ -41,7 +41,11 @@ const yAxis = (state = initialState, action) => {
   console.log('yAxis reducer - action type', action.type);
   switch (action.type) {
     case 'SET_Y_AXIS_TYPE':
-      console.log('dataQueryKey',yMinMaxDefaults[getDefaultsIndex(action.yAxisType)].dataQueryKey);
+      let axisType = action.yAxisType;
+      if(typeof(axisType) == 'undefined') {
+        axisType = 'tempF';
+      } 
+      console.log('dataQueryKey',yMinMaxDefaults[getDefaultsIndex(axisType)].dataQueryKey);
       let index = getDefaultsIndex(action.yAxisType);
       return ({
                 ...state,
