@@ -157,7 +157,7 @@ const settings = (state = initialState, action) => {
           }
         }
       }
-      console.log('SET_SHORT_NICKNAMES - newNicknames ', newNicknamesList);
+      //console.log('SET_SHORT_NICKNAMES - newNicknames ', newNicknamesList);
       return {
         ...state,
         nodeNicknamesList: newNicknamesList

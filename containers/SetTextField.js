@@ -43,9 +43,6 @@ const mapStateToProps = (state, ownProps) => {
             if (state.settings.nodeNicknamesList[i].nicknames[j].nodeID == nodeID) {
               value = state.settings.nodeNicknamesList[i].nicknames[j].shortname;
               found = true;
-              if(nodeID == 1){
-                console.log('nodeID 1 - gateway_id ', gateway_id, ' value ', value, ' nodeNicknamesList ', state.settings.nodeNicknamesList);
-              }
             }
           }  
         }
