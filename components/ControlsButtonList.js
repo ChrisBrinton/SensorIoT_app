@@ -18,7 +18,7 @@ const getNicknameForNodeID = (nodeID, gateway_id, nicknamesList) => {
 }
 
 function getGWNickname(gateway_id, nicknames) {
-  for (i in nicknames) {
+  for (let i in nicknames) {
     if (nicknames[i].gateway_id == gateway_id && nicknames[i].longname != '') {
       return nicknames[i].longname;
     }
@@ -30,7 +30,7 @@ const ControlsButtonList = ({ list, nicknames }) => {
   //console.log('controlsButtonList created with list:', list, ' nicknames: ', nicknames);
   let buttonList = [];
   key=0;
-  for (i in list) {
+  for (let i in list) {
 
     color = "#C5E8ED";
     if (i % 2 == 0) {
@@ -49,7 +49,7 @@ const ControlsButtonList = ({ list, nicknames }) => {
       </View>
     );
     
-    for (j in list[i].nodes) {
+    for (let j in list[i].nodes) {
       label = getNicknameForNodeID(list[i].nodes[j].nodeID, list[i].gateway_id, nicknames);
       nodeButtons.push(
         <SelectNodes

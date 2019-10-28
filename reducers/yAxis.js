@@ -19,7 +19,7 @@ const initialState = {
 
 function updateMinMax(state, newMin, newMax) {
   let newMinMaxs = state;
-  for (i in newMinMaxs.yMinMaxDefaults) {
+  for (let i in newMinMaxs.yMinMaxDefaults) {
     if (type == newMinMaxs.yMinMaxDefaults[i].dataType) {
       newMinMaxs.yMinMaxDefaults[i].yMin = newMin;
       newMinMaxs.yMinMaxDefaults[i].yMax = newMax;
@@ -30,7 +30,7 @@ function updateMinMax(state, newMin, newMax) {
 }
 
 function getDefaultsIndex(type) {
-  for (i in yMinMaxDefaults) {
+  for (let i in yMinMaxDefaults) {
     if ( type == yMinMaxDefaults[i].dataType) {
       return i;
     }

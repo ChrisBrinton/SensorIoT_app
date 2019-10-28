@@ -5,7 +5,7 @@ import DisplayGWNicknameRow from '../containers/DisplayGWNicknameRow';
 const NicknameList = ({ list, children }) => {
   console.log('NicknameList created with list: ', list);
   let nicknames = [];
-  for (i in list) {
+  for (let i in list) {
     const gwNicknameLabel = 'Gateway ID: ' + list[i].gateway_id;
     let color = "#A5D8FD";
     nicknames.push(
@@ -16,7 +16,7 @@ const NicknameList = ({ list, children }) => {
         viewcolor={color}
       ></DisplayGWNicknameRow>
     );
-    for (j in list[i].nodes) {
+    for (let j in list[i].nodes) {
       const nicknameLabel = "Node ID: " + list[i].nodes[j].nodeID;
       color = "#C5E8ED";
       if (i % 2 == 0) {

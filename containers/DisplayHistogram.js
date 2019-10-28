@@ -4,7 +4,7 @@ import Histogram from '../components/Histogram'
 
 function getRangeFromType(reduxState) {
   let range = { yAxisMin: -1, yAxisMax: -1 };
-  for (i in reduxState.yAxis.yAxisMinMaxDefaults) {
+  for (let i in reduxState.yAxis.yAxisMinMaxDefaults) {
     if (reduxState.yAxis.yAxisType == reduxState.yAxis.yAxisMinMaxDefaults[i].dataType) {
       range = {yAxisMin: reduxState.yAxis.yAxisMinMaxDefaults[i].yMin,
                yAxisMax: reduxState.yAxis.yAxisMinMaxDefaults[i].yMax};
@@ -49,8 +49,8 @@ const mapStateToProps = (state, ownProps) => {
   //here.
   if ( state.yAxis.yAxisType == 'TempC') {
     data = [];
-    for (i in state.histogramDataSet.data) {
-      for (j in state.histogramDataSet.data[i].nodes) {
+    for (let i in state.histogramDataSet.data) {
+      for (let j in state.histogramDataSet.data[i].nodes) {
         data.push({nodeID: state.histogramDataSet.data[i].nodes[j].nodeID, sensorData: state.histogramDataSet.data[i].nodes[j].sensorData
           .map((item, index) => {
             //console.log("histogram data map function item ", item);

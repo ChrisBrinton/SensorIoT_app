@@ -9,9 +9,9 @@ import { fetchSensorData } from '../actions';
 function getNodeObj(histogramDataSet, gateway_id, nodeID) {
   let obj={};
   //console.log('getNodeObj - histogramDataSet ', histogramDataSet, ' gateway_id ', gateway_id, ' nodeID ', nodeID);
-  for(i in histogramDataSet.nodeList){
+  for(let i in histogramDataSet.nodeList){
     if(histogramDataSet.nodeList[i].gateway_id == gateway_id){
-      for(j in histogramDataSet.nodeList[i].nodes){
+      for(let j in histogramDataSet.nodeList[i].nodes){
         if(histogramDataSet.nodeList[i].nodes[j].nodeID == nodeID){
           obj = histogramDataSet.nodeList[i].nodes[j];
         }

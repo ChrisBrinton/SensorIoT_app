@@ -4,7 +4,7 @@ import DisplayGaugeRow from '../containers/DisplayGaugeRow';
 import PropTypes from "prop-types";
 
 function getGWNickname(gateway_id, nicknames) {
-  for (i in nicknames) {
+  for (let i in nicknames) {
     if (nicknames[i].gateway_id == gateway_id && nicknames[i].longname != '') {
       return nicknames[i].longname;
     }

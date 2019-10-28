@@ -3,7 +3,7 @@ import Gauge from '../components/Gauge'
 
 function getMinMaxFromType(state, type) {
   let defaults = state.yAxis.yAxisMinMaxDefaults;
-  for (x in defaults) {
+  for (let x in defaults) {
     if (type == defaults[x].dataType) {
       return {min: defaults[x].yMin, max: defaults[x].yMax};
     } else if (type == 'Temp') {

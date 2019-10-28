@@ -55,6 +55,7 @@ class DashboardScreen extends Component {
 
   getSnapshotBeforeUpdate() {
     console.log('DashboardScreen - getSnapshotBeforeUpdate (used to be componentWillMount, part a)')
+    return null;
   }
  
   componentDidUpdate() {

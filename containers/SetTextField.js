@@ -34,7 +34,7 @@ const mapStateToProps = (state, ownProps) => {
       break;
     case "nicknameShort":
       //console.log('state.settings.nodeNicknamesList ', state.settings.nodeNicknamesList);
-      for (i in state.settings.nodeNicknamesList) {
+      for (let i in state.settings.nodeNicknamesList) {
         for (let j in state.settings.nodeNicknamesList[i].nicknames) {
           if (
             state.settings.nodeNicknamesList[i].nicknames[j].nodeID == nodeID
@@ -46,7 +46,7 @@ const mapStateToProps = (state, ownProps) => {
       //console.log('SetTextField mapStateToProps nicknameShort nodeID ', nodeID, ' value ', value);
       break;
     case "nicknameLong":
-      for (i in state.settings.nodeNicknamesList) {
+      for (let i in state.settings.nodeNicknamesList) {
         for (let j in state.settings.nodeNicknamesList[i].nicknames) {
           if (
             state.settings.nodeNicknamesList[i].nicknames[j].nodeID == nodeID
@@ -59,7 +59,7 @@ const mapStateToProps = (state, ownProps) => {
       break;
     case "nicknameGW":
       console.log( "subTitle: ", subTitle, " nodeID: ", nodeID, " gateway_id: ", gateway_id);
-      for (i in state.settings.nodeNicknamesList) {
+      for (let i in state.settings.nodeNicknamesList) {
         if (state.settings.nodeNicknamesList[i].gateway_id == gateway_id) {
           value = state.settings.nodeNicknamesList[i].longname;
           //console.log('SetTextField mapStateToProps nicknameLong gateway_id ', gateway_id, ' value ', value);
