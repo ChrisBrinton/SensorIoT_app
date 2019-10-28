@@ -61,14 +61,16 @@ export const setGatewayID = value => ({
   myGatewayIDList: value,
 })
 
-export const setShortNickname = (nodeID, value) => ({
+export const setShortNickname = (gateway_id, nodeID, value) => ({
   type: 'SET_SHORT_NICKNAME',
+  gateway_id: gateway_id,
   nodeID: nodeID,
   value: value,
 })
 
-export const setLongNickname = (nodeID, value) => ({
+export const setLongNickname = (gateway_id, nodeID, value) => ({
   type: 'SET_LONG_NICKNAME',
+  gateway_id: gateway_id,
   nodeID: nodeID,
   value: value,
 })

@@ -26,7 +26,7 @@ const initialState = {
 };
 
 function replaceNodeNickname(newNicknames, newNodeNickName) {
-  for (k = 0; k < newNicknames.length; k++) {
+  for (let k in newNicknames) {
     if (newNicknames[k].nodeID == newNodeNickName.node_id) {
       newNicknames[k].shortname = newNodeNickName.shortname;
       newNicknames[k].longname = newNodeNickName.longname;
@@ -117,9 +117,9 @@ const settings = (state = initialState, action) => {
     case "RESET_DIRTY_NICKNAMES":
       newNicknamesList = JSON.parse(JSON.stringify(state.nodeNicknamesList));
       console.log('RESET_DIRTY_NICKNAMES newNicknamesList ', newNicknamesList);
-      for (i in newNicknamesList) {
+      for (let i in newNicknamesList) {
         newNicknamesList[i].dirty = false;
-        for (j in newNicknamesList[i].nicknames) {
+        for (let j in newNicknamesList[i].nicknames) {
           newNicknamesList[i].nicknames[j].dirty = false;
         }
       }
@@ -135,27 +135,29 @@ const settings = (state = initialState, action) => {
         //console.log('copying state.nodeNicknamesList ', state.nodeNicknamesList, ' to newNicknames ', newNicknamesList);
       }
       found = false;
-      for (i in newNicknamesList) {
-        for (j in newNicknamesList[i].nicknames) {
-          if (newNicknamesList[i].nicknames[j].nodeID == action.nodeID) {
-            found = true;
-            newNicknamesList[i].nicknames[j].shortname = action.value;
-            newNicknamesList[i].nicknames[j].dirty = true;
+      for (let i in newNicknamesList) {
+        if (newNicknamesList[i].gateway_id == action.gateway_id) {
+          for (let j in newNicknamesList[i].nicknames) {
+            if (newNicknamesList[i].nicknames[j].nodeID == action.nodeID) {
+              found = true;
+              newNicknamesList[i].nicknames[j].shortname = action.value;
+              newNicknamesList[i].nicknames[j].dirty = true;
+            }
+          }
+          if (!found) {
+            let obj = {
+              nodeID: action.nodeID,
+              shortname: action.value,
+              longname: "",
+              seq_no: 0,
+              dirty: true
+            };
+            newNicknamesList[i].nicknames.push(obj);
+            //console.log('adding new nickname obj ', obj, ' to newNicknames ', newNicknames);
           }
         }
-        if (!found) {
-          let obj = {
-            nodeID: action.nodeID,
-            shortname: action.value,
-            longname: "",
-            seq_no: 0,
-            dirty: true
-          };
-          newNicknamesList[i].nicknames.push(obj);
-          //console.log('adding new nickname obj ', obj, ' to newNicknames ', newNicknames);
-        }
       }
-      //console.log('SET_SHORT_NICKNAMES - newNicknames ', newNicknames);
+      console.log('SET_SHORT_NICKNAMES - newNicknames ', newNicknamesList);
       return {
         ...state,
         nodeNicknamesList: newNicknamesList
@@ -166,24 +168,26 @@ const settings = (state = initialState, action) => {
         newNicknamesList = JSON.parse(JSON.stringify(state.nodeNicknamesList));
       }
       found = false;
-      for (i in newNicknamesList) {
-        for (j in newNicknamesList[i].nicknames) {
-          if (newNicknamesList[i].nicknames[j].nodeID == action.nodeID) {
-            found = true;
-            newNicknamesList[i].nicknames[j].longname = action.value;
-            newNicknamesList[i].nicknames[j].dirty = true;
+      for (let i in newNicknamesList) {
+        if (newNicknamesList[i].gateway_id == action.gateway_id) {
+          for (let j in newNicknamesList[i].nicknames) {
+            if (newNicknamesList[i].nicknames[j].nodeID == action.nodeID) {
+              found = true;
+              newNicknamesList[i].nicknames[j].longname = action.value;
+              newNicknamesList[i].nicknames[j].dirty = true;
+            }
+          }
+          if (!found) {
+            newNicknamesList[i].nicknames.push({
+              nodeID: action.nodeID,
+              shortname: "",
+              longname: action.value,
+              seq_no: 0,
+              dirty: true
+            });
           }
         }
-        if (!found) {
-          newNicknamesList[i].nicknames.push({
-            nodeID: action.nodeID,
-            shortname: "",
-            longname: action.value,
-            seq_no: 0,
-            dirty: true
-          });
-        }
-        //console.log('SET_LONG_NICKNAMES - newNicknames ', newNicknames);
+      //console.log('SET_LONG_NICKNAMES - newNicknames ', newNicknames);
       }
       return {
         ...state,
@@ -195,7 +199,7 @@ const settings = (state = initialState, action) => {
         newNicknames = JSON.parse(JSON.stringify(state.nodeNicknamesList));
       }
       found = false;
-      for (i in newNicknames) {
+      for (let i in newNicknames) {
         if (newNicknames[i].gateway_id == action.gateway_id) {
           found = true;
           newNicknames[i].longname = action.value;

@@ -19,9 +19,11 @@ const mapStateToProps = (state, ownProps) => {
   if (ownProps.title.indexOf("nickname") !== -1) {
     bits = ownProps.title.split(" ");
     subTitle = bits[0];
-    bits = ownProps.title.split(":");
-    nodeID = parseInt(bits[bits.length - 1]);
-    gateway_id = bits[bits.length - 1].trim();
+    //bits = ownProps.title.split(":");
+    //nodeID = parseInt(bits[bits.length - 1]);
+    //gateway_id = bits[bits.length - 1].trim();
+    nodeID = ownProps.nodeID;
+    gateway_id = ownProps.gateway_id;
   } else {
     subTitle = ownProps.title;
   }
@@ -34,24 +36,31 @@ const mapStateToProps = (state, ownProps) => {
       break;
     case "nicknameShort":
       //console.log('state.settings.nodeNicknamesList ', state.settings.nodeNicknamesList);
+      let found = false;
       for (let i in state.settings.nodeNicknamesList) {
-        for (let j in state.settings.nodeNicknamesList[i].nicknames) {
-          if (
-            state.settings.nodeNicknamesList[i].nicknames[j].nodeID == nodeID
-          ) {
-            value = state.settings.nodeNicknamesList[i].nicknames[j].shortname;
-          }
+        if(state.settings.nodeNicknamesList[i].gateway_id == gateway_id) {
+          for (let j in state.settings.nodeNicknamesList[i].nicknames) {
+            if (state.settings.nodeNicknamesList[i].nicknames[j].nodeID == nodeID) {
+              value = state.settings.nodeNicknamesList[i].nicknames[j].shortname;
+              found = true;
+              if(nodeID == 1){
+                console.log('nodeID 1 - gateway_id ', gateway_id, ' value ', value, ' nodeNicknamesList ', state.settings.nodeNicknamesList);
+              }
+            }
+          }  
         }
       }
-      //console.log('SetTextField mapStateToProps nicknameShort nodeID ', nodeID, ' value ', value);
+      if(!found){
+        console.warn('SetTextField mapStateToProps nicknameShort gateway_id ', gateway_id, ' nodeID ', nodeID, ' not found! nodeNicknamesList: ', state.settings.nodeNicknamesList);
+      }
       break;
     case "nicknameLong":
       for (let i in state.settings.nodeNicknamesList) {
-        for (let j in state.settings.nodeNicknamesList[i].nicknames) {
-          if (
-            state.settings.nodeNicknamesList[i].nicknames[j].nodeID == nodeID
-          ) {
-            value = state.settings.nodeNicknamesList[i].nicknames[j].longname;
+        if(state.settings.nodeNicknamesList[i].gateway_id == gateway_id) {
+          for (let j in state.settings.nodeNicknamesList[i].nicknames) {
+            if (state.settings.nodeNicknamesList[i].nicknames[j].nodeID == nodeID) {
+              value = state.settings.nodeNicknamesList[i].nicknames[j].longname;
+            }
           }
         }
       }
@@ -86,8 +95,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       if (ownProps.title.indexOf("nickname") !== -1) {
         bits = ownProps.title.split(" ");
         subTitle = bits[0];
-        nodeID = parseInt(bits[bits.length - 1]);
-        gateway_id = bits[bits.length - 1].trim();
+        //nodeID = parseInt(bits[bits.length - 1]);
+        //gateway_id = bits[bits.length - 1].trim();
+        nodeID = ownProps.nodeID;
+        gateway_id = ownProps.gateway_id;
       } else {
         subTitle = ownProps.title;
       }
@@ -100,12 +111,12 @@ const mapDispatchToProps = (dispatch, ownProps) => {
           action = setGatewayID(value);
           break;
         case "nicknameShort":
-          //console.log('SetTextField mapDispatchToProps ShortName nodeID:', nodeID, 'value:', value);
-          action = setShortNickname(nodeID, value);
+          console.log('SetTextField mapDispatchToProps ShortName gateway_id:', gateway_id, 'nodeID:', nodeID, 'value:', value);
+          action = setShortNickname(gateway_id, nodeID, value);
           break;
         case "nicknameLong":
           //console.log('SetTextField mapDispatchToProps LongName nodeID:', nodeID, 'value:', value);
-          action = setLongNickname(nodeID, value);
+          action = setLongNickname(gateway_id, nodeID, value);
           break;
         case "nicknameGW":
           console.log('SetTextField mapDispatchToProps gateway_id ', gateway_id, ' value ', value);
@@ -122,7 +133,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       if (ownProps.title.indexOf("nickname") !== -1) {
         bits = ownProps.title.split(" ");
         subTitle = bits[0];
-        nodeID = parseInt(bits[bits.length - 1]);
+        //nodeID = parseInt(bits[bits.length - 1]);
+        nodeID = ownProps.nodeID;
       } else {
         subTitle = ownProps.title;
       }
