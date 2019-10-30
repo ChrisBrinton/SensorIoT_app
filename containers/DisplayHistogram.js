@@ -50,15 +50,18 @@ const mapStateToProps = (state, ownProps) => {
   if ( state.yAxis.yAxisType == 'TempC') {
     data = [];
     for (let i in state.histogramDataSet.data) {
+      let newData = [];
       for (let j in state.histogramDataSet.data[i].nodes) {
-        data.push({nodeID: state.histogramDataSet.data[i].nodes[j].nodeID, sensorData: state.histogramDataSet.data[i].nodes[j].sensorData
+        newData.push({nodeID: state.histogramDataSet.data[i].nodes[j].nodeID, sensorData: state.histogramDataSet.data[i].nodes[j].sensorData
           .map((item, index) => {
             //console.log("histogram data map function item ", item);
             return({value: (item.value-32)/1.8, date: item.date})
             }
           )
-          });  
+          }
+        );  
       }
+      data.push({gateway_id: state.histogramDataSet.data[i].gateway_id, nodes: newData});
     }
     //console.log('Histogram after temp transform to C', data);
   }

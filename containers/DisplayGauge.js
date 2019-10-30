@@ -21,9 +21,15 @@ function getMinMaxFromType(state, type) {
 const mapStateToProps = (state, ownProps) => {
   minMax = getMinMaxFromType(state, ownProps.type);
   //console.log('DiplayGauge mapStateToProps ownProps:', ownProps, 'minMax', minMax);
+  let value = 0;
+  if(ownProps.type == 'Temp' && state.yAxis.tempType == 'C'){
+    value = (ownProps.value-32)/1.8;
+  } else {
+    value = ownProps.value;
+  }
   return ({
     type: ownProps.type,
-    value: ownProps.value,
+    value: value,
     min: minMax.min,
     max: minMax.max,
     size: ownProps.size,

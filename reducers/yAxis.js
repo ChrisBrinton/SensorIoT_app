@@ -43,13 +43,25 @@ const yAxis = (state = initialState, action) => {
     case 'SET_Y_AXIS_TYPE':
       let axisType = action.yAxisType;
       if(typeof(axisType) == 'undefined') {
-        axisType = 'tempF';
-      } 
-      console.log('dataQueryKey',yMinMaxDefaults[getDefaultsIndex(axisType)].dataQueryKey);
-      let index = getDefaultsIndex(action.yAxisType);
+        if(state.tempType == 'F'){
+          axisType = 'TempF';
+        } else {
+          axisType = 'TempC';
+        }
+      } else {
+        if(action.yAxisType.indexOf('Temp') != -1){
+          if(state.tempType == 'F'){
+            axisType = 'TempF';
+          } else {
+            axisType = 'TempC';
+          }
+        }   
+      }
+      console.log('yAxis reducer SET_Y_AXIS_TYPE action:', action, 'axisType: ', axisType, ' dataQueryKey ',yMinMaxDefaults[getDefaultsIndex(axisType)].dataQueryKey);
+      let index = getDefaultsIndex(axisType);
       return ({
                 ...state,
-                yAxisType: action.yAxisType,
+                yAxisType: axisType,
                 dataQueryKey: yMinMaxDefaults[index].dataQueryKey,
                 lowThreshold: yMinMaxDefaults[index].lowThreshold,
                 highThreshold: yMinMaxDefaults[index].highThreshold,

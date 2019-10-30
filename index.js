@@ -13,7 +13,7 @@ import AppReducer from './reducers';
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  blacklist: ['dashboardDataSet', 'histogramDataSet', 'yAxis', 'navigation'],
+  blacklist: ['dashboardDataSet', 'histogramDataSet', 'navigation'],
 };
 
 const persistedReducer = persistReducer(persistConfig, AppReducer);
