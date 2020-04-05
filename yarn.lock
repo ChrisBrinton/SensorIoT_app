@@ -1052,9 +1052,9 @@ acorn-walk@^6.0.1:
   integrity sha512-7evsyfH1cLOCdAzZAd43Cic04yKydNx0cF+7tiA19p1XnLLPU4dpCQOqpjqwokFe//vS0QqfqqjCS2JkiIs0cA==
 
 acorn@^5.5.3:
-  version "5.7.3"
-  resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.7.3.tgz#67aa231bf8812974b85235a96771eb6bd07ea279"
-  integrity sha512-T/zvzYRfbVojPWahDsE5evJdHb3oJoQfFbsrKM7w5Zcs++Tr257tia3BmMP8XYVjp1S9RZXQMh7gao96BlqZOw==
+  version "5.7.4"
+  resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.7.4.tgz#3e8d8a9947d0599a1796d10225d7432f4a4acf5e"
+  integrity sha512-1D++VG7BhrtvQpNbBzovKNc1FLGGEE/oGe7b9xJm/RFHMBeUaUGpluV9RLjZa47YFdPcDAenEYuq9pQPcMdLJg==
 
 acorn@^6.0.1:
   version "6.3.0"
@@ -6064,10 +6064,10 @@ react-native-keyboard-aware-scrollview@^2.0.0:
   resolved "https://registry.yarnpkg.com/react-native-keyboard-aware-scrollview/-/react-native-keyboard-aware-scrollview-2.0.0.tgz#a7e2cc31b7230893db5dc05eb6fed3f358500a55"
   integrity sha512-VAkwrmNl00bjTLXcvB3EMxuJ06kEBVRfpUq61X0Wl6Gdy1iSQpv04dVbZZ3KIflA9VhAlE0HFPltLLXIGjf2Ug==
 
-react-native-material-textfield@^0.12.0:
-  version "0.12.0"
-  resolved "https://registry.yarnpkg.com/react-native-material-textfield/-/react-native-material-textfield-0.12.0.tgz#3fba19d76ab89f67052c81e082152fc243d82a3f"
-  integrity sha1-P7oZ12q4n2cFLIHgghUvwkPYKj8=
+react-native-material-textfield@^0.14.1:
+  version "0.14.1"
+  resolved "https://registry.yarnpkg.com/react-native-material-textfield/-/react-native-material-textfield-0.14.1.tgz#88967d0ee598ed71e25af465925472bbe1928916"
+  integrity sha512-ISF7eH1kpaBQpiUkdMXEwi8h1lQ9tbjTPrJRUvEBDYL/wiE0wgMg58LD14MiTk1hK8GDjg2robsWerVigsO5gA==
   dependencies:
     prop-types "^15.5.9"
 
