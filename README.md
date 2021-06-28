@@ -21,9 +21,18 @@ Once the prereqs are installed, in your dev area on your local machine:
     git clone https://github.com/ChrisBrinton/SensorIoT_app
     cd SensorIoT_app
     npm install
-    react-native run-android (or react-native run-ios)
+    npx react-native run-android (or react-native run-ios)
 
 On Android, depending on how many revisions Android Studio and react-native have moved forward, you may need to fiddle with the android/app/build.gradle file to get the sdk version matched properly.
+
+In the android directory, you'll need a gradle.properties file that contains the following lines:
+
+    org.gradle.jvmargs=-Xmx2048M
+
+    android.useAndroidX=true
+    android.enableJetifier=true
+
+This file is not stored in the repo because that file is also where the play store key credentials are kept.
 
 To recreate the project on iOS after the build is hopelessly buggered:
 
@@ -80,8 +89,8 @@ Make sure you are running the latest version of Android Studio: Help->Check for 
 The "AVD Manager" menu holds the simulators. We've been using a "Pixel 2 no sound" simulator profile. Start the simulator
 
 
-    react-native run-android - will build the project and start execution on the simulator
-    react-native log-android - this will show the debug log info coming from the simulator
+    npx react-native run-android - will build the project and start execution on the simulator
+    npx react-native log-android - this will show the debug log info coming from the simulator
     ./gradew clean - run this from the android directory
 
 ### Building SensorIoT on iOS
@@ -114,7 +123,7 @@ time only either for a given account, or for a given app. For the same app, but 
       ./gradlew bundleRelease
       - The output of the bundle is in ~/android/app/build/outputs/bundle/release/app.aab
     - Testing the release version on the simulator:
-      react-native run-android --variant=release
+      npx react-native run-android --variant=release
 
   - iOS - after you have a functioning build
     - in XCode make sure the target is set to Generic iOS Device
@@ -150,7 +159,7 @@ http://appiconmaker.co
     git clone https://github.com/ChrisBrinton/SensorIoT_app.git SensorIoT
     cd SensorIoT
     npm install
-    react-native run-android
+    npx react-native run-android
 
 ## Upload app to TestFlight
 Instructions here: 
