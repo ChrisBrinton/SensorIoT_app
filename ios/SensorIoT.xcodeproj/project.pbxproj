@@ -18,9 +18,8 @@
 		2D16E6881FA4F8E400B85C8A /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D16E6891FA4F8E400B85C8A /* libReact.a */; };
 		2DCD954D1E0B4F2C00145EB5 /* SensorIoTTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* SensorIoTTests.m */; };
 		703EA14CF4C73EE82660231C /* libPods-SensorIoT.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 924292C64453A4688F11A020 /* libPods-SensorIoT.a */; };
-		7A9F814C92CF53FB5C108E13 /* libPods-SensorIoT-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A1F38AE497B48BA765551FEE /* libPods-SensorIoT-tvOSTests.a */; };
-		8AC43419934B673E0CEBE4DE /* libPods-SensorIoT-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E4F64049017C3E8CB3EDB62 /* libPods-SensorIoT-tvOS.a */; };
-		9FA4B6A3E4FDDC5BA097F495 /* libPods-SensorIoTTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1736F8F0444E1671F9714B49 /* libPods-SensorIoTTests.a */; };
+		7E72FD127371C3D04B0FEB34 /* libPods-SensorIoT-SensorIoTTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FD9C50B8DD80C0C6526634F /* libPods-SensorIoT-SensorIoTTests.a */; };
+		7F9D6BE6268B90600053DD40 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9D6BE5268B90600053DD40 /* File.swift */; };
 		ED297163215061F000B7C4FE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED297162215061F000B7C4FE /* JavaScriptCore.framework */; };
 		ED2971652150620600B7C4FE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2971642150620600B7C4FE /* JavaScriptCore.framework */; };
 /* End PBXBuildFile section */
@@ -54,19 +53,17 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = SensorIoT/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = SensorIoT/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = SensorIoT/main.m; sourceTree = "<group>"; };
-		1736F8F0444E1671F9714B49 /* libPods-SensorIoTTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SensorIoTTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		1E881A2C1D2613028980BD56 /* Pods-SensorIoT-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SensorIoT-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-SensorIoT-tvOS/Pods-SensorIoT-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
-		1FDE9DE07CC26C79F8A43116 /* Pods-SensorIoT-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SensorIoT-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-SensorIoT-tvOSTests/Pods-SensorIoT-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		1E05978663B0FC314FFE8277 /* Pods-SensorIoT-SensorIoTTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SensorIoT-SensorIoTTests.debug.xcconfig"; path = "Target Support Files/Pods-SensorIoT-SensorIoTTests/Pods-SensorIoT-SensorIoTTests.debug.xcconfig"; sourceTree = "<group>"; };
+		284972F0DC7A6F4AD72CA6FE /* Pods-SensorIoT-SensorIoTTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SensorIoT-SensorIoTTests.release.xcconfig"; path = "Target Support Files/Pods-SensorIoT-SensorIoTTests/Pods-SensorIoT-SensorIoTTests.release.xcconfig"; sourceTree = "<group>"; };
 		2881912D389C0F300952841E /* Pods-SensorIoT.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SensorIoT.release.xcconfig"; path = "Target Support Files/Pods-SensorIoT/Pods-SensorIoT.release.xcconfig"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* SensorIoT-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SensorIoT-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* SensorIoT-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SensorIoT-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D16E6891FA4F8E400B85C8A /* libReact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libReact.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		5E4F64049017C3E8CB3EDB62 /* libPods-SensorIoT-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SensorIoT-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3FD9C50B8DD80C0C6526634F /* libPods-SensorIoT-SensorIoTTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SensorIoT-SensorIoTTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7F9D6BE4268B905F0053DD40 /* SensorIoT-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SensorIoT-Bridging-Header.h"; sourceTree = "<group>"; };
+		7F9D6BE5268B90600053DD40 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		924292C64453A4688F11A020 /* libPods-SensorIoT.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SensorIoT.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		94A788B2EF7E88C16025DD76 /* Pods-SensorIoT.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SensorIoT.debug.xcconfig"; path = "Target Support Files/Pods-SensorIoT/Pods-SensorIoT.debug.xcconfig"; sourceTree = "<group>"; };
-		960368DDBCCB19260E64192B /* Pods-SensorIoT-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SensorIoT-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-SensorIoT-tvOSTests/Pods-SensorIoT-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
-		A1F38AE497B48BA765551FEE /* libPods-SensorIoT-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SensorIoT-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B06339770D35DDE760B079F1 /* Pods-SensorIoT-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SensorIoT-tvOS.release.xcconfig"; path = "Target Support Files/Pods-SensorIoT-tvOS/Pods-SensorIoT-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		ECA7C8EFB1780BF71E2AE4BE /* Pods-SensorIoTTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SensorIoTTests.debug.xcconfig"; path = "Target Support Files/Pods-SensorIoTTests/Pods-SensorIoTTests.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
@@ -78,7 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9FA4B6A3E4FDDC5BA097F495 /* libPods-SensorIoTTests.a in Frameworks */,
+				7E72FD127371C3D04B0FEB34 /* libPods-SensorIoT-SensorIoTTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -97,7 +94,6 @@
 			files = (
 				ED2971652150620600B7C4FE /* JavaScriptCore.framework in Frameworks */,
 				2D16E6881FA4F8E400B85C8A /* libReact.a in Frameworks */,
-				8AC43419934B673E0CEBE4DE /* libPods-SensorIoT-tvOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -105,7 +101,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7A9F814C92CF53FB5C108E13 /* libPods-SensorIoT-tvOSTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -150,9 +145,7 @@
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
 				2D16E6891FA4F8E400B85C8A /* libReact.a */,
 				924292C64453A4688F11A020 /* libPods-SensorIoT.a */,
-				5E4F64049017C3E8CB3EDB62 /* libPods-SensorIoT-tvOS.a */,
-				A1F38AE497B48BA765551FEE /* libPods-SensorIoT-tvOSTests.a */,
-				1736F8F0444E1671F9714B49 /* libPods-SensorIoTTests.a */,
+				3FD9C50B8DD80C0C6526634F /* libPods-SensorIoT-SensorIoTTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -174,6 +167,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				7F9D6BE5268B90600053DD40 /* File.swift */,
 				13B07FAE1A68108700A75B9A /* SensorIoT */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* SensorIoTTests */,
@@ -181,6 +175,7 @@
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				7FFEA76D22137FA900CAA49D /* Recovered References */,
 				E02EB9C8F119F8BDD0895247 /* Pods */,
+				7F9D6BE4268B905F0053DD40 /* SensorIoT-Bridging-Header.h */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -203,12 +198,10 @@
 			children = (
 				94A788B2EF7E88C16025DD76 /* Pods-SensorIoT.debug.xcconfig */,
 				2881912D389C0F300952841E /* Pods-SensorIoT.release.xcconfig */,
-				1E881A2C1D2613028980BD56 /* Pods-SensorIoT-tvOS.debug.xcconfig */,
-				B06339770D35DDE760B079F1 /* Pods-SensorIoT-tvOS.release.xcconfig */,
-				1FDE9DE07CC26C79F8A43116 /* Pods-SensorIoT-tvOSTests.debug.xcconfig */,
-				960368DDBCCB19260E64192B /* Pods-SensorIoT-tvOSTests.release.xcconfig */,
 				ECA7C8EFB1780BF71E2AE4BE /* Pods-SensorIoTTests.debug.xcconfig */,
 				EDBA74BDA641C9C0D3B6C1F5 /* Pods-SensorIoTTests.release.xcconfig */,
+				1E05978663B0FC314FFE8277 /* Pods-SensorIoT-SensorIoTTests.debug.xcconfig */,
+				284972F0DC7A6F4AD72CA6FE /* Pods-SensorIoT-SensorIoTTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -224,6 +217,8 @@
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
+				748D96A81FF611788F511B13 /* [CP] Embed Pods Frameworks */,
+				43FFC935666ACF40A20AA418 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -244,6 +239,8 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
+				0E6A8FF6966CE33D32D20989 /* [CP] Embed Pods Frameworks */,
+				9BBAA4D403A4B0ECD8074BDF /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -258,7 +255,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "SensorIoT-tvOS" */;
 			buildPhases = (
-				D1A575DC5B023AA2612FD97F /* [CP] Check Pods Manifest.lock */,
 				2D02E4771E0B4A5D006451C7 /* Sources */,
 				2D02E4781E0B4A5D006451C7 /* Frameworks */,
 				2D02E4791E0B4A5D006451C7 /* Resources */,
@@ -277,7 +273,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "SensorIoT-tvOSTests" */;
 			buildPhases = (
-				E8A4C367B6D1FFF6C8CF7D68 /* [CP] Check Pods Manifest.lock */,
 				2D02E48C1E0B4A5D006451C7 /* Sources */,
 				2D02E48D1E0B4A5D006451C7 /* Frameworks */,
 				2D02E48E1E0B4A5D006451C7 /* Resources */,
@@ -308,6 +303,7 @@
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = 4C37ENDNZM;
+						LastSwiftMigration = 1250;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -391,6 +387,24 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
+		0E6A8FF6966CE33D32D20989 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SensorIoT/Pods-SensorIoT-frameworks.sh",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/OpenSSL/OpenSSL.framework/OpenSSL",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenSSL.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SensorIoT/Pods-SensorIoT-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -404,6 +418,42 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+		};
+		43FFC935666ACF40A20AA418 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SensorIoT-SensorIoTTests/Pods-SensorIoT-SensorIoTTests-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SensorIoT-SensorIoTTests/Pods-SensorIoT-SensorIoTTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		748D96A81FF611788F511B13 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SensorIoT-SensorIoTTests/Pods-SensorIoT-SensorIoTTests-frameworks.sh",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/OpenSSL/OpenSSL.framework/OpenSSL",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenSSL.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SensorIoT-SensorIoTTests/Pods-SensorIoT-SensorIoTTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 		8A9FBD02A2F51D69E823B83B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -427,48 +477,22 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		D1A575DC5B023AA2612FD97F /* [CP] Check Pods Manifest.lock */ = {
+		9BBAA4D403A4B0ECD8074BDF /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
+				"${PODS_ROOT}/Target Support Files/Pods-SensorIoT/Pods-SensorIoT-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
 			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-SensorIoT-tvOS-checkManifestLockResult.txt",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E8A4C367B6D1FFF6C8CF7D68 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-SensorIoT-tvOSTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SensorIoT/Pods-SensorIoT-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F1B768249101EEBCAAA55863 /* [CP] Check Pods Manifest.lock */ = {
@@ -486,7 +510,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-SensorIoTTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-SensorIoT-SensorIoTTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -509,6 +533,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				7F9D6BE6268B90600053DD40 /* File.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -560,8 +585,9 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = ECA7C8EFB1780BF71E2AE4BE /* Pods-SensorIoTTests.debug.xcconfig */;
+			baseConfigurationReference = 1E05978663B0FC314FFE8277 /* Pods-SensorIoT-SensorIoTTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = 4C37ENDNZM;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -590,8 +616,9 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EDBA74BDA641C9C0D3B6C1F5 /* Pods-SensorIoTTests.release.xcconfig */;
+			baseConfigurationReference = 284972F0DC7A6F4AD72CA6FE /* Pods-SensorIoT-SensorIoTTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = 4C37ENDNZM;
@@ -620,6 +647,7 @@
 			baseConfigurationReference = 94A788B2EF7E88C16025DD76 /* Pods-SensorIoT.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 4C37ENDNZM;
@@ -631,6 +659,7 @@
 				);
 				INFOPLIST_FILE = SensorIoT/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.2.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -638,6 +667,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.brintontech.sensoriot;
 				PRODUCT_NAME = SensorIoT;
+				SWIFT_OBJC_BRIDGING_HEADER = "SensorIoT-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -647,6 +679,7 @@
 			baseConfigurationReference = 2881912D389C0F300952841E /* Pods-SensorIoT.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 4C37ENDNZM;
 				HEADER_SEARCH_PATHS = (
@@ -657,6 +690,7 @@
 				);
 				INFOPLIST_FILE = SensorIoT/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.2.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -664,13 +698,14 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.brintontech.sensoriot;
 				PRODUCT_NAME = SensorIoT;
+				SWIFT_OBJC_BRIDGING_HEADER = "SensorIoT-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
 		};
 		2D02E4971E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1E881A2C1D2613028980BD56 /* Pods-SensorIoT-tvOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -704,7 +739,6 @@
 		};
 		2D02E4981E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B06339770D35DDE760B079F1 /* Pods-SensorIoT-tvOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -738,7 +772,6 @@
 		};
 		2D02E4991E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1FDE9DE07CC26C79F8A43116 /* Pods-SensorIoT-tvOSTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -771,7 +804,6 @@
 		};
 		2D02E49A1E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 960368DDBCCB19260E64192B /* Pods-SensorIoT-tvOSTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -833,6 +865,7 @@
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 ";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -886,6 +919,7 @@
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 ";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
