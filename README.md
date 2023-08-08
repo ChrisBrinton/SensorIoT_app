@@ -51,7 +51,7 @@ To recreate the project on iOS after the build is hopelessly buggered:
     rm SensorIoT/ios/Images.xcassets
     cp SensotIoT_app/ios/Images.xcassets SensorIoT/ios/SensorIoT
 
-manually link ART.xcodeproj [react-native instructions](https://facebook.github.io/react-native/docs/linking-libraries-ios.html#manual-linking) or the more specific [stack overflow instructions](https://stackoverflow.com/questions/37658957/no-component-found-for-view-with-name-artshape/49381982#49381982) then:
+manually link ART.xcodeproj [react-native instructions](https://reactnative.dev/docs/linking-libraries-ios#manual-linking) or the more specific [stack overflow instructions](https://stackoverflow.com/questions/37658957/no-component-found-for-view-with-name-artshape/49381982#49381982) then:
 
     cd SensorIoT
 
