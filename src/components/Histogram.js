@@ -178,9 +178,9 @@ function Histogram({ contentInsetY, contentInsetX }) {
     );
   }
 
-  // Get date range for x-axis
-  let minDate = new Date();
-  let maxDate = new Date(0);
+  // Get date range for x-axis (date is stored as timestamp number)
+  let minDate = Date.now();
+  let maxDate = 0;
   allSeries.forEach((series) => {
     series.data.forEach((point) => {
       if (point.date < minDate) minDate = point.date;

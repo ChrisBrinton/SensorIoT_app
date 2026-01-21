@@ -30,8 +30,9 @@ function findNode(nodeList, gateway_id, nodeID) {
 function unpackSensorData(json) {
   const list = [];
   for (let i in json) {
-    const valueDate = new Date(json[i].time * 1000);
-    list[i] = { value: json[i].value, date: valueDate };
+    // Store timestamp as number to keep Redux state serializable
+    // The chart component will convert to Date when needed
+    list[i] = { value: json[i].value, date: json[i].time * 1000 };
   }
   return list;
 }
@@ -82,7 +83,7 @@ export const fetchNodeList = createAsyncThunk(
     }
     gwList = gwList + 'gw=' + state.settings.myGatewayIDList[state.settings.myGatewayIDList.length - 1];
 
-    const url = 'https://' + state.settings.myMQTTServer + '/SensorIoT/nodelists?' + gwList + '&period=' + state.xAxis.xDateRange;
+    const url = 'https://' + state.settings.myMQTTServer + '/nodelists?' + gwList + '&period=' + state.xAxis.xDateRange;
     console.log('fetchNodeList using url:', url);
 
     try {
@@ -119,7 +120,7 @@ export const fetchSensorData = createAsyncThunk(
       
       if (nodes !== '') {
         const gateway_id = state.histogramDataSet.nodeList[i].gateway_id;
-        const url = 'https://' + state.settings.myMQTTServer + '/SensorIoT/gw/' + gateway_id +
+        const url = 'https://' + state.settings.myMQTTServer + '/gw/' + gateway_id +
           '?' + nodes + 'type=' + state.yAxis.dataQueryKey + '&period=' + state.xAxis.xDateRange + '&timezone=EST5EDT';
         
         try {

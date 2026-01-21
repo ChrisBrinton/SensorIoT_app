@@ -27,19 +27,22 @@ function matchLatestType(nodeElement, json) {
 }
 
 function unpackLatestData(nodeData, json) {
+  const nodeId = parseInt(json.node_id);
   for (let i = 0; i < nodeData.length; i++) {
-    if (nodeData[i].nodeID === parseInt(json.node_id)) {
+    if (nodeData[i].nodeID === nodeId) {
       matchLatestType(nodeData[i], json);
-      nodeData[i].nodeTime = new Date(json.time * 1000);
+      // Store as ISO string to keep Redux state serializable
+      nodeData[i].nodeTime = new Date(json.time * 1000).toISOString();
       return;
     }
   }
   const newData = {
-    nodeID: json.node_id,
+    nodeID: nodeId,
     latestData: { F: 0, H: 0, P: 0, BAT: 0, RSSI: 0 },
   };
   matchLatestType(newData, json);
-  newData.nodeTime = new Date(json.time * 1000);
+  // Store as ISO string to keep Redux state serializable
+  newData.nodeTime = new Date(json.time * 1000).toISOString();
   nodeData.push(newData);
 }
 
@@ -70,7 +73,7 @@ export const fetchNodeLatestData = createAsyncThunk(
     }
     gwList = gwList + 'gw=' + state.settings.myGatewayIDList[state.settings.myGatewayIDList.length - 1];
 
-    const url = 'https://' + state.settings.myMQTTServer + '/SensorIoT/latests?' + gwList;
+    const url = 'https://' + state.settings.myMQTTServer + '/latests?' + gwList;
     console.log('fetchNodeLatestData using url:', url);
 
     try {
@@ -99,18 +102,24 @@ const dashboardDataSetSlice = createSlice({
       })
       .addCase(fetchNodeLatestData.fulfilled, (state, action) => {
         const json = action.payload;
-        const newNodeData = [];
+        const gatewayMap = new Map();
         
         for (let i in json) {
-          const newData = [];
-          for (let j in json[i].latest) {
-            unpackLatestData(newData, json[i].latest[j]);
+          const gwId = json[i].gateway_id;
+          if (!gatewayMap.has(gwId)) {
+            gatewayMap.set(gwId, []);
           }
-          newNodeData.push({
-            gateway_id: json[i].gateway_id,
-            latest: newData,
-          });
+          const nodeDataArray = gatewayMap.get(gwId);
+          for (let j in json[i].latest) {
+            unpackLatestData(nodeDataArray, json[i].latest[j]);
+          }
         }
+        
+        // Convert Map to array, ensuring unique gateway entries
+        const newNodeData = Array.from(gatewayMap.entries()).map(([gateway_id, latest]) => ({
+          gateway_id,
+          latest,
+        }));
         
         state.isLoading = 0;
         state.nodeData = newNodeData;

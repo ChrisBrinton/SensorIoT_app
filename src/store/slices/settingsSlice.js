@@ -59,7 +59,7 @@ export const fetchNicknames = createAsyncThunk(
     }
     gwList = gwList + 'gw=' + state.settings.myGatewayIDList[state.settings.myGatewayIDList.length - 1];
 
-    const url = 'https://' + state.settings.myMQTTServer + '/SensorIoT/get_nicknames?' + gwList;
+    const url = 'https://' + state.settings.myMQTTServer + '/get_nicknames?' + gwList;
     console.log('get_nicknames using url:', url);
 
     try {
@@ -99,7 +99,7 @@ export const saveNicknames = createAsyncThunk(
       return null;
     }
 
-    const url = 'https://' + state.settings.myMQTTServer + '/SensorIoT/save_nicknames';
+    const url = 'https://' + state.settings.myMQTTServer + '/save_nicknames';
     const body = JSON.stringify(state.settings.nodeNicknamesList);
 
     try {

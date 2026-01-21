@@ -15,7 +15,7 @@ function DashboardList({ navigation }) {
     return (
       <View style={styles.gatewayContainer}>
         <Text style={styles.gatewayTitle}>{gwDisplayName}</Text>
-        {gateway.latest?.map((node) => {
+        {gateway.latest?.map((node, index) => {
           // Find nickname for this node
           const nodeNickname = gwNickname?.nicknames?.find(
             (n) => n.nodeID === node.nodeID
@@ -24,7 +24,7 @@ function DashboardList({ navigation }) {
 
           return (
             <GaugeRow
-              key={`${gateway.gateway_id}-${node.nodeID}`}
+              key={`${gateway.gateway_id}-${node.nodeID}-${index}`}
               gateway_id={gateway.gateway_id}
               nodeID={node.nodeID}
               nodeName={nodeDisplayName}
@@ -52,7 +52,7 @@ function DashboardList({ navigation }) {
     <FlatList
       data={nodeData}
       renderItem={renderGateway}
-      keyExtractor={(item) => item.gateway_id}
+      keyExtractor={(item) => String(item.gateway_id)}
       scrollEnabled={false}
       contentContainerStyle={styles.listContainer}
     />
